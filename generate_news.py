@@ -350,9 +350,13 @@ updateBadge();
 def update_archive(html: str, today: str = TODAY):
     import os as _os
     _os.makedirs(ARCHIVE_DIR, exist_ok=True)
-    with open(f"{ARCHIVE_DIR}/{today}.html", "w", encoding="utf-8") as f:
+    archive_path = f"{ARCHIVE_DIR}/{today}.html"
+    if _os.path.exists(archive_path):
+        print(f"  [SKIP] {archive_path} exists — archive is immutable")
+        return
+    with open(archive_path, "w", encoding="utf-8") as f:
         f.write(html)
-    print(f"  Archived: {ARCHIVE_DIR}/{today}.html")
+    print(f"  Archived: {archive_path}")
 
     idx_path = f"{ARCHIVE_DIR}/index.json"
     dates = []
