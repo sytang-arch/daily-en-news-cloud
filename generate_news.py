@@ -127,11 +127,14 @@ def generate_content(news_summary: str) -> dict:
     dcount = len(d.get("dictionary", {}))
     print(f"  Dict entries: {dcount}")
     
-    if dcount < 500:
-        print(f"  [RETRY] Dict too short ({dcount}<500)")
-        d = call_deepseek(SYSTEM_PROMPT_DICT, arts_text + "\n\n" + DICT_RETRY_PROMPT.replace("{count}", str(dcount)), max_tok=7000)
-        dcount2 = len(d.get("dictionary", {}))
-        print(f"  Dict after retry: {dcount2}")
+    if dcount < 400:
+        print(f"  [RETRY] Dict too short ({dcount}<400)")
+        try:
+            d2 = call_deepseek(SYSTEM_PROMPT_DICT, arts_text + "\n\n" + DICT_RETRY_PROMPT.replace("{count}", str(dcount)), max_tok=8000)
+            if d2.get("dictionary"): d = d2
+            print(f"  Dict after retry: {len(d.get('dictionary',{}))}")
+        except Exception:
+            print(f"  [WARN] Retry failed, using {dcount} entries as-is")
     
     data["dictionary"] = d.get("dictionary", {})
     return data
