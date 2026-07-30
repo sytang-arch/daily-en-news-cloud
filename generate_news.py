@@ -195,7 +195,7 @@ def build_html(data: dict) -> str:
     --shadow-lg:0 12px 40px rgba(0,0,0,.12);--radius:10px;--sidebar-w:200px;
   }}
   *{{margin:0;padding:0;box-sizing:border-box}}
-  body{{font-family:Georgia,'Times New Roman',serif;background:var(--bg);color:var(--text);line-height:1.8;display:flex;min-height:100vh}}
+  body{{font-family:Georgia,'Times New Roman',serif;background:var(--bg);color:var(--text);line-height:1.8;min-height:100vh;padding-left:var(--sidebar-w)}}
   #sidebar{{
     position:fixed;left:0;top:0;width:var(--sidebar-w);height:100vh;background:#2c2c2c;color:#ccc;
     overflow-y:auto;padding:20px 0;z-index:100;font-family:-apple-system,sans-serif;font-size:.82rem;
@@ -206,7 +206,7 @@ def build_html(data: dict) -> str:
   #sidebar .date-link:hover{{color:#fff;background:#3a3a3a;border-left-color:var(--gold)}}
   #sidebar .date-link.active{{color:#fff;background:#3a3a3a;border-left-color:var(--gold);font-weight:600}}
   #sidebar .no-archive{{padding:16px;color:#666;font-size:.78rem;text-align:center}}
-  #main{{margin-left:var(--sidebar-w);margin-right:auto;max-width:780px;padding:32px 28px 60px}}
+  #main{{margin:0 auto;max-width:780px;padding:32px 28px 60px}}
   header{{text-align:center;padding:36px 0 28px;border-bottom:2px solid var(--border);margin-bottom:32px}}
   header h1{{font-size:1.75rem;font-weight:700;color:#1a1a1a}}
   header .date{{font-size:.9rem;color:var(--text-light)}}
@@ -260,8 +260,9 @@ def build_html(data: dict) -> str:
   footer{{text-align:center;padding:24px 0 0;border-top:1px solid var(--border);font-size:.78rem;color:#aaa;margin-top:8px}}
   .news-card p,.news-card h3{{-webkit-tap-highlight-color:transparent}}
   @media(max-width:760px){{
+    body{{padding-left:0}}
     #sidebar{{display:none}}
-    #main{{margin-left:0;padding:20px 14px 40px}}
+    #main{{margin:0 auto;padding:20px 14px 40px}}
     .news-card{{padding:16px 18px}}
     #history-panel{{right:12px;bottom:60px}}
     #word-popover{{max-width:260px}}
@@ -335,7 +336,7 @@ document.addEventListener('keydown',function(e){{if(e.key==='Escape'){{hidePopov
   fetch('/daily-en-news-cloud/archive/index.json',{{cache:'no-cache'}}).then(function(r){{return r.json()}}).then(function(dates){{
     if(!dates.length){{sd.innerHTML='<p>No archived editions yet.</p>';return}}
     var today='{TODAY}';sd.innerHTML='';
-    dates.forEach(function(d){{var a=document.createElement('a');a.className='date-link';a.href='archive/'+d+'.html';a.textContent=d;if(d===today)a.classList.add('active');sd.appendChild(a)}})
+    dates.forEach(function(d){{var a=document.createElement('a');a.className='date-link';a.href='/daily-en-news-cloud/archive/'+d+'.html';a.textContent=d;if(d===today)a.classList.add('active');sd.appendChild(a)}})
   }}).catch(function(){{sd.innerHTML='<p>Archive index loading...</p>'}})
 }})();
 updateBadge();
