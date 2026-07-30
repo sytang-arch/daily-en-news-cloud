@@ -95,7 +95,7 @@ def call_deepseek(news_text: str, retry: bool = False) -> dict:
     payload = {
         "model":"deepseek-chat",
         "messages":[{"role":"system","content":SYSTEM_PROMPT},{"role":"user","content":user_msg}],
-        "temperature":0.7,"max_tokens":16000,
+        "temperature":0.7,"max_tokens":8000,
         "response_format":{"type":"json_object"},
     }
     req = ur.Request(DEEPSEEK_URL, data=json.dumps(payload).encode(),
@@ -115,7 +115,7 @@ def generate_content(news_summary: str) -> dict:
     print(f"  Dict entries: {dcount}")
     if dcount < 500:
         print(f"  [RETRY] Dict too short ({dcount}<500), retrying...")
-        extra = news_summary + "\n\n" + RETRY_PROMPT.format(count=dcount)
+        extra = news_summary + "\n\n" + RETRY_PROMPT.replace("{count}", str(dcount))
         data = call_deepseek(extra)
         dcount2 = len(data.get("dictionary", {}))
         print(f"  Dict entries after retry: {dcount2}")
