@@ -63,39 +63,42 @@ def build_summary(cat, arts):
     return "\n".join(lines)
 
 # ── DeepSeek ────────────────────────────────────────────
-SYSTEM_PROMPT = """You are an expert English teacher and news editor creating a daily reading page for a Chinese student at TOEIC ~600 (CEFR B1).
+SYSTEM_PROMPT_ARTICLES = """You are an expert English teacher and news editor creating a daily reading page for a Chinese student at TOEIC ~600 (CEFR B1).
 
-## OUTPUT — valid JSON only:
+## OUTPUT — valid JSON only (NO dictionary field):
 {
   "date": "Thursday, July 30, 2026",
   "politics": [{"title":"...", "paragraphs":["...","...","..."], "translation":["中文...","中文...","中文..."], "source":"Source: X — YYYY-MM-DD"}, ...],
   "economy": [{"title":"...", "paragraphs":["...","...","..."], "translation":["中文...","中文...","中文..."], "what_it_means":"...", "source":"Source: X — YYYY-MM-DD"}, ...],
-  "research": [{"title":"...", "paragraphs":["...","...","..."], "translation":["中文...","中文...","中文..."], "source":"Source: X — YYYY-MM-DD"}, ...],
-  "dictionary": {"word":"pos. 中文释义", ...}
+  "research": [{"title":"...", "paragraphs":["...","...","..."], "translation":["中文...","中文...","中文..."], "source":"Source: X — YYYY-MM-DD"}, ...]
 }
 
+## REQUIREMENTS
+- 2-3 articles per category. Each: exactly 3 English paragraphs (2-4 sentences) + 3 Chinese translations.
+- English B1+ to B2. Explain technical terms in parentheses.
+- Economy articles MUST include "what_it_means" field.
+- All sources dated within last 2 days. No single person dominates. No C1+ rare words."""
+
+SYSTEM_PROMPT_DICT = """You are a TOEIC vocabulary expert. Given English news articles, build a COMPLETE English-Chinese dictionary.
+
+## OUTPUT — valid JSON only:
+{"dictionary": {"word":"pos. 中文释义", ...}}
+
 ## STRICT REQUIREMENTS
-- 2-3 articles per category. Each article: exactly 3 English paragraphs (2-4 sentences each) + 3 Chinese translation paragraphs.
-- English level B1+ to B2. Explain technical terms in parentheses.
-- Economy articles MUST include "what_it_means" — 1 sentence why it matters to ordinary people.
-- **CRITICAL — DICTIONARY**: MUST contain AT LEAST 500 entries. Cover EVERY non-trivial word (nouns, verbs, adjectives, adverbs) used in ALL articles. Multi-word phrases like "credit default swap" should be included as well. Format: "word":"pos. 中文释义". ALL keys lowercase. Go through every paragraph word by word and ensure complete coverage. If you produce fewer than 500 entries the output will be REJECTED.
-- **CRITICAL — TRANSLATION**: Each article MUST have a "translation" array with exactly one Chinese paragraph per English paragraph. Translations should be natural, accurate Chinese — not word-for-word, but conveying the full meaning naturally.
+- MUST contain AT LEAST 500 entries.
+- Cover EVERY non-trivial word (nouns, verbs, adjectives, adverbs) from the articles.
+- Include multi-word phrases like "credit default swap" or "ground game".
+- Format: ALL keys lowercase. Value format: "pos. 中文释义".
+- Go through each article paragraph word by word. Do not skip common words — a B1 learner may not know them."""
 
-## QUALITY CHECK (internal)
-1. All sources dated within last 2 days. Drop older ones.
-2. No single person dominates. Include institutional stories.
-3. No C1+ rare words. Replace with B1-B2 equivalents.
-4. Every field term explained in-text in parentheses."""
+DICT_RETRY_PROMPT = "\n\n## ATTENTION\nThe dictionary only contained {count} entries — less than 500. REGENERATE with at least 500 entries covering every word from the articles."
 
-RETRY_PROMPT = "## ATTENTION\nThe dictionary field only contained {count} entries — less than the minimum 500. Please REGENERATE the entire JSON output with AT LEAST 500 dictionary entries. Go through the articles paragraph by paragraph and add EVERY non-trivial word to the dictionary. Include all nouns, verbs, adjectives, adverbs, and multi-word phrases. Also include the Chinese translations for each article."
-
-def call_deepseek(news_text: str, retry: bool = False) -> dict:
+def call_deepseek(system: str, user_msg: str, max_tok: int = 8000) -> dict:
     import urllib.request as ur
-    user_msg = f"Today is {datetime.now(BEIJING_TZ).strftime('%A, %B %d, %Y')}.\n\n{news_text}"
     payload = {
         "model":"deepseek-chat",
-        "messages":[{"role":"system","content":SYSTEM_PROMPT},{"role":"user","content":user_msg}],
-        "temperature":0.7,"max_tokens":8000,
+        "messages":[{"role":"system","content":system},{"role":"user","content":user_msg}],
+        "temperature":0.7,"max_tokens":max_tok,
         "response_format":{"type":"json_object"},
     }
     req = ur.Request(DEEPSEEK_URL, data=json.dumps(payload).encode(),
@@ -109,16 +112,28 @@ def call_deepseek(news_text: str, retry: bool = False) -> dict:
     except json.JSONDecodeError: return json.loads(re.sub(r"^```(?:json)?\s*|\s*```$","",content.strip()))
 
 def generate_content(news_summary: str) -> dict:
-    """Call DeepSeek, retry once if dictionary too short."""
-    data = call_deepseek(news_summary)
-    dcount = len(data.get("dictionary", {}))
+    """Two-step generation: articles first, then dictionary."""
+    today = datetime.now(BEIJING_TZ).strftime('%A, %B %d, %Y')
+    
+    # Step 1: Articles + translations
+    print(f"\n[STEP 1/2] Generating articles...")
+    data = call_deepseek(SYSTEM_PROMPT_ARTICLES, f"Today is {today}.\n\n{news_summary}", max_tok=6000)
+    print(f"  Articles: {sum(len(data.get(k,[])) for k in ['politics','economy','research'])}")
+
+    # Step 2: Dictionary
+    print(f"[STEP 2/2] Generating dictionary...")
+    arts_text = json.dumps({k: data.get(k,[]) for k in ['politics','economy','research']}, ensure_ascii=False)
+    d = call_deepseek(SYSTEM_PROMPT_DICT, f"Here are today's articles:\n{arts_text}\n\nGenerate the full dictionary.", max_tok=7000)
+    dcount = len(d.get("dictionary", {}))
     print(f"  Dict entries: {dcount}")
+    
     if dcount < 500:
-        print(f"  [RETRY] Dict too short ({dcount}<500), retrying...")
-        extra = news_summary + "\n\n" + RETRY_PROMPT.replace("{count}", str(dcount))
-        data = call_deepseek(extra)
-        dcount2 = len(data.get("dictionary", {}))
-        print(f"  Dict entries after retry: {dcount2}")
+        print(f"  [RETRY] Dict too short ({dcount}<500)")
+        d = call_deepseek(SYSTEM_PROMPT_DICT, arts_text + "\n\n" + DICT_RETRY_PROMPT.replace("{count}", str(dcount)), max_tok=7000)
+        dcount2 = len(d.get("dictionary", {}))
+        print(f"  Dict after retry: {dcount2}")
+    
+    data["dictionary"] = d.get("dictionary", {})
     return data
 
 # ── HTML Template ───────────────────────────────────────
