@@ -206,7 +206,7 @@ def build_html(data: dict) -> str:
   #sidebar .date-link:hover{{color:#fff;background:#3a3a3a;border-left-color:var(--gold)}}
   #sidebar .date-link.active{{color:#fff;background:#3a3a3a;border-left-color:var(--gold);font-weight:600}}
   #sidebar .no-archive{{padding:16px;color:#666;font-size:.78rem;text-align:center}}
-  #main{{margin-left:var(--sidebar-w);flex:1;max-width:780px;padding:32px 28px 60px}}
+  #main{{margin-left:var(--sidebar-w);margin-right:auto;max-width:780px;padding:32px 28px 60px}}
   header{{text-align:center;padding:36px 0 28px;border-bottom:2px solid var(--border);margin-bottom:32px}}
   header h1{{font-size:1.75rem;font-weight:700;color:#1a1a1a}}
   header .date{{font-size:.9rem;color:var(--text-light)}}
@@ -332,7 +332,7 @@ document.addEventListener('keydown',function(e){{if(e.key==='Escape'){{hidePopov
 // Sidebar archive loader
 (function(){{
   var sd=document.getElementById('sidebar-dates');
-  fetch('archive/index.json',{{cache:'no-cache'}}).then(function(r){{return r.json()}}).then(function(dates){{
+  fetch('/daily-en-news-cloud/archive/index.json',{{cache:'no-cache'}}).then(function(r){{return r.json()}}).then(function(dates){{
     if(!dates.length){{sd.innerHTML='<p>No archived editions yet.</p>';return}}
     var today='{TODAY}';sd.innerHTML='';
     dates.forEach(function(d){{var a=document.createElement('a');a.className='date-link';a.href='archive/'+d+'.html';a.textContent=d;if(d===today)a.classList.add('active');sd.appendChild(a)}})
