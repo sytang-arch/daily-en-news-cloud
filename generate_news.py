@@ -281,7 +281,7 @@ def build_html(data: dict) -> str:
     Use the <strong>left sidebar</strong> to browse past editions.
   </div>
 </div>
-<div class="section">{sections_html}</div>
+<div class="section">{sections}</div>
 <footer>
   <p>&#128218; Auto-generated via NewsAPI + DeepSeek | Cloud pipeline &mdash; GitHub Actions | {date_str}</p>
 </footer>
