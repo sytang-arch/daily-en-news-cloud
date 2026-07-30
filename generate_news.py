@@ -107,8 +107,9 @@ def call_deepseek(system: str, user_msg: str, max_tok: int = 8000, use_reasoner:
         payload["response_format"] = {"type":"json_object"}
     req = ur.Request(DEEPSEEK_URL, data=json.dumps(payload).encode(),
         headers={"Content-Type":"application/json","Authorization":f"Bearer {DEEPSEEK_KEY}"})
+    timeout = 360 if use_reasoner else 180
     try:
-        with ur.urlopen(req, timeout=180) as r: result = json.loads(r.read())
+        with ur.urlopen(req, timeout=timeout) as r: result = json.loads(r.read())
     except Exception as e:
         print(f"[ERROR] DeepSeek: {e}"); sys.exit(1)
     content = result["choices"][0]["message"]["content"]
