@@ -93,14 +93,18 @@ SYSTEM_PROMPT_DICT = """You are a TOEIC vocabulary expert. Given English news ar
 
 DICT_RETRY_PROMPT = "\n\n## ATTENTION\nThe dictionary only contained {count} entries — less than 500. REGENERATE with at least 500 entries covering every word from the articles."
 
-def call_deepseek(system: str, user_msg: str, max_tok: int = 8000) -> dict:
+def call_deepseek(system: str, user_msg: str, max_tok: int = 8000, use_reasoner: bool = False) -> dict:
     import urllib.request as ur
+    model = "deepseek-reasoner" if use_reasoner else "deepseek-chat"
     payload = {
-        "model":"deepseek-chat",
+        "model": model,
         "messages":[{"role":"system","content":system},{"role":"user","content":user_msg}],
-        "temperature":0.7,"max_tokens":max_tok,
-        "response_format":{"type":"json_object"},
+        "max_tokens": max_tok,
     }
+    if not use_reasoner:
+        payload["temperature"] = 0.7
+    if use_reasoner or model == "deepseek-chat":
+        payload["response_format"] = {"type":"json_object"}
     req = ur.Request(DEEPSEEK_URL, data=json.dumps(payload).encode(),
         headers={"Content-Type":"application/json","Authorization":f"Bearer {DEEPSEEK_KEY}"})
     try:
@@ -112,45 +116,36 @@ def call_deepseek(system: str, user_msg: str, max_tok: int = 8000) -> dict:
     except json.JSONDecodeError: return json.loads(re.sub(r"^```(?:json)?\s*|\s*```$","",content.strip()))
 
 def generate_content(news_summary: str) -> dict:
-    """Two-step generation: articles first, then dictionary split by category."""
+    """Two-step: articles (chat) + dictionary (reasoner, 64K max output)."""
     today = datetime.now(BEIJING_TZ).strftime('%A, %B %d, %Y')
     
-    # Step 1: Articles + translations
-    print(f"\n[STEP 1/3] Generating articles...")
+    # Step 1: Articles + translations (fast, cheap)
+    print(f"\n[STEP 1/2] Generating articles (deepseek-chat)...")
     data = call_deepseek(SYSTEM_PROMPT_ARTICLES, f"Today is {today}.\n\n{news_summary}", max_tok=6000)
     n_arts = sum(len(data.get(k,[])) for k in ['politics','economy','research'])
     print(f"  Articles: {n_arts}")
 
-    # Step 2: Dictionary — split into 2 calls to stay under 8K limit
-    all_dict = {}
-    for step_name, keys in [("politics+economy", ["politics","economy"]), ("research", ["research"])]:
-        print(f"[STEP 2/3] Dict: {step_name}...")
-        arts_json = json.dumps({k: data.get(k,[]) for k in keys}, ensure_ascii=False)
-        d = call_deepseek(SYSTEM_PROMPT_DICT, f"Generate dictionary for these articles:\n{arts_json}", max_tok=7000)
-        dc = len(d.get("dictionary", {}))
-        all_dict.update(d.get("dictionary", {}))
-        print(f"  {step_name}: {dc} entries (merged: {len(all_dict)})")
-        if dc < 200:
-            try:
-                d2 = call_deepseek(SYSTEM_PROMPT_DICT, arts_json + "\n" + DICT_RETRY_PROMPT.replace("{count}", str(dc)), max_tok=8000)
-                all_dict.update(d2.get("dictionary", {}))
-                print(f"  retry: +{len(d2.get('dictionary',{}))} → merged {len(all_dict)}")
-            except Exception:
-                pass
+    # Step 2: Dictionary (deepseek-reasoner, 64K max output, single call)
+    print(f"[STEP 2/2] Generating dictionary (deepseek-reasoner, max_tok=30000)...")
+    arts_json = json.dumps({k: data.get(k,[]) for k in ['politics','economy','research']}, ensure_ascii=False)
+    d = call_deepseek(SYSTEM_PROMPT_DICT, f"Generate dictionary for these articles:\n{arts_json}", max_tok=30000, use_reasoner=True)
+    dcount = len(d.get("dictionary", {}))
+    print(f"  Dict entries: {dcount}")
     
-    # Step 3: If still under 400, do one more global pass
-    if len(all_dict) < 400:
-        print(f"[STEP 3/3] Dict global pass ({len(all_dict)}<400)...")
-        all_json = json.dumps({k: data.get(k,[]) for k in ['politics','economy','research']}, ensure_ascii=False)
+    if dcount < 500:
+        print(f"  [RETRY] Dict too short ({dcount}<500)")
         try:
-            d3 = call_deepseek(SYSTEM_PROMPT_DICT, all_json + "\n\nGenerate ADDITIONAL entries not already covered. Focus on words that appear in the articles but may have been missed.", max_tok=7000)
-            all_dict.update(d3.get("dictionary", {}))
-            print(f"  Global pass: merged {len(all_dict)}")
+            d2 = call_deepseek(SYSTEM_PROMPT_DICT, arts_json + "\n" + DICT_RETRY_PROMPT.replace("{count}", str(dcount)), max_tok=30000, use_reasoner=True)
+            all_dict = {}
+            all_dict.update(d.get("dictionary", {}))
+            all_dict.update(d2.get("dictionary", {}))
+            data["dictionary"] = all_dict
+            print(f"  Dict after retry: {len(all_dict)} entries (merged)")
         except Exception:
-            print(f"  Global pass failed, using {len(all_dict)} entries")
-
-    data["dictionary"] = all_dict
-    print(f"  Final dict: {len(all_dict)} entries")
+            data["dictionary"] = d.get("dictionary", {})
+            print(f"  Retry failed, using {dcount} entries")
+    else:
+        data["dictionary"] = d.get("dictionary", {})
     return data
 
 # ── HTML Template ───────────────────────────────────────
