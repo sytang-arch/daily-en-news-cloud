@@ -114,7 +114,23 @@ def call_deepseek(system: str, user_msg: str, max_tok: int = 8000, use_reasoner:
         print(f"[ERROR] DeepSeek: {e}"); sys.exit(1)
     content = result["choices"][0]["message"]["content"]
     try: return json.loads(content)
-    except json.JSONDecodeError: return json.loads(re.sub(r"^```(?:json)?\s*|\s*```$","",content.strip()))
+    except json.JSONDecodeError:
+        # Attempt 1: strip markdown code fences
+        cleaned = re.sub(r"^```(?:json)?\s*|\s*```$","",content.strip())
+        try: return json.loads(cleaned)
+        except json.JSONDecodeError:
+            # Attempt 2: find last complete JSON object
+            idx = cleaned.rfind('"}'); 
+            if idx > 0:
+                try: return json.loads(cleaned[:idx+2] + "}")
+                except json.JSONDecodeError: pass
+            # Attempt 3: truncate to last valid } and close
+            brace_idx = cleaned.rfind('}')
+            if brace_idx > len(cleaned)*0.7:
+                try: return json.loads(cleaned[:brace_idx+1])
+                except json.JSONDecodeError: pass
+            print(f"[ERROR] Cannot parse JSON even after repair, content ends with: {content[-200:]}")
+            sys.exit(1)
 
 def generate_content(news_summary: str) -> dict:
     """Two-step: articles (chat) + dictionary (reasoner, 64K max output)."""
@@ -122,7 +138,7 @@ def generate_content(news_summary: str) -> dict:
     
     # Step 1: Articles + translations (fast, cheap)
     print(f"\n[STEP 1/2] Generating articles (deepseek-chat)...")
-    data = call_deepseek(SYSTEM_PROMPT_ARTICLES, f"Today is {today}.\n\n{news_summary}", max_tok=6000)
+    data = call_deepseek(SYSTEM_PROMPT_ARTICLES, f"Today is {today}.\n\n{news_summary}", max_tok=8000)
     n_arts = sum(len(data.get(k,[])) for k in ['politics','economy','research'])
     print(f"  Articles: {n_arts}")
 
