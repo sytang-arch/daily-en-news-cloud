@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Today's US News — Saturday, August 01, 2026 | English Reading Practice</title>
+<style>
+  :root{
+    --bg:#faf9f7;--card-bg:#fff;--text:#2d2d2d;--text-light:#5a5a5a;--accent-p:#b22234;--accent-e:#1a5f8a;--accent-r:#2d7d46;
+    --gold:#b7933a;--border:#e8e4df;--tag-bg:#f0ede8;--shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+    --shadow-lg:0 12px 40px rgba(0,0,0,.12);--radius:10px;--sidebar-w:200px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:Georgia,'Times New Roman',serif;background:var(--bg);color:var(--text);line-height:1.8;min-height:100vh;padding-left:var(--sidebar-w)}
+  #sidebar{
+    position:fixed;left:0;top:0;width:var(--sidebar-w);height:100vh;background:#2c2c2c;color:#ccc;
+    overflow-y:auto;padding:20px 0;z-index:100;font-family:-apple-system,sans-serif;font-size:.82rem;
+    transition:transform .25s ease
+  }
+  #sidebar h3{color:#fff;font-size:.85rem;padding:8px 16px;border-bottom:1px solid #444;margin-bottom:8px;text-align:center}
+  #sidebar .date-link{display:block;padding:6px 16px;color:#aaa;text-decoration:none;transition:all .15s;border-left:3px solid transparent}
+  #sidebar .date-link:hover{color:#fff;background:#3a3a3a;border-left-color:var(--gold)}
+  #sidebar .date-link.active{color:#fff;background:#3a3a3a;border-left-color:var(--gold);font-weight:600}
+  #sidebar .no-archive{padding:16px;color:#666;font-size:.78rem;text-align:center}
+  #main{margin:0 auto;max-width:780px;padding:32px 28px 60px}
+  header{text-align:center;padding:36px 0 28px;border-bottom:2px solid var(--border);margin-bottom:32px}
+  header h1{font-size:1.75rem;font-weight:700;color:#1a1a1a}
+  header .date{font-size:.9rem;color:var(--text-light)}
+  .meta-bar{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-top:14px;font-size:.82rem;color:var(--text-light)}
+  .meta-bar span{background:var(--tag-bg);padding:4px 14px;border-radius:20px}
+  .section{margin-bottom:40px}
+  .section-title{font-size:1.25rem;font-weight:700;margin-bottom:16px;padding-bottom:6px;border-bottom:3px solid;display:flex;align-items:center;gap:8px}
+  .section-title.politics{color:var(--accent-p);border-color:var(--accent-p)}
+  .section-title.economy{color:var(--accent-e);border-color:var(--accent-e)}
+  .section-title.research{color:var(--accent-r);border-color:var(--accent-r)}
+  .news-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:22px 26px;margin-bottom:16px;box-shadow:var(--shadow);transition:box-shadow .3s,border-color .3s}
+  .news-card:hover{box-shadow:0 3px 12px rgba(0,0,0,.08);border-color:#d8d2c8}
+  .news-card h3{font-size:1.08rem;font-weight:700;margin-bottom:10px;line-height:1.45}
+  .news-card p{font-size:.95rem;color:var(--text-light);margin-bottom:12px;text-align:justify}
+  .news-card .source{font-size:.78rem;color:#999;font-style:italic}
+  .news-card .wim{color:#8a6d20;font-size:.88rem;padding:6px 0 0}
+  .trans-toggle{margin:8px 0 12px;border:1px solid #e0d8c0;border-radius:8px;overflow:hidden}
+  .trans-toggle summary{padding:8px 14px;background:#faf6ec;cursor:pointer;font-size:.85rem;color:#8a6d20;font-weight:600;user-select:none}
+  .trans-toggle .trans-content{padding:12px 16px;background:#fffbee;color:#5a4a2a;font-size:.88rem;line-height:1.8}
+  .trans-toggle .trans-content p{color:#5a4a2a!important;margin-bottom:8px!important}
+  .cloud-badge{display:inline-block;background:#e8f5e9;color:#2d7d46;font-size:.7rem;padding:2px 10px;border-radius:10px;margin-left:8px;vertical-align:middle}
+  .tips{background:#f4f9ff;border-radius:var(--radius);padding:16px 22px;margin-bottom:32px;font-size:.88rem;color:#3a5a7c;line-height:1.7;display:flex;align-items:flex-start;gap:12px}
+  .tips .icon{font-size:1.4rem;flex-shrink:0}
+  .lookup-word{cursor:pointer;border-bottom:1.5px dotted transparent;transition:border-color .2s,background .2s;border-radius:2px;padding:0 1px}
+  .lookup-word:hover{border-bottom-color:var(--gold);background:rgba(183,147,58,.08)}
+  .lookup-word.active{background:rgba(183,147,58,.18);border-bottom-color:var(--gold)}
+  #word-popover{position:fixed;z-index:9999;background:#fffef9;border:1px solid #d8d0b8;border-radius:12px;box-shadow:var(--shadow-lg);padding:18px 22px;min-width:200px;max-width:320px;opacity:0;transform:translateY(8px) scale(.96);transition:opacity .2s cubic-bezier(.16,1,.3,1),transform .25s cubic-bezier(.16,1,.3,1);pointer-events:none;font-family:-apple-system,sans-serif;word-break:break-word}
+  #word-popover.visible{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+  #word-popover .pop-word{font-size:1.25rem;font-weight:700;color:#1a1a1a;margin-bottom:4px;font-family:Georgia,serif}
+  #word-popover .pop-pos{font-size:.75rem;color:#999;text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px}
+  #word-popover .pop-meaning{font-size:.92rem;color:#444;line-height:1.5;padding:8px 12px;background:#faf6ec;border-radius:6px;border-left:3px solid var(--gold)}
+  #word-popover .pop-meaning .zh{color:#6b4c1e;font-weight:600}
+  #word-popover .pop-close{position:absolute;top:8px;right:10px;width:24px;height:24px;border:none;background:none;cursor:pointer;font-size:1rem;color:#bbb;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:color .2s,background .2s}
+  #word-popover .pop-close:hover{color:#666;background:#f0ede8}
+  #sel-toolbar{position:fixed;z-index:9998;background:#2d2d2d;color:#fff;border-radius:8px;padding:6px 14px;font-size:.82rem;font-family:-apple-system,sans-serif;cursor:pointer;opacity:0;transform:translateY(6px);transition:opacity .18s,transform .2s;pointer-events:none;box-shadow:0 6px 20px rgba(0,0,0,.25);white-space:nowrap}
+  #sel-toolbar.visible{opacity:1;transform:translateY(0);pointer-events:auto}
+  #sel-toolbar:hover{background:#3d3d3d}
+  #history-panel{position:fixed;right:24px;bottom:80px;z-index:9990;display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+  #history-toggle{width:44px;height:44px;border-radius:50%;background:#fff;border:1px solid var(--border);box-shadow:0 2px 12px rgba(0,0,0,.08);cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;transition:all .2s;position:relative}
+  #history-toggle:hover{border-color:var(--gold);box-shadow:0 4px 16px rgba(0,0,0,.12)}
+  #history-badge{position:absolute;top:-4px;right:-4px;background:var(--gold);color:#fff;font-size:.65rem;font-family:-apple-system,sans-serif;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 4px;opacity:0;transform:scale(0);transition:all .3s cubic-bezier(.16,1,.3,1)}
+  #history-badge.show{opacity:1;transform:scale(1)}
+  #history-list{background:#fffef9;border:1px solid #d8d0b8;border-radius:12px;box-shadow:var(--shadow-lg);padding:14px 16px;max-height:300px;overflow-y:auto;width:240px;font-family:-apple-system,sans-serif;font-size:.82rem;display:none;flex-direction:column;gap:8px}
+  #history-list.open{display:flex}
+  #history-list .h-item{display:flex;justify-content:space-between;align-items:center;padding:6px 8px;border-radius:6px;cursor:pointer;transition:background .15s;gap:8px}
+  #history-list .h-item:hover{background:#faf6ec}
+  #history-list .h-word{font-weight:600;color:#1a1a1a}
+  #history-list .h-zh{color:#888;font-size:.78rem}
+  #history-clear{text-align:center;font-size:.72rem;color:#bbb;cursor:pointer;padding:4px;border-radius:4px;transition:color .2s}
+  #history-clear:hover{color:#c0392b}
+  footer{text-align:center;padding:24px 0 0;border-top:1px solid var(--border);font-size:.78rem;color:#aaa;margin-top:8px}
+  .news-card p,.news-card h3{-webkit-tap-highlight-color:transparent}
+  #sidebar-toggle{display:none}
+  #sidebar-backdrop{display:none}
+  @media(max-width:760px){
+    body{padding-left:0}
+    #main{margin:0 auto;padding:20px 14px 40px}
+    .news-card{padding:16px 18px}
+    #history-panel{right:12px;bottom:60px}
+    #word-popover{max-width:260px}
+    #sidebar{
+      display:block;position:fixed;left:0;top:0;width:260px;height:100vh;height:100dvh;
+      z-index:300;transform:translateX(-100%);transition:transform .3s cubic-bezier(.4,0,.2,1);
+      box-shadow:4px 0 24px rgba(0,0,0,.3);overflow-y:auto;-webkit-overflow-scrolling:touch
+    }
+    #sidebar.open{transform:translateX(0)}
+    #sidebar-backdrop{
+      display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:299;
+      opacity:0;transition:opacity .3s ease
+    }
+    #sidebar-backdrop.visible{display:block;opacity:1}
+    #sidebar-toggle{
+      display:flex;position:fixed;top:12px;left:12px;z-index:298;
+      width:40px;height:40px;border-radius:50%;background:#2c2c2c;color:#fff;
+      border:none;font-size:1.3rem;cursor:pointer;align-items:center;justify-content:center;
+      box-shadow:0 2px 8px rgba(0,0,0,.25);transition:background .2s;-webkit-tap-highlight-color:transparent;
+      -webkit-user-select:none;user-select:none
+    }
+    #sidebar-toggle:hover{background:#3a3a3a}
+    #sidebar-toggle:active{background:#4a4a4a}
+  }
+  @media(pointer:coarse){.news-card p,.news-card h3{cursor:default}}
+</style>
+</head>
+<body>
+<button id="sidebar-toggle" aria-label="Toggle date archive">&#9776;</button>
+<div id="sidebar-backdrop"></div>
+<div id="sidebar">
+  <h3>&#128197; Past Editions</h3>
+  <div id="sidebar-dates" class="no-archive">Loading...</div>
+</div>
+<div id="main">
+<header>
+  <h1>Today's US News Brief <span class="cloud-badge">&#9729; CLOUD</span></h1>
+  <div class="date">Saturday, August 01, 2026</div>
+  <div class="meta-bar">
+    <span>&#128214; ~30 min read</span><span>&#128272; TOEIC 600+</span><span>&#128451; Politics &middot; Economy &middot; Research</span>
+  </div>
+</header>
+<div class="tips">
+  <span class="icon">&#128161;</span>
+  <div>
+    <strong>Click any word</strong> to look up its Chinese meaning.
+    <strong>Click &ldquo;Chinese Translation&rdquo;</strong> under each article for full Chinese text.
+    Use the <strong>left sidebar</strong> to browse past editions.
+  </div>
+</div>
+<div class="section"><div class="section-title politics">&#127987; POLITICS</div>
+<div class="news-card">
+    <h3>1. Spain deploys military to Ceuta after thousands of people breach Morocco's border</h3>
+    <p>At least 18 migrants have died trying to reach the Spanish exclave of Ceuta, where Spain deployed its military after thousands of people breached the border with Morocco and poured into the territory.</p>
+<p>The Spanish government sent troops to reinforce the border and help local police control the situation. Many migrants tried to swim or climb over the fences to enter Ceuta, which is a small Spanish territory on the northern coast of Africa.</p>
+<p>This incident has caused tension between Spain and Morocco, and European leaders are watching closely as they deal with migration issues across the continent.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p>至少有18名移民在试图到达西班牙飞地休达时死亡，西班牙在数千人突破与摩洛哥的边境并涌入该领土后部署了军队。</p>
+<p>西班牙政府派遣军队加强边境，并帮助当地警察控制局势。许多移民试图游泳或翻越围栏进入休达，这是非洲北海岸的一个西班牙小领土。</p>
+<p>这一事件引起了西班牙和摩洛哥之间的紧张关系，欧洲领导人在处理整个大陆的移民问题时密切关注着局势。</p>
+</div>
+</details>
+    <p class="source">Source: NPR — 2026-07-31</p>
+  </div>
+<div class="news-card">
+    <h3>2. U.S. investigating whether Iran was behind cyberattack on Minnesota water systems</h3>
+    <p>Malicious cyber activity affected technology at more than 30 community water systems across Minnesota this week, leading authorities to dig into whether Iranian actors are behind the attack, CBS News has learned.</p>
+<p>The cyberattack disrupted operations at the water systems, but officials said there was no immediate threat to the public water supply. Investigators are looking into the origin of the attack and whether foreign hackers were involved.</p>
+<p>This comes amid heightened tensions between the U.S. and Iran, and cybersecurity experts warn that critical infrastructure could be a target in future conflicts.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p>本周，明尼苏达州30多个社区供水系统的技术受到恶意网络活动的影响，导致当局深入调查此次攻击是否由伊朗行为者所为，CBS新闻获悉。</p>
+<p>这次网络攻击扰乱了供水系统的运作，但官员表示对公共供水没有直接威胁。调查人员正在调查攻击的来源以及是否有外国黑客参与。</p>
+<p>这正值美伊紧张局势加剧之际，网络安全专家警告说，关键基础设施可能成为未来冲突的目标。</p>
+</div>
+</details>
+    <p class="source">Source: CBS News — 2026-07-31</p>
+  </div>
+<div class="news-card">
+    <h3>3. Tankers Are Being Blown Out of the Water. See How Mideast Strikes Are Piling Up.</h3>
+    <p>Recent strikes in the Middle East have increased, with tankers being attacked in the waters. These attacks are part of a larger conflict involving Iran and the U.S., and they are affecting global shipping and oil prices.</p>
+<p>The situation is dangerous for sailors and the environment, as oil spills could cause major damage. Many countries are concerned about the stability of the region and the impact on world trade.</p>
+<p>The international community is calling for a ceasefire and diplomatic solutions to prevent further escalation.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p>最近中东的袭击事件增加，油轮在水域遭到攻击。这些袭击是涉及伊朗和美国的大规模冲突的一部分，并影响全球航运和油价。</p>
+<p>局势对海员和环境都很危险，因为石油泄漏可能造成重大损害。许多国家对地区的稳定以及对世界贸易的影响感到担忧。</p>
+<p>国际社会呼吁停火和外交解决方案，以防止进一步升级。</p>
+</div>
+</details>
+    <p class="source">Source: WSJ — 2026-07-31</p>
+  </div>
+<div class="section-title economy">&#128176; ECONOMY</div>
+<div class="news-card">
+    <h3>4. South Korea's Kospi index jumps nearly 18% on a surge in chipmaking stocks</h3>
+    <p>World markets have advanced and South Korea's Kospi index has jumped nearly 18% as artificial intelligence-related stocks bounce back after losses earlier this week. U.S. futures edged higher and oil prices resumed climbing.</p>
+<p>Shares of South Korean technology companies, especially chipmakers like Samsung and SK Hynix, led the gains. Investors are optimistic about the demand for AI chips and expect strong earnings from these companies.</p>
+<p>The rebound in tech stocks also lifted other Asian markets, and analysts believe that the AI boom will continue to drive growth in the semiconductor industry.</p>
+<p class="wim">&#128161; <strong>What this means for you:</strong> This means that investors are regaining confidence in tech stocks, especially those related to AI, which could lead to more investments and higher stock prices in the near future.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p>全球市场上涨，韩国Kospi指数大涨近18%，因为人工智能相关股票在本周早些时候下跌后反弹。美国期货小幅走高，油价恢复攀升。</p>
+<p>韩国科技公司，尤其是三星和SK海力士等芯片制造商的股票领涨。投资者对AI芯片的需求持乐观态度，并预计这些公司将获得强劲收益。</p>
+<p>科技股的反弹也提振了其他亚洲市场，分析师认为AI热潮将继续推动半导体行业的增长。</p>
+</div>
+</details>
+    <p class="source">Source: AP News — 2026-07-31</p>
+  </div>
+<div class="news-card">
+    <h3>5. Oil prices ease as recovering Hormuz Strait traffic tempers war premium</h3>
+    <p>Oil prices eased on Friday as traffic through the Strait of Hormuz began to recover, reducing fears about supply disruptions. Commonwealth Bank of Australia said in a note that stronger oil flows through the strait had eased market concerns after U.S.-Iran strikes earlier this week.</p>
+<p>The Strait of Hormuz is a critical waterway for global oil shipments, and any threat to its security can cause oil prices to spike. However, as traffic returns to normal, prices are stabilizing.</p>
+<p>Analysts expect oil prices to remain volatile in the short term, but the easing of tensions could bring some relief to consumers.</p>
+<p class="wim">&#128161; <strong>What this means for you:</strong> This means that oil prices may not rise as much as feared, which could help reduce costs for businesses and consumers who rely on fuel.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p>周五油价回落，因为霍尔木兹海峡的交通开始恢复，减少了对供应中断的担忧。澳大利亚联邦银行在报告中称，美国-伊朗本周早些时候发动袭击后，海峡的石油流量增强，缓解了市场担忧。</p>
+<p>霍尔木兹海峡是全球石油运输的关键水道，对其安全的任何威胁都可能导致油价飙升。然而，随着交通恢复正常，价格正在稳定。</p>
+<p>分析师预计短期内油价仍将波动，但紧张局势的缓和可能给消费者带来一些缓解。</p>
+</div>
+</details>
+    <p class="source">Source: CNBC — 2026-07-31</p>
+  </div>
+<div class="news-card">
+    <h3>6. BOJ holds rates at 1%, warns of core inflation exceeding 2% target</h3>
+    <p>The Bank of Japan (BOJ) decided to keep its interest rates unchanged at 1% in its latest meeting. However, the central bank warned that core inflation (price increases excluding fresh food) may exceed its 2% target in the coming months.</p>
+<p>This decision comes as speculation continues about whether the BOJ will hike rates at a faster pace. The BOJ has been cautious about raising rates too quickly, as it could hurt the economy.</p>
+<p>Investors are watching the BOJ's moves closely, as changes in Japanese interest rates can affect global financial markets.</p>
+<p class="wim">&#128161; <strong>What this means for you:</strong> This means that the BOJ is being careful about raising rates, but if inflation stays high, it might have to increase rates in the future, which could affect borrowing costs and investments.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p>日本央行（BOJ）在最近的会议上决定维持利率在1%不变。然而，央行警告说，核心通胀（不包括生鲜食品的价格上涨）可能在未来几个月超过2%的目标。</p>
+<p>这一决定是在有关日本央行是否会更快加息的猜测中做出的。日本央行一直谨慎行事，以免过快加息损害经济。</p>
+<p>投资者密切关注日本央行的动向，因为日本利率的变化可能影响全球金融市场。</p>
+</div>
+</details>
+    <p class="source">Source: CNBC — 2026-07-31</p>
+  </div>
+<div class="section-title research">&#128300; RESEARCH</div>
+<div class="news-card">
+    <h3>7. Photonic time crystals unlock ultrafast control of light in the terahertz range</h3>
+    <p>An international team of researchers from École Polytechnique, Collège de France and Helmholtz-Zentrum Dresden-Rossendorf (HZDR) has achieved a world first: the experimental realization of an all-optical photonic time crystal (PTC), a material whose optical properties change in time.</p>
+<p>This new type of crystal can control light in the terahertz range (a band of electromagnetic radiation) at ultrafast speeds. This could lead to new technologies in communication and imaging.</p>
+<p>The researchers believe that photonic time crystals could be used to create faster and more efficient optical devices, which might benefit many fields, from medicine to telecommunications.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p>来自巴黎综合理工学院、法兰西公学院和德累斯顿-罗森多夫亥姆霍兹中心（HZDR）的国际研究团队实现了世界首创：实验实现了全光学光子时间晶体（PTC），这是一种光学性质随时间变化的材料。</p>
+<p>这种新型晶体可以在太赫兹范围（电磁辐射的一个波段）内以超快速度控制光。这可能会带来通信和成像的新技术。</p>
+<p>研究人员认为，光子时间晶体可用于制造更快、更高效的光学器件，这可能惠及从医学到电信等多个领域。</p>
+</div>
+</details>
+    <p class="source">Source: Phys.Org — 2026-07-30</p>
+  </div>
+<div class="news-card">
+    <h3>8. Learning may rely on stronger neural connections, not expanding networks</h3>
+    <p>How does the brain learn? Does it acquire new knowledge by creating new neural pathways or by strengthening existing connections? A new study from Bar-Ilan University offers evidence in favor of the latter, suggesting that learning is driven primarily by changes in the strength of existing connections.</p>
+<p>The researchers conducted experiments on animals and found that when learning a new task, the brain strengthened the connections between neurons rather than forming new ones. This finding could change how we understand memory and learning.</p>
+<p>The study may have implications for education and for treating conditions like Alzheimer's disease, where learning and memory are impaired.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p>大脑是如何学习的？它是通过创造新的神经通路还是通过加强现有连接来获取新知识？巴伊兰大学的一项新研究提供了支持后者的证据，表明学习主要是由现有连接强度的变化驱动的。</p>
+<p>研究人员对动物进行了实验，发现当学习新任务时，大脑加强了神经元之间的连接，而不是形成新的连接。这一发现可能改变我们对记忆和学习的理解。</p>
+<p>这项研究可能对教育以及治疗阿尔茨海默病等学习和记忆受损的疾病具有意义。</p>
+</div>
+</details>
+    <p class="source">Source: Phys.Org — 2026-07-30</p>
+  </div>
+<div class="news-card">
+    <h3>9. Scientists discover 2 new 'ghost' lineages that contributed DNA to modern humans</h3>
+    <p>A new method of analyzing modern humans' DNA is revealing secrets about our extinct ancestors. Scientists have discovered two new 'ghost' lineages (ancient human groups) that contributed DNA to modern humans.</p>
+<p>These lineages are called 'ghost' because they are not known from fossil records but are inferred from DNA analysis. They may have interbred with early humans, leaving traces in our genes.</p>
+<p>The findings help us understand human evolution and migration patterns. They also show that the history of our species is more complex than previously thought.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p>一种分析现代人类DNA的新方法正在揭示我们已灭绝祖先的秘密。科学家发现了两个新的“幽灵”谱系（古代人类群体），它们为现代人类贡献了DNA。</p>
+<p>这些谱系被称为“幽灵”，因为它们不是从化石记录中得知的，而是从DNA分析中推断出来的。它们可能与早期人类杂交，在我们的基因中留下了痕迹。</p>
+<p>这些发现有助于我们理解人类进化和迁徙模式。它们也表明，我们物种的历史比以前认为的更加复杂。</p>
+</div>
+</details>
+    <p class="source">Source: Live Science — 2026-07-30</p>
+  </div>
+</div>
+<footer>
+  <p>&#128218; Auto-generated via NewsAPI + DeepSeek | Cloud pipeline &mdash; GitHub Actions | Saturday, August 01, 2026</p>
+</footer>
+</div>
+
+<div id="word-popover">
+  <button class="pop-close" id="pop-close-btn">&times;</button>
+  <div class="pop-word" id="pop-word"></div><div class="pop-pos" id="pop-pos"></div><div class="pop-meaning" id="pop-meaning"></div>
+</div>
+<div id="sel-toolbar">&#128269; Look up "<span id="sel-word"></span>"</div>
+<div id="history-panel">
+  <div id="history-list"><div id="history-clear">Clear all</div></div>
+  <button id="history-toggle" title="Lookup History">&#128214;<span id="history-badge">0</span></button>
+</div>
+
+<script>
+var DICT = {    "a":"art. 一（个）",
+    "about":"prep. 关于；adv. 大约",
+    "across":"prep. 横过，穿过",
+    "achieve":"v. 实现，达到",
+    "acquire":"v. 获得，学到",
+    "activity":"n. 活动",
+    "actor":"n. 行为者，演员",
+    "advanced":"adj. 先进的，高级的",
+    "affect":"v. 影响",
+    "africa":"n. 非洲",
+    "after":"prep./conj. 在...之后",
+    "ai":"n. 人工智能",
+    "all-optical":"adj. 全光学的",
+    "alzheimer's disease":"n. 阿尔茨海默病",
+    "amid":"prep. 在...之中",
+    "an":"art. 一（个）",
+    "analysis":"n. 分析",
+    "analyst":"n. 分析师",
+    "analyzing":"v. 分析（现在分词）",
+    "ancestors":"n. 祖先",
+    "ancestor":"n. 祖先",
+    "ancient":"adj. 古代的",
+    "and":"conj. 和，与",
+    "animal":"n. 动物",
+    "any":"adj. 任何的；pron. 任何",
+    "are":"v. 是（be的复数）",
+    "artificial":"adj. 人工的，人造的",
+    "artificial intelligence":"phrase 人工智能",
+    "as":"conj./prep. 作为，如同；adv. 同样地",
+    "asian":"adj. 亚洲的",
+    "at":"prep. 在（地点/时间）",
+    "at least":"phrase 至少",
+    "attack":"n./v. 攻击",
+    "attacked":"v. 攻击（过去式）",
+    "attacks":"n. 攻击（复数）",
+    "authorities":"n. 当局，官方",
+    "australia":"n. 澳大利亚",
+    "back":"adv. 回来；n. 背部",
+    "band":"n. 波段，带",
+    "bank":"n. 银行",
+    "bank of japan":"phrase 日本银行/日本央行",
+    "bar-ilan university":"phrase 巴伊兰大学",
+    "be":"v. 是，存在",
+    "because":"conj. 因为",
+    "been":"v. be的过去分词",
+    "began":"v. 开始（begin的过去式）",
+    "behind":"prep. 在...后面",
+    "believe":"v. 相信",
+    "benefit":"v. 受益；n. 利益",
+    "between":"prep. 在...之间",
+    "blown":"v. blow的过去分词，吹",
+    "boj":"n. 日本央行（Bank of Japan）",
+    "boom":"n. 繁荣",
+    "border":"n. 边境",
+    "bounce":"v. 反弹",
+    "bounce back":"phrase 反弹，恢复",
+    "brain":"n. 大脑",
+    "breach":"v. 突破，违反",
+    "breached":"v. breach的过去式",
+    "bring":"v. 带来",
+    "but":"conj. 但是",
+    "by":"prep. 通过，被",
+    "call":"v. 呼吁，打电话",
+    "called":"v. call的过去分词，被称为",
+    "calling":"v. 呼吁（现在分词）",
+    "can":"aux. 能，可以",
+    "cause":"v. 导致；n. 原因",
+    "caused":"v. cause的过去式",
+    "cautious":"adj. 谨慎的",
+    "cbs":"n. 美国哥伦比亚广播公司",
+    "cbs news":"phrase 哥伦比亚广播公司新闻",
+    "ceasefire":"n. 停火",
+    "central":"adj. 中央的，中心的",
+    "central bank":"phrase 中央银行",
+    "ceuta":"n. 休达",
+    "change":"v./n. 改变，变化",
+    "changes":"n. 变化（复数）",
+    "chip":"n. 芯片",
+    "chipmakers":"n. 芯片制造商",
+    "chipmaking":"n. 芯片制造",
+    "chipmaking stocks":"phrase 芯片制造股",
+    "climb":"v. 爬，攀登",
+    "climbing":"v. 攀升（现在分词）",
+    "closely":"adv. 紧密地，密切地",
+    "coast":"n. 海岸",
+    "collège de france":"phrase 法兰西公学院",
+    "comes":"v. come的第三人称单数",
+    "coming":"adj. 即将到来的",
+    "commonwealth":"n. 联邦",
+    "commonwealth bank of australia":"phrase 澳大利亚联邦银行",
+    "communication":"n. 通信，沟通",
+    "community":"n. 社区",
+    "community water systems":"phrase 社区供水系统",
+    "companies":"n. 公司（复数）",
+    "company":"n. 公司",
+    "complex":"adj. 复杂的",
+    "concerned":"adj. 担忧的，关心的",
+    "concerns":"n. 担忧，关切",
+    "conditions":"n. 状况，疾病",
+    "conduct":"v. 进行",
+    "conflict":"n. 冲突",
+    "conflicts":"n. 冲突（复数）",
+    "connection":"n. 连接，联系",
+    "connections":"n. 连接（复数）",
+    "consumer":"n. 消费者",
+    "consumers":"n. 消费者（复数）",
+    "continent":"n. 大陆",
+    "continue":"v. 继续",
+    "continues":"v. continue的第三人称单数",
+    "contributed":"v. contribute的过去式，贡献",
+    "control":"v./n. 控制",
+    "core":"adj. 核心的",
+    "core inflation":"phrase 核心通胀",
+    "countries":"n. 国家（复数）",
+    "country":"n. 国家",
+    "create":"v. 创造",
+    "creating":"v. create的现在分词",
+    "critical":"adj. 关键的，危急的",
+    "critical infrastructure":"phrase 关键基础设施",
+    "crystal":"n. 晶体",
+    "crystals":"n. 晶体（复数）",
+    "cyber":"adj. 网络的",
+    "cyber activity":"phrase 网络活动",
+    "cyberattack":"n. 网络攻击",
+    "cybersecurity":"n. 网络安全",
+    "damage":"n./v. 损害",
+    "dangerous":"adj. 危险的",
+    "deal":"v. 处理，应对",
+    "decided":"v. decide的过去式，决定",
+    "decision":"n. 决定",
+    "demand":"n./v. 需求",
+    "deploy":"v. 部署",
+    "deployed":"v. deploy的过去式",
+    "deploys":"v. deploy的第三人称单数",
+    "device":"n. 设备",
+    "devices":"n. 设备（复数）",
+    "dig":"v. 挖掘；调查",
+    "diplomatic":"adj. 外交的",
+    "diplomatic solutions":"phrase 外交解决方案",
+    "discover":"v. 发现",
+    "discovered":"v. discover的过去式",
+    "disrupt":"v. 中断，扰乱",
+    "disruptions":"n. 中断，扰乱",
+    "dna":"n. 脱氧核糖核酸",
+    "dna analysis":"phrase DNA分析",
+    "does":"v. do的第三人称单数",
+    "driven":"v. drive的过去分词，驱动",
+    "drive":"v. 驱动，推动",
+    "dresden-rossendorf":"n. 德累斯顿-罗森多夫",
+    "early":"adj./adv. 早",
+    "earlier":"adj./adv. 更早的；更早地",
+    "earnings":"n. 收益，盈利",
+    "ease":"v. 缓解，放松",
+    "eased":"v. ease的过去式",
+    "easing":"n./v. 缓解",
+    "east":"n. 东方",
+    "economy":"n. 经济",
+    "edge":"v. 略为移动；n. 边缘",
+    "education":"n. 教育",
+    "efficient":"adj. 高效的",
+    "electromagnetic":"adj. 电磁的",
+    "electromagnetic radiation":"phrase 电磁辐射",
+    "enter":"v. 进入",
+    "environment":"n. 环境",
+    "especially":"adv. 尤其",
+    "escalation":"n. 升级",
+    "european":"adj. 欧洲的",
+    "evidence":"n. 证据",
+    "evolution":"n. 进化",
+    "exceed":"v. 超过",
+    "exceeding":"v. exceed的现在分词，超过",
+    "excluding":"prep./v. 不包括",
+    "exclave":"n. 飞地",
+    "existing":"adj. 现有的",
+    "expand":"v. 扩展",
+    "expanding":"v. expand的现在分词",
+    "expect":"v. 预期，期望",
+    "experiment":"n. 实验",
+    "experiments":"n. 实验（复数）",
+    "experts":"n. 专家",
+    "extinct":"adj. 已灭绝的",
+    "favor":"n./v. 支持，赞成",
+    "fears":"n. 恐惧",
+    "fence":"n. 围栏",
+    "fields":"n. 领域",
+    "findings":"n. 发现（结果）",
+    "financial":"adj. 金融的",
+    "financial markets":"phrase 金融市场",
+    "first":"adj./adv. 第一",
+    "flows":"n. 流动",
+    "food":"n. 食物",
+    "for":"prep. 为了，对于",
+    "foreign":"adj. 外国的",
+    "forming":"v. form的现在分词，形成",
+    "fossil":"n. 化石",
+    "fossil records":"phrase 化石记录",
+    "found":"v. find的过去式，发现",
+    "france":"n. 法国",
+    "fresh":"adj. 新鲜的",
+    "fresh food":"phrase 生鲜食品",
+    "friday":"n. 星期五",
+    "from":"prep. 从",
+    "further":"adj./adv. 进一步",
+    "future":"n./adj. 未来（的）",
+    "gain":"n. 收益",
+    "genes":"n. 基因",
+    "ghost":"n. 幽灵",
+    "ghost lineages":"phrase 幽灵谱系",
+    "global":"adj. 全球的",
+    "global financial markets":"phrase 全球金融市场",
+    "government":"n. 政府",
+    "group":"n. 群体",
+    "groups":"n. 群体（复数）",
+    "growth":"n. 增长",
+    "hacker":"n. 黑客",
+    "hackers":"n. 黑客（复数）",
+    "had":"v. have的过去式/过去分词",
+    "has":"v. have的第三人称单数",
+    "have":"v. 有",
+    "heighten":"v. 加剧",
+    "heightened":"adj. 加剧的",
+    "help":"v./n. 帮助",
+    "helmholtz-zentrum dresden-rossendorf":"phrase 亥姆霍兹-德累斯顿-罗森多夫研究中心",
+    "higher":"adj./adv. 更高的",
+    "hike":"v. 提高（利率）",
+    "history":"n. 历史",
+    "holds":"v. hold的第三人称单数，保持",
+    "hormuz":"n. 霍尔木兹",
+    "how":"adv. 如何",
+    "however":"adv. 然而",
+    "human":"adj./n. 人类（的）",
+    "human evolution":"phrase 人类进化",
+    "humans":"n. 人类（复数）",
+    "hurt":"v. 伤害",
+    "hzdr":"n. 亥姆霍兹-德累斯顿-罗森多夫研究中心（缩写）",
+    "imaging":"n. 成像",
+    "immediate":"adj. 立即的",
+    "impact":"n./v. 影响",
+    "impaired":"adj. 受损的",
+    "implications":"n. 影响，意义",
+    "in":"prep. 在...里",
+    "in favor of":"phrase 支持，赞同",
+    "incident":"n. 事件",
+    "increase":"v./n. 增加",
+    "increased":"adj./v. 增加的",
+    "industry":"n. 工业，行业",
+    "inferred":"v. infer的过去分词，推断",
+    "inflation":"n. 通货膨胀",
+    "intelligence":"n. 智力，情报",
+    "interest":"n. 利息；兴趣",
+    "interest rates":"phrase 利率",
+    "international":"adj. 国际的",
+    "international community":"phrase 国际社会",
+    "interbred":"v. interbreed的过去式/过去分词，杂交繁殖",
+    "into":"prep. 进入",
+    "investigating":"v. investigate的现在分词，调查",
+    "investigators":"n. 调查人员",
+    "investors":"n. 投资者",
+    "involved":"v. involve的过去分词，涉及",
+    "involving":"v. involve的现在分词，涉及",
+    "iran":"n. 伊朗",
+    "iranian":"adj. 伊朗的",
+    "is":"v. be的第三人称单数",
+    "issue":"n. 问题",
+    "issues":"n. 问题（复数）",
+    "it":"pron. 它",
+    "its":"pron. 它的",
+    "japan":"n. 日本",
+    "japanese":"adj. 日本的",
+    "jumped":"v. jump的过去式，跳跃",
+    "jumps":"v. jump的第三人称单数",
+    "keep":"v. 保持",
+    "know":"v. 知道",
+    "knowledge":"n. 知识",
+    "known":"v. know的过去分词，已知",
+    "korea":"n. 韩国",
+    "kospi":"n. 韩国综合股价指数",
+    "kospi index":"phrase Kospi指数",
+    "larger":"adj. 更大的",
+    "latest":"adj. 最新的",
+    "leaders":"n. 领导人",
+    "leading":"adj. 领导的；主要的",
+    "learn":"v. 学习",
+    "learned":"v. learn的过去式，获悉",
+    "learning":"n. 学习",
+    "learning and memory":"phrase 学习与记忆",
+    "leave":"v. 留下",
+    "leaving":"v. leave的现在分词",
+    "led":"v. lead的过去式，领导",
+    "light":"n. 光",
+    "like":"prep. 像；v. 喜欢",
+    "lineage":"n. 谱系",
+    "lineages":"n. 谱系（复数）",
+    "local":"adj. 当地的",
+    "local police":"phrase 当地警察",
+    "look":"v. 看",
+    "losses":"n. 损失",
+    "major":"adj. 主要的，重大的",
+    "malicious":"adj. 恶意的",
+    "many":"adj. 许多",
+    "market":"n. 市场",
+    "market concerns":"phrase 市场担忧",
+    "markets":"n. 市场（复数）",
+    "material":"n. 材料",
+    "may":"aux. 可能",
+    "medicine":"n. 医学，药物",
+    "meeting":"n. 会议",
+    "memory":"n. 记忆",
+    "method":"n. 方法",
+    "middle":"adj. 中部的，中间的",
+    "middle east":"phrase 中东",
+    "migrants":"n. 移民",
+    "migration":"n. 移民，迁徙",
+    "migration patterns":"phrase 迁徙模式",
+    "military":"n. 军事，军队",
+    "minnesota":"n. 明尼苏达州",
+    "modern":"adj. 现代的",
+    "modern humans":"phrase 现代人类",
+    "months":"n. 月份",
+    "more":"adv./adj. 更多",
+    "more than":"phrase 超过，多于",
+    "morocco":"n. 摩洛哥",
+    "moves":"n. 行动，举措",
+    "nearly":"adv. 几乎",
+    "neural":"adj. 神经的",
+    "neural connections":"phrase 神经连接",
+    "neural pathways":"phrase 神经通路",
+    "neurons":"n. 神经元",
+    "networks":"n. 网络",
+    "new":"adj. 新的",
+    "new study":"phrase 新研究",
+    "news":"n. 新闻",
+    "no":"det./adv. 没有",
+    "normal":"n./adj. 正常",
+    "northern":"adj. 北部的",
+    "northern coast":"phrase 北部海岸",
+    "not":"adv. 不",
+    "note":"n. 报告，便条",
+    "of":"prep. ...的",
+    "offer":"v. 提供",
+    "officials":"n. 官员",
+    "oil":"n. 石油",
+    "oil prices":"phrase 油价",
+    "oil spills":"phrase 石油泄漏",
+    "on":"prep. 在...上",
+    "ones":"pron. 一些（复数）",
+    "operations":"n. 运作，运营",
+    "optical":"adj. 光学的",
+    "optical devices":"phrase 光学器件",
+    "optimistic":"adj. 乐观的",
+    "or":"conj. 或者",
+    "origin":"n. 起源",
+    "other":"adj. 其他的",
+    "our":"pron. 我们的",
+    "out":"adv. 出去，向外",
+    "out of":"phrase 从...中，由于",
+    "over":"prep. 越过",
+    "pace":"n. 步伐，速度",
+    "part":"n. 部分",
+    "patterns":"n. 模式",
+    "people":"n. 人们",
+    "photonic":"adj. 光子的",
+    "photonic time crystal":"phrase 光子时间晶体",
+    "pile":"v. 堆积",
+    "piling":"v. pile的现在分词",
+    "police":"n. 警察",
+    "poured":"v. pour的过去式，涌入",
+    "premium":"n. 溢价，保险费",
+    "prevent":"v. 防止",
+    "previously":"adv. 以前",
+    "price":"n. 价格",
+    "prices":"n. 价格（复数）",
+    "primarily":"adv. 主要地",
+    "properties":"n. 性质，特性",
+    "public":"adj. 公共的",
+    "public water supply":"phrase 公共供水",
+    "radiation":"n. 辐射",
+    "raise":"v. 提高",
+    "raising":"v. raise的现在分词",
+    "range":"n. 范围",
+    "rate":"n. 率，利率",
+    "rates":"n. 率，利率（复数）",
+    "rather":"adv. 相当；rather than 而不是",
+    "rather than":"phrase 而不是",
+    "reach":"v. 到达",
+    "rebound":"n./v. 反弹",
+    "recent":"adj. 最近的",
+    "recover":"v. 恢复",
+    "recovering":"v. recover的现在分词",
+    "reduce":"v. 减少",
+    "reducing":"v. reduce的现在分词",
+    "reinforce":"v. 加强",
+    "related":"adj. 相关的",
+    "relief":"n. 缓解",
+    "rely":"v. 依靠",
+    "remain":"v. 保持",
+    "researchers":"n. 研究人员",
+    "resumed":"v. resume的过去式，恢复",
+    "returns":"v. 返回",
+    "revealing":"v. reveal的现在分词，揭示",
+    "sailors":"n. 海员",
+    "said":"v. say的过去式",
+    "samsung":"n. 三星",
+    "scientist":"n. 科学家",
+    "scientists":"n. 科学家（复数）",
+    "secrets":"n. 秘密",
+    "security":"n. 安全",
+    "see":"v. 看",
+    "semiconductor":"n. 半导体",
+    "semiconductor industry":"phrase 半导体行业",
+    "send":"v. 派遣",
+    "sent":"v. send的过去式",
+    "share":"n. 股票",
+    "shares":"n. 股票（复数）",
+    "shipments":"n. 运输，装运",
+    "shipping":"n. 航运",
+    "short":"adj. 短的",
+    "short term":"phrase 短期",
+    "show":"v. 显示",
+    "situation":"n. 局势，情况",
+    "sk hynix":"phrase SK海力士",
+    "small":"adj. 小的",
+    "solution":"n. 解决方案",
+    "some":"adj. 一些",
+    "south":"n./adj. 南方(的)",
+    "south korea":"phrase 韩国",
+    "south korean":"phrase 韩国的；韩国人",
+    "south korean technology companies":"phrase 韩国科技公司",
+    "spain":"n. 西班牙",
+    "spanish":"adj. 西班牙的",
+    "speculation":"n. 猜测",
+    "species":"n. 物种",
+    "speed":"n. 速度",
+    "spike":"v./n. 飙升",
+    "spill":"n./v. 泄漏",
+    "stability":"n. 稳定",
+    "stabilize":"v. 稳定",
+    "stabilizing":"v. stabilize的现在分词",
+    "stocks":"n. 股票",
+    "strait":"n. 海峡",
+    "strait of hormuz":"phrase 霍尔木兹海峡",
+    "strength":"n. 力量，强度",
+    "strengthened":"v. strengthen的过去式，加强",
+    "strengthening":"v. strengthen的现在分词",
+    "strikes":"n. 打击，袭击",
+    "strong":"adj. 强壮的，坚固的",
+    "stronger":"adj. 更强的",
+    "study":"n. 研究",
+    "suggesting":"v. suggest的现在分词，表明",
+    "supply":"n. 供应",
+    "supply disruptions":"phrase 供应中断",
+    "surge":"n. 激增",
+    "swim":"v. 游泳",
+    "system":"n. 系统",
+    "systems":"n. 系统（复数）",
+    "tanker":"n. 油轮",
+    "task":"n. 任务",
+    "team":"n. 团队",
+    "tech":"n. 科技",
+    "tech stocks":"phrase 科技股",
+    "technologies":"n. 技术（复数）",
+    "technology":"n. 技术",
+    "telecommunications":"n. 电信",
+    "tempers":"v. 缓和；n. 情绪",
+    "tensions":"n. 紧张局势",
+    "terahertz":"n. 太赫兹",
+    "terahertz range":"phrase 太赫兹范围",
+    "term":"n. 术语；期限",
+    "territory":"n. 领土",
+    "than":"conj. 比",
+    "that":"pron./conj. 那个，引导从句",
+    "the":"art. 这，那",
+    "the latter":"phrase 后者",
+    "their":"pron. 他们的",
+    "them":"pron. 他们",
+    "these":"pron./adj. 这些",
+    "they":"pron. 他们",
+    "think":"v. 认为",
+    "this":"pron./adj. 这个",
+    "thousands":"n. 数千",
+    "threat":"n. 威胁",
+    "through":"prep. 通过",
+    "time":"n. 时间",
+    "to":"prep. 到，向",
+    "too":"adv. 太",
+    "trade":"n./v. 贸易",
+    "traffic":"n. 交通",
+    "traces":"n. 痕迹",
+    "treating":"v. treat的现在分词，治疗",
+    "tried":"v. try的过去式，尝试",
+    "troops":"n. 军队",
+    "trying":"v. try的现在分词",
+    "type":"n. 类型",
+    "u.s.":"n. 美国",
+    "u.s.-iran":"phrase 美伊",
+    "ultrafast":"adj. 超快的",
+    "unchanged":"adj. 不变的",
+    "understand":"v. 理解",
+    "university":"n. 大学",
+    "unlock":"v. 开启，解锁",
+    "up":"adv. 向上",
+    "us":"pron. 我们",
+    "used":"v. use的过去分词，使用",
+    "volatile":"adj. 波动的，不稳定的",
+    "war":"n. 战争",
+    "war premium":"phrase 战争溢价",
+    "warn":"v. 警告",
+    "warned":"v. warn的过去式",
+    "watching":"v. watch的现在分词，观察",
+    "water":"n. 水",
+    "water systems":"phrase 供水系统",
+    "waterway":"n. 水道",
+    "we":"pron. 我们",
+    "week":"n. 周",
+    "were":"v. are的过去式",
+    "when":"conj. 当",
+    "where":"conj. 哪里",
+    "whether":"conj. 是否",
+    "which":"pron. 哪个",
+    "whose":"pron. 谁的",
+    "will":"aux. 将要",
+    "with":"prep. 和...一起",
+    "world":"n. 世界",
+    "world trade":"phrase 世界贸易"
+};
+var popover=document.getElementById('word-popover'),popWord=document.getElementById('pop-word'),popPos=document.getElementById('pop-pos'),popMeaning=document.getElementById('pop-meaning'),popClose=document.getElementById('pop-close-btn'),selToolbar=document.getElementById('sel-toolbar'),selWordSpan=document.getElementById('sel-word'),historyList=document.getElementById('history-list'),historyToggle=document.getElementById('history-toggle'),historyBadge=document.getElementById('history-badge'),popoverTimer=null,activeWordEl=null,lookupHistory=[];
+try{var saved=localStorage.getItem('wb_cloud_v2_history');if(saved)lookupHistory=JSON.parse(saved);updateBadge()}catch(e){}
+function norm(w){return w.trim().toLowerCase().replace(/[.,;:!?()"']+$/g,'').replace(/^[.,;:!?()"']+/g,'').replace(/'s$/g,'')}
+function lookup(raw){var w=norm(raw);if(!w||w.length<2)return null;if(DICT[w])return{word:raw.trim(),meaning:DICT[w]};var o=raw.trim().toLowerCase().replace(/[^\w\s-]/g,'');if(DICT[o])return{word:raw.trim(),meaning:DICT[o]};return null}
+function showPopover(x,y,word,meaning){if(popoverTimer){clearTimeout(popoverTimer);popoverTimer=null}var m=meaning.match(/^(\w+\.?)\s*(.*)/);popWord.textContent=word;popPos.textContent=m?m[1]:'';popMeaning.innerHTML='<span class="zh">'+(m?m[2]:meaning)+'</span>';var pw=popover.offsetWidth,ph=popover.offsetHeight,l=x+12,t=y-ph-8;if(t<10)t=y+20;if(l+pw>window.innerWidth-10)l=x-pw-12;if(l<10)l=10;popover.style.left=l+'px';popover.style.top=t+'px';popover.classList.add('visible')}
+function hidePopover(){popover.classList.remove('visible')}
+function addHistory(word,meaning){lookupHistory=lookupHistory.filter(function(h){return h.word!==word});lookupHistory.unshift({word:word,meaning:meaning});if(lookupHistory.length>30)lookupHistory.pop();try{localStorage.setItem('wb_cloud_v2_history',JSON.stringify(lookupHistory))}catch(e){};updateBadge();renderHistory()}
+function updateBadge(){var c=lookupHistory.length;historyBadge.textContent=c;if(c>0)historyBadge.classList.add('show');else historyBadge.classList.remove('show')}
+function renderHistory(){historyList.innerHTML='';var cd=document.createElement('div');cd.id='history-clear';cd.textContent='Clear all';cd.onclick=function(){lookupHistory=[];localStorage.removeItem('wb_cloud_v2_history');updateBadge();renderHistory()};historyList.appendChild(cd);lookupHistory.forEach(function(h){var d=document.createElement('div');d.className='h-item';var m=h.meaning.match(/^(\w+\.?)\s*(.*)/);d.innerHTML='<span class="h-word">'+h.word+'</span><span class="h-zh">'+(m?m[2]:h.meaning)+'</span>';historyList.appendChild(d)})}
+document.querySelectorAll('.news-card p:not(.wim):not(.source), .news-card h3').forEach(function(el){el.addEventListener('click',function(e){var sel=window.getSelection();if(sel.toString().trim())return;var range=document.caretRangeFromPoint(e.clientX,e.clientY);if(!range)return;var tn=range.startContainer;if(tn.nodeType!==Node.TEXT_NODE)return;var text=tn.textContent,off=range.startOffset,start=off;while(start>0&&/[\w'-]/.test(text[start-1]))start--;var end=off;while(end<text.length&&/[\w'-]/.test(text[end]))end++;var w=text.slice(start,end).trim();if(!w||w.length<2)return;var r=lookup(w);if(!r){hidePopover();return}if(activeWordEl)activeWordEl.classList.remove('active');var span=document.createElement('span');span.className='lookup-word active';span.textContent=w;var before=text.slice(0,start),after=text.slice(end);var p=tn.parentNode;p.insertBefore(document.createTextNode(before),tn);p.insertBefore(span,tn);p.insertBefore(document.createTextNode(after),tn);p.removeChild(tn);activeWordEl=span;setTimeout(function(){if(activeWordEl===span)span.classList.remove('active')},3000);var rect=span.getBoundingClientRect();showPopover(rect.left+rect.width/2,rect.top,r.word,r.meaning);addHistory(r.word,r.meaning)})});
+document.addEventListener('mouseup',function(e){setTimeout(function(){var sel=window.getSelection();var text=sel.toString().trim();if(!text||text.length<2||text.length>40){selToolbar.classList.remove('visible');return}var n=sel.anchorNode,ok=false;while(n){if(n.classList&&n.classList.contains('news-card')){ok=true;break}n=n.parentNode}if(!ok){selToolbar.classList.remove('visible');return}var rect=sel.getRangeAt(0).getBoundingClientRect();selWordSpan.textContent=text;var l=rect.left+rect.width/2-selToolbar.offsetWidth/2,t=rect.bottom+8;if(l<10)l=10;if(l+selToolbar.offsetWidth>window.innerWidth-10)l=window.innerWidth-selToolbar.offsetWidth-10;selToolbar.style.left=l+'px';selToolbar.style.top=t+'px';selToolbar.classList.add('visible');selToolbar._st=text},10)});
+selToolbar.addEventListener('click',function(){var text=selToolbar._st;if(!text)return;var pk=text.toLowerCase(),r=null;if(DICT[pk])r={word:text,meaning:DICT[pk]};else{var ws=text.split(/\s+/);for(var i=0;i<ws.length;i++){r=lookup(ws[i]);if(r)break}}if(r){var rect=selToolbar.getBoundingClientRect();showPopover(rect.left+rect.width/2,rect.top,r.word,r.meaning);addHistory(r.word,r.meaning)}selToolbar.classList.remove('visible');window.getSelection().removeAllRanges()});
+document.addEventListener('click',function(e){if(e.target.closest('.news-card'))return;if(popover.contains(e.target))return;if(e.target===selToolbar||selToolbar.contains(e.target))return;if(e.target.closest('#history-panel')||e.target.closest('#sidebar'))return;popoverTimer=setTimeout(hidePopover,200)});
+popover.addEventListener('mouseenter',function(){if(popoverTimer){clearTimeout(popoverTimer);popoverTimer=null}});
+popover.addEventListener('mouseleave',function(){popoverTimer=setTimeout(hidePopover,300)});
+popClose.addEventListener('click',function(e){e.stopPropagation();hidePopover()});
+window.addEventListener('scroll',function(){hidePopover();selToolbar.classList.remove('visible')},{passive:true});
+historyToggle.addEventListener('click',function(e){e.stopPropagation();renderHistory();historyList.classList.toggle('open')});
+document.addEventListener('click',function(e){if(!historyList.contains(e.target)&&e.target!==historyToggle&&!historyToggle.contains(e.target))historyList.classList.remove('open')});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){hidePopover();selToolbar.classList.remove('visible');historyList.classList.remove('open')}});
+// Sidebar toggle (mobile overlay)
+(function(){
+  var sb=document.getElementById('sidebar'),st=document.getElementById('sidebar-toggle'),bd=document.getElementById('sidebar-backdrop');
+  function openSb(){sb.classList.add('open');bd.classList.add('visible');document.body.style.overflow='hidden'}
+  function closeSb(){sb.classList.remove('open');bd.classList.remove('visible');document.body.style.overflow=''}
+  st.addEventListener('click',function(e){e.stopPropagation();sb.classList.contains('open')?closeSb():openSb()});
+  bd.addEventListener('click',closeSb);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&sb.classList.contains('open'))closeSb()});
+  // Close sidebar when a date link is clicked on mobile
+  sb.addEventListener('click',function(e){if(window.innerWidth<=760&&e.target.classList.contains('date-link'))closeSb()});
+  window.addEventListener('resize',function(){if(window.innerWidth>760)closeSb()});
+})();
+// Sidebar archive loader
+(function(){
+  var sd=document.getElementById('sidebar-dates');
+  fetch('/daily-en-news-cloud/archive/index.json',{cache:'no-cache'}).then(function(r){return r.json()}).then(function(dates){
+    if(!dates.length){sd.innerHTML='<p>No archived editions yet.</p>';return}
+    var today='2026-08-01';sd.innerHTML='';
+    dates.forEach(function(d){var a=document.createElement('a');a.className='date-link';a.href='/daily-en-news-cloud/archive/'+d+'.html';a.textContent=d;if(d===today)a.classList.add('active');sd.appendChild(a)})
+  }).catch(function(){sd.innerHTML='<p>Archive index loading...</p>'})
+})();
+updateBadge();
+</script>
+</body>
+</html>
