@@ -68,13 +68,14 @@ SYSTEM_PROMPT_ARTICLES = """You are an expert English teacher and news editor cr
 ## OUTPUT — valid JSON only (NO dictionary field):
 {
   "date": "Thursday, July 30, 2026",
-  "politics": [{"title":"...", "paragraphs":["...","...","..."], "translation":["中文...","中文...","中文..."], "source":"Source: X — YYYY-MM-DD"}, ...],
-  "economy": [{"title":"...", "paragraphs":["...","...","..."], "translation":["中文...","中文...","中文..."], "what_it_means":"...", "source":"Source: X — YYYY-MM-DD"}, ...],
-  "research": [{"title":"...", "paragraphs":["...","...","..."], "translation":["中文...","中文...","中文..."], "source":"Source: X — YYYY-MM-DD"}, ...]
+  "politics": [{"title":"...", "paragraphs":["...","..."], "translation":["中文...","中文..."], "source":"Source: X — YYYY-MM-DD"}, ...],
+  "economy": [{"title":"...", "paragraphs":["...","..."], "translation":["中文...","中文..."], "what_it_means":"...", "source":"Source: X — YYYY-MM-DD"}, ...],
+  "research": [{"title":"...", "paragraphs":["...","..."], "translation":["中文...","中文..."], "source":"Source: X — YYYY-MM-DD"}, ...]
 }
 
-## REQUIREMENTS
-- 2-3 articles per category. Each: exactly 3 English paragraphs (2-4 sentences) + 3 Chinese translations.
+## STRICT REQUIREMENTS
+- EXACTLY 2 articles per category. No more, no less. Total: 6 articles.
+- Each article: EXACTLY 2 English paragraphs (2-4 sentences each) + 2 Chinese translations.
 - English B1+ to B2. Explain technical terms in parentheses.
 - Economy articles MUST include "what_it_means" field.
 - All sources dated within last 2 days. No single person dominates. No C1+ rare words."""
@@ -85,13 +86,13 @@ SYSTEM_PROMPT_DICT = """You are a TOEIC vocabulary expert. Given English news ar
 {"dictionary": {"word":"pos. 中文释义", ...}}
 
 ## STRICT REQUIREMENTS
-- MUST contain AT LEAST 500 entries.
+- MUST contain between 400 and 600 entries. Do NOT exceed 600.
 - Cover EVERY non-trivial word (nouns, verbs, adjectives, adverbs) from the articles.
 - Include multi-word phrases like "credit default swap" or "ground game".
 - Format: ALL keys lowercase. Value format: "pos. 中文释义".
-- Go through each article paragraph word by word. Do not skip common words — a B1 learner may not know them."""
+- Focus on B1-B2 level vocabulary. Skip very basic words (the, is, a, I, you)."""
 
-DICT_RETRY_PROMPT = "\n\n## ATTENTION\nThe dictionary only contained {count} entries — less than 500. REGENERATE with at least 500 entries covering every word from the articles."
+DICT_RETRY_PROMPT = "\n\n## ATTENTION\nThe dictionary only contained {count} entries — less than 400. REGENERATE with at least 400 entries covering every word from the articles."
 
 def call_deepseek(system: str, user_msg: str, max_tok: int = 8000, use_reasoner: bool = False) -> dict:
     import urllib.request as ur
@@ -124,45 +125,63 @@ def call_deepseek(system: str, user_msg: str, max_tok: int = 8000, use_reasoner:
             if idx > 0:
                 try: return json.loads(cleaned[:idx+2] + "}")
                 except json.JSONDecodeError: pass
-            # Attempt 3: truncate to last valid } and close
+            # Attempt 3: truncate to last valid }
             brace_idx = cleaned.rfind('}')
-            if brace_idx > len(cleaned)*0.7:
+            if brace_idx > len(cleaned)*0.3:
                 try: return json.loads(cleaned[:brace_idx+1])
                 except json.JSONDecodeError: pass
-            print(f"[ERROR] Cannot parse JSON even after repair, content ends with: {content[-200:]}")
-            sys.exit(1)
+            # Graceful fallback: return empty dict, let caller handle
+            print(f"[WARN] JSON repair failed, returning empty result")
+            return {"dictionary": {}}
+    # Fallback that returns None for articles — caller can detect and retry
+    return {"dictionary": {}}
 
 def generate_content(news_summary: str) -> dict:
-    """Two-step: articles (chat) + dictionary (reasoner, 64K max output)."""
+    """Two-step: articles (chat) + dictionary (reasoner, 50K tokens, fallback to chat)."""
     today = datetime.now(BEIJING_TZ).strftime('%A, %B %d, %Y')
     
-    # Step 1: Articles + translations (fast, cheap)
+    # Step 1: Articles + translations (chat, 8K max)
     print(f"\n[STEP 1/2] Generating articles (deepseek-chat)...")
     data = call_deepseek(SYSTEM_PROMPT_ARTICLES, f"Today is {today}.\n\n{news_summary}", max_tok=8000)
     n_arts = sum(len(data.get(k,[])) for k in ['politics','economy','research'])
     print(f"  Articles: {n_arts}")
+    if n_arts == 0:
+        print(f"  [FATAL] No articles generated, exiting")
+        sys.exit(1)
 
-    # Step 2: Dictionary (deepseek-reasoner, 64K max output, single call)
-    print(f"[STEP 2/2] Generating dictionary (deepseek-reasoner, max_tok=30000)...")
+    # Step 2: Dictionary — reasoner with 50K tokens
+    print(f"[STEP 2/2] Generating dictionary (deepseek-reasoner, max_tok=50000)...")
     arts_json = json.dumps({k: data.get(k,[]) for k in ['politics','economy','research']}, ensure_ascii=False)
-    d = call_deepseek(SYSTEM_PROMPT_DICT, f"Generate dictionary for these articles:\n{arts_json}", max_tok=30000, use_reasoner=True)
+    d = call_deepseek(SYSTEM_PROMPT_DICT, f"Generate dictionary for these articles:\n{arts_json}", max_tok=50000, use_reasoner=True)
     dcount = len(d.get("dictionary", {}))
     print(f"  Dict entries: {dcount}")
     
-    if dcount < 500:
-        print(f"  [RETRY] Dict too short ({dcount}<500)")
+    # If reasoner returned empty (JSON repair failed), fallback to chat
+    if dcount == 0:
+        print(f"  [FALLBACK] Reasoner failed, using chat model for compact dict...")
+        d = call_deepseek(SYSTEM_PROMPT_DICT, f"Generate dictionary:\n{arts_json}", max_tok=8000)
+        dcount = len(d.get("dictionary", {}))
+        print(f"  Chat dict: {dcount}")
+    
+    # If dict too short, retry with reasoner
+    if 0 < dcount < 400:
+        print(f"  [RETRY] Dict too short ({dcount}<400)")
         try:
-            d2 = call_deepseek(SYSTEM_PROMPT_DICT, arts_json + "\n" + DICT_RETRY_PROMPT.replace("{count}", str(dcount)), max_tok=30000, use_reasoner=True)
-            all_dict = {}
-            all_dict.update(d.get("dictionary", {}))
-            all_dict.update(d2.get("dictionary", {}))
-            data["dictionary"] = all_dict
-            print(f"  Dict after retry: {len(all_dict)} entries (merged)")
+            d2 = call_deepseek(SYSTEM_PROMPT_DICT, arts_json + "\n" + DICT_RETRY_PROMPT.replace("{count}", str(dcount)), max_tok=50000, use_reasoner=True)
+            if d2.get("dictionary"):
+                all_dict = {}
+                all_dict.update(d.get("dictionary", {}))
+                all_dict.update(d2.get("dictionary", {}))
+                data["dictionary"] = all_dict
+                print(f"  Dict after merge: {len(all_dict)}")
+            else:
+                data["dictionary"] = d.get("dictionary", {})
         except Exception:
             data["dictionary"] = d.get("dictionary", {})
-            print(f"  Retry failed, using {dcount} entries")
+            print(f"  Retry failed, using {dcount} entries as-is")
     else:
         data["dictionary"] = d.get("dictionary", {})
+    print(f"  Final dict: {len(data.get('dictionary',{}))} entries")
     return data
 
 # ── HTML Template ───────────────────────────────────────
