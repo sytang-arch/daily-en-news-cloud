@@ -209,6 +209,18 @@ def generate_content(news_summary: str) -> dict:
         except Exception as e:
             print(f"  [WARN] Batch {i//BATCH_SIZE+1} failed: {e}")
     
+    # Step 3: Fill-in loop — translate any words the model skipped
+    missing = [w for w in words if w not in dictionary]
+    if missing:
+        print(f"  [FILL-IN] {len(missing)} words missed by model, retrying...")
+        try:
+            fill_dict = translate_word_batch(missing, max_tok=8000)
+            dictionary.update(fill_dict)
+            still_missing = [w for w in missing if w not in dictionary]
+            print(f"  Filled {len(fill_dict)} more, {len(still_missing)} still missing")
+        except Exception as e:
+            print(f"  [WARN] Fill-in failed: {e}")
+    
     data["dictionary"] = dictionary
     print(f"  Final dict: {len(dictionary)} entries")
     return data
