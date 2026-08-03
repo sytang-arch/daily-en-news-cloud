@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Today's US News — Monday, August 03, 2026 | English Reading Practice</title>
+<style>
+  :root{
+    --bg:#faf9f7;--card-bg:#fff;--text:#2d2d2d;--text-light:#5a5a5a;--accent-p:#b22234;--accent-e:#1a5f8a;--accent-r:#2d7d46;
+    --gold:#b7933a;--border:#e8e4df;--tag-bg:#f0ede8;--shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+    --shadow-lg:0 12px 40px rgba(0,0,0,.12);--radius:10px;--sidebar-w:200px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:Georgia,'Times New Roman',serif;background:var(--bg);color:var(--text);line-height:1.8;min-height:100vh;padding-left:var(--sidebar-w)}
+  #sidebar{
+    position:fixed;left:0;top:0;width:var(--sidebar-w);height:100vh;background:#2c2c2c;color:#ccc;
+    overflow-y:auto;padding:20px 0;z-index:100;font-family:-apple-system,sans-serif;font-size:.82rem;
+    transition:transform .25s ease
+  }
+  #sidebar h3{color:#fff;font-size:.85rem;padding:8px 16px;border-bottom:1px solid #444;margin-bottom:8px;text-align:center}
+  #sidebar .date-link{display:block;padding:6px 16px;color:#aaa;text-decoration:none;transition:all .15s;border-left:3px solid transparent}
+  #sidebar .date-link:hover{color:#fff;background:#3a3a3a;border-left-color:var(--gold)}
+  #sidebar .date-link.active{color:#fff;background:#3a3a3a;border-left-color:var(--gold);font-weight:600}
+  #sidebar .no-archive{padding:16px;color:#666;font-size:.78rem;text-align:center}
+  #main{margin:0 auto;max-width:780px;padding:32px 28px 60px}
+  header{text-align:center;padding:36px 0 28px;border-bottom:2px solid var(--border);margin-bottom:32px}
+  header h1{font-size:1.75rem;font-weight:700;color:#1a1a1a}
+  header .date{font-size:.9rem;color:var(--text-light)}
+  .meta-bar{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-top:14px;font-size:.82rem;color:var(--text-light)}
+  .meta-bar span{background:var(--tag-bg);padding:4px 14px;border-radius:20px}
+  .section{margin-bottom:40px}
+  .section-title{font-size:1.25rem;font-weight:700;margin-bottom:16px;padding-bottom:6px;border-bottom:3px solid;display:flex;align-items:center;gap:8px}
+  .section-title.politics{color:var(--accent-p);border-color:var(--accent-p)}
+  .section-title.economy{color:var(--accent-e);border-color:var(--accent-e)}
+  .section-title.research{color:var(--accent-r);border-color:var(--accent-r)}
+  .news-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:22px 26px;margin-bottom:16px;box-shadow:var(--shadow);transition:box-shadow .3s,border-color .3s}
+  .news-card:hover{box-shadow:0 3px 12px rgba(0,0,0,.08);border-color:#d8d2c8}
+  .news-card h3{font-size:1.08rem;font-weight:700;margin-bottom:10px;line-height:1.45}
+  .news-card p{font-size:.95rem;color:var(--text-light);margin-bottom:12px;text-align:justify}
+  .news-card .source{font-size:.78rem;color:#999;font-style:italic}
+  .news-card .wim{color:#8a6d20;font-size:.88rem;padding:6px 0 0}
+  .trans-toggle{margin:8px 0 12px;border:1px solid #e0d8c0;border-radius:8px;overflow:hidden}
+  .trans-toggle summary{padding:8px 14px;background:#faf6ec;cursor:pointer;font-size:.85rem;color:#8a6d20;font-weight:600;user-select:none}
+  .trans-toggle .trans-content{padding:12px 16px;background:#fffbee;color:#5a4a2a;font-size:.88rem;line-height:1.8}
+  .trans-toggle .trans-content p{color:#5a4a2a!important;margin-bottom:8px!important}
+  .cloud-badge{display:inline-block;background:#e8f5e9;color:#2d7d46;font-size:.7rem;padding:2px 10px;border-radius:10px;margin-left:8px;vertical-align:middle}
+  .tips{background:#f4f9ff;border-radius:var(--radius);padding:16px 22px;margin-bottom:32px;font-size:.88rem;color:#3a5a7c;line-height:1.7;display:flex;align-items:flex-start;gap:12px}
+  .tips .icon{font-size:1.4rem;flex-shrink:0}
+  .lookup-word{cursor:pointer;border-bottom:1.5px dotted transparent;transition:border-color .2s,background .2s;border-radius:2px;padding:0 1px}
+  .lookup-word:hover{border-bottom-color:var(--gold);background:rgba(183,147,58,.08)}
+  .lookup-word.active{background:rgba(183,147,58,.18);border-bottom-color:var(--gold)}
+  #word-popover{position:fixed;z-index:9999;background:#fffef9;border:1px solid #d8d0b8;border-radius:12px;box-shadow:var(--shadow-lg);padding:18px 22px;min-width:200px;max-width:320px;opacity:0;transform:translateY(8px) scale(.96);transition:opacity .2s cubic-bezier(.16,1,.3,1),transform .25s cubic-bezier(.16,1,.3,1);pointer-events:none;font-family:-apple-system,sans-serif;word-break:break-word}
+  #word-popover.visible{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+  #word-popover .pop-word{font-size:1.25rem;font-weight:700;color:#1a1a1a;margin-bottom:4px;font-family:Georgia,serif}
+  #word-popover .pop-pos{font-size:.75rem;color:#999;text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px}
+  #word-popover .pop-meaning{font-size:.92rem;color:#444;line-height:1.5;padding:8px 12px;background:#faf6ec;border-radius:6px;border-left:3px solid var(--gold)}
+  #word-popover .pop-meaning .zh{color:#6b4c1e;font-weight:600}
+  #word-popover .pop-close{position:absolute;top:8px;right:10px;width:24px;height:24px;border:none;background:none;cursor:pointer;font-size:1rem;color:#bbb;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:color .2s,background .2s}
+  #word-popover .pop-close:hover{color:#666;background:#f0ede8}
+  #sel-toolbar{position:fixed;z-index:9998;background:#2d2d2d;color:#fff;border-radius:8px;padding:6px 14px;font-size:.82rem;font-family:-apple-system,sans-serif;cursor:pointer;opacity:0;transform:translateY(6px);transition:opacity .18s,transform .2s;pointer-events:none;box-shadow:0 6px 20px rgba(0,0,0,.25);white-space:nowrap}
+  #sel-toolbar.visible{opacity:1;transform:translateY(0);pointer-events:auto}
+  #sel-toolbar:hover{background:#3d3d3d}
+  #history-panel{position:fixed;right:24px;bottom:80px;z-index:9990;display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+  #history-toggle{width:44px;height:44px;border-radius:50%;background:#fff;border:1px solid var(--border);box-shadow:0 2px 12px rgba(0,0,0,.08);cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;transition:all .2s;position:relative}
+  #history-toggle:hover{border-color:var(--gold);box-shadow:0 4px 16px rgba(0,0,0,.12)}
+  #history-badge{position:absolute;top:-4px;right:-4px;background:var(--gold);color:#fff;font-size:.65rem;font-family:-apple-system,sans-serif;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 4px;opacity:0;transform:scale(0);transition:all .3s cubic-bezier(.16,1,.3,1)}
+  #history-badge.show{opacity:1;transform:scale(1)}
+  #history-list{background:#fffef9;border:1px solid #d8d0b8;border-radius:12px;box-shadow:var(--shadow-lg);padding:14px 16px;max-height:300px;overflow-y:auto;width:240px;font-family:-apple-system,sans-serif;font-size:.82rem;display:none;flex-direction:column;gap:8px}
+  #history-list.open{display:flex}
+  #history-list .h-item{display:flex;justify-content:space-between;align-items:center;padding:6px 8px;border-radius:6px;cursor:pointer;transition:background .15s;gap:8px}
+  #history-list .h-item:hover{background:#faf6ec}
+  #history-list .h-word{font-weight:600;color:#1a1a1a}
+  #history-list .h-zh{color:#888;font-size:.78rem}
+  #history-clear{text-align:center;font-size:.72rem;color:#bbb;cursor:pointer;padding:4px;border-radius:4px;transition:color .2s}
+  #history-clear:hover{color:#c0392b}
+  footer{text-align:center;padding:24px 0 0;border-top:1px solid var(--border);font-size:.78rem;color:#aaa;margin-top:8px}
+  .news-card p,.news-card h3{-webkit-tap-highlight-color:transparent}
+  #sidebar-toggle{display:none}
+  #sidebar-backdrop{display:none}
+  @media(max-width:760px){
+    body{padding-left:0}
+    #main{margin:0 auto;padding:20px 14px 40px}
+    .news-card{padding:16px 18px}
+    #history-panel{right:12px;bottom:60px}
+    #word-popover{max-width:260px}
+    #sidebar{
+      display:block;position:fixed;left:0;top:0;width:260px;height:100vh;height:100dvh;
+      z-index:300;transform:translateX(-100%);transition:transform .3s cubic-bezier(.4,0,.2,1);
+      box-shadow:4px 0 24px rgba(0,0,0,.3);overflow-y:auto;-webkit-overflow-scrolling:touch
+    }
+    #sidebar.open{transform:translateX(0)}
+    #sidebar-backdrop{
+      display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:299;
+      opacity:0;transition:opacity .3s ease
+    }
+    #sidebar-backdrop.visible{display:block;opacity:1}
+    #sidebar-toggle{
+      display:flex;position:fixed;top:12px;left:12px;z-index:298;
+      width:40px;height:40px;border-radius:50%;background:#2c2c2c;color:#fff;
+      border:none;font-size:1.3rem;cursor:pointer;align-items:center;justify-content:center;
+      box-shadow:0 2px 8px rgba(0,0,0,.25);transition:background .2s;-webkit-tap-highlight-color:transparent;
+      -webkit-user-select:none;user-select:none
+    }
+    #sidebar-toggle:hover{background:#3a3a3a}
+    #sidebar-toggle:active{background:#4a4a4a}
+  }
+  @media(pointer:coarse){.news-card p,.news-card h3{cursor:default}}
+</style>
+</head>
+<body>
+<button id="sidebar-toggle" aria-label="Toggle date archive">&#9776;</button>
+<div id="sidebar-backdrop"></div>
+<div id="sidebar">
+  <h3>&#128197; Past Editions</h3>
+  <div id="sidebar-dates" class="no-archive">Loading...</div>
+</div>
+<div id="main">
+<header>
+  <h1>Today's US News Brief <span class="cloud-badge">&#9729; CLOUD</span></h1>
+  <div class="date">Monday, August 03, 2026</div>
+  <div class="meta-bar">
+    <span>&#128214; ~30 min read</span><span>&#128272; TOEIC 600+</span><span>&#128451; Politics &middot; Economy &middot; Research</span>
+  </div>
+</header>
+<div class="tips">
+  <span class="icon">&#128161;</span>
+  <div>
+    <strong>Click any word</strong> to look up its Chinese meaning.
+    <strong>Click &ldquo;Chinese Translation&rdquo;</strong> under each article for full Chinese text.
+    Use the <strong>left sidebar</strong> to browse past editions.
+  </div>
+</div>
+<div class="section"><div class="section-title politics">&#127987; POLITICS</div>
+<div class="news-card">
+    <h3>1. Actor Vincent Pastore, Known for 'The Sopranos,' Dies at 80</h3>
+    <p>Vincent Pastore, an actor famous for playing mobsters and tough guys, has died at the age of 80. He was best known for his role as Salvatore "Big Pussy" Bonpensiero on the hit TV show "The Sopranos." His manager, Bob McGowan, confirmed the news.</p>
+<p>Pastore appeared in many movies and TV shows during his long career. He often played characters with a rough, tough personality. Fans and fellow actors remember him as a talented performer who brought energy to every role.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p>文森特·帕斯托雷，一位以扮演黑帮分子和硬汉闻名的演员，已去世，享年80岁。他最著名的角色是在热门电视剧《黑道家族》中饰演萨尔瓦托·"大猫"·邦彭谢罗。他的经纪人鲍勃·麦高恩证实了这一消息。</p>
+<p>帕斯托雷在漫长的职业生涯中出演了许多电影和电视剧。他经常扮演性格粗犷、强悍的角色。粉丝和同行演员都记得他是一位才华横溢的演员，为每个角色都注入了活力。</p>
+</div>
+</details>
+    <p class="source">Source: AP News — 2026-08-02</p>
+  </div>
+<div class="news-card">
+    <h3>2. Zelensky Says Ukraine Has No Interceptors as Missiles Hit Kyiv</h3>
+    <p>Ukrainian President Volodymyr Zelensky said that Ukraine has no interceptors (missiles used to shoot down incoming missiles) as Russian ballistic missiles struck the capital, Kyiv. He had asked for American air-defense missiles during a White House meeting earlier.</p>
+<p>The attacks caused damage and raised concerns about Ukraine's ability to defend its cities. Zelensky's statement highlights the urgent need for more military support from Western allies.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p>乌克兰总统泽连斯基表示，当俄罗斯弹道导弹袭击首都基辅时，乌克兰没有拦截导弹（用于击落来袭导弹的导弹）。他早些时候在白宫会晤期间曾请求美国提供防空导弹。</p>
+<p>这些袭击造成了破坏，并引发了对乌克兰保卫其城市能力的担忧。泽连斯基的声明凸显了西方盟友提供更多军事支持的紧迫性。</p>
+</div>
+</details>
+    <p class="source">Source: The Washington Post — 2026-08-01</p>
+  </div>
+<div class="section-title economy">&#128176; ECONOMY</div>
+<div class="news-card">
+    <h3>3. South Korean Retail Investors Angry Over Kospi Rout</h3>
+    <p>South Korea's retail traders (individual investors) have a reputation for taking big risks. However, the sharp drop in the Kospi stock index in July has shaken even these experienced investors, showing that they have limits to how much market volatility they can handle.</p>
+<p>Many angry investors are blaming the government and are vowing not to buy stocks again. This change in mood could affect the local stock market and the broader economy.</p>
+<p class="wim">&#128161; <strong>What this means for you:</strong> This means that if retail investors stop buying, the stock market could become less stable, and companies may find it harder to raise money.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p>韩国的散户交易者（个人投资者）以承担大风险而闻名。然而，7月份韩国综合股价指数（Kospi）的急剧下跌动摇了即使是这些经验丰富的投资者，表明他们对市场波动的容忍度是有限的。</p>
+<p>许多愤怒的投资者指责政府，并誓言不再购买股票。这种情绪变化可能会影响当地股市和更广泛的经济。</p>
+</div>
+</details>
+    <p class="source">Source: Bloomberg — 2026-08-02</p>
+  </div>
+<div class="news-card">
+    <h3>4. Congress Ended Surprise Medical Bills — Doctors and Insurers Hate It</h3>
+    <p>Congress passed a law to stop surprise medical bills (unexpected charges from out-of-network doctors). However, both doctors and insurance companies are unhappy with the law, and they are fighting over how to fix it.</p>
+<p>Lawmakers agree that the current law has problems. But the conflict between doctors and insurers is making it difficult to make changes, leaving patients in a difficult situation.</p>
+<p class="wim">&#128161; <strong>What this means for you:</strong> This means that patients may continue to face confusion and high costs because the dispute between doctors and insurers is slowing down efforts to improve the law.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p>美国国会通过了一项法律，旨在阻止意外医疗账单（来自网络外医生的意外收费）。然而，医生和保险公司都对这项法律不满，他们正在就如何修改它而争斗。</p>
+<p>立法者一致认为现行法律存在问题。但医生和保险公司之间的冲突使得修改变得困难，使患者陷入困境。</p>
+</div>
+</details>
+    <p class="source">Source: Politico — 2026-08-01</p>
+  </div>
+<div class="section-title research">&#128300; RESEARCH</div>
+<div class="news-card">
+    <h3>5. Dinosaur-Killing Asteroid May Have Caused Extreme Firestorms</h3>
+    <p>The asteroid that killed the dinosaurs may have caused firestorms that were 17 times hotter than the temperature that is lethal to humans. A new study suggests that a layer of fine dust from the impact heated the atmosphere, igniting fires worldwide.</p>
+<p>This intense heat would have killed exposed animals within hours. The research helps explain the massive extinction event that wiped out most species, including dinosaurs.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p>导致恐龙灭绝的小行星可能引发了比人类致命温度高17倍的火灾风暴。一项新研究表明，撞击产生的细尘层加热了大气，引发了全球范围的火灾。</p>
+<p>这种极热会在数小时内杀死暴露的动物。这项研究有助于解释那次大规模灭绝事件，该事件消灭了包括恐龙在内的大多数物种。</p>
+</div>
+</details>
+    <p class="source">Source: Space.com — 2026-08-01</p>
+  </div>
+<div class="news-card">
+    <h3>6. August's Total Solar Eclipse to Sweep Over Spain, Iceland, and Greenland</h3>
+    <p>A total solar eclipse (when the moon completely covers the sun) will occur on August 12, visible in mainland Spain for the first time in over a century, as well as parts of Iceland and Greenland. Daytime darkness will last for a few minutes.</p>
+<p>This is a rare event that attracts many skywatchers. Scientists will also study the eclipse to learn more about the sun's atmosphere. Another longer eclipse is expected next summer.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p>8月12日将发生日全食（月球完全遮住太阳），这是西班牙本土一个多世纪以来首次出现，冰岛和格陵兰部分地区也可看到。白天的黑暗将持续几分钟。</p>
+<p>这是一个罕见的事件，吸引了许多天文爱好者。科学家们也将研究这次日食，以了解更多关于太阳大气的信息。明年夏天预计还有一次更长的日食。</p>
+</div>
+</details>
+    <p class="source">Source: Associated Press — 2026-08-01</p>
+  </div>
+</div>
+<footer>
+  <p>&#128218; Auto-generated via NewsAPI + DeepSeek | Cloud pipeline &mdash; GitHub Actions | Monday, August 03, 2026</p>
+</footer>
+</div>
+
+<div id="word-popover">
+  <button class="pop-close" id="pop-close-btn">&times;</button>
+  <div class="pop-word" id="pop-word"></div><div class="pop-pos" id="pop-pos"></div><div class="pop-meaning" id="pop-meaning"></div>
+</div>
+<div id="sel-toolbar">&#128269; Look up "<span id="sel-word"></span>"</div>
+<div id="history-panel">
+  <div id="history-list"><div id="history-clear">Clear all</div></div>
+  <button id="history-toggle" title="Lookup History">&#128214;<span id="history-badge">0</span></button>
+</div>
+
+<script>
+var DICT = {    "ability":"n. 能力",
+    "actor":"n. 演员",
+    "affect":"v. 影响",
+    "age":"n. 年龄",
+    "agree":"v. 同意",
+    "air-defense":"adj. 防空（的）",
+    "air-defense missile":"n. 防空导弹",
+    "ally":"n. 盟友",
+    "American":"adj. 美国的",
+    "angry":"adj. 生气的",
+    "animal":"n. 动物",
+    "appear":"v. 出现",
+    "ask":"v. 询问；要求",
+    "asteroid":"n. 小行星",
+    "attack":"n./v. 攻击",
+    "attract":"v. 吸引",
+    "atmosphere":"n. 大气层；气氛",
+    "ballistic":"adj. 弹道的",
+    "ballistic missile":"n. 弹道导弹",
+    "become":"v. 变得",
+    "best":"adj./adv. 最好的/最好地",
+    "big":"adj. 大的",
+    "bill":"n. 账单；法案",
+    "blame":"v. 责备",
+    "bring":"v. 带来",
+    "broad":"adj. 广泛的",
+    "broader economy":"n. 更广泛的经济",
+    "buy":"v. 购买",
+    "capital":"n. 首都；资本",
+    "career":"n. 职业",
+    "cause":"v./n. 引起；原因",
+    "century":"n. 世纪",
+    "change":"n./v. 改变",
+    "character":"n. 角色；性格",
+    "charge":"n. 费用；v. 收费",
+    "city":"n. 城市",
+    "company":"n. 公司",
+    "completely":"adv. 完全地",
+    "concern":"n. 担忧",
+    "confirm":"v. 确认",
+    "conflict":"n. 冲突",
+    "congress":"n. 国会",
+    "continue":"v. 继续",
+    "cost":"n. 成本",
+    "cover":"v. 覆盖",
+    "current":"adj. 当前的",
+    "current law":"n. 现行法律",
+    "damage":"n./v. 损害",
+    "darkness":"n. 黑暗",
+    "daytime":"n. 白天",
+    "daytime darkness":"n. 白天的黑暗",
+    "defend":"v. 防御",
+    "die":"v. 死亡",
+    "difficult":"adj. 困难的",
+    "difficult situation":"n. 困境",
+    "dinosaur":"n. 恐龙",
+    "dinosaur-killing asteroid":"n. 灭绝恐龙的小行星",
+    "dispute":"n. 争端",
+    "doctor":"n. 医生",
+    "drop":"n. 下降；v. 落下",
+    "dust":"n. 灰尘",
+    "early":"adj./adv. 早的/早",
+    "eclipse":"n. 日食；月食",
+    "economy":"n. 经济",
+    "effort":"n. 努力",
+    "end":"v. 结束；n. 末端",
+    "energy":"n. 能量",
+    "event":"n. 事件",
+    "experienced":"adj. 有经验的",
+    "experienced investor":"n. 有经验的投资者",
+    "explain":"v. 解释",
+    "expect":"v. 预期",
+    "extreme":"adj. 极端的",
+    "extinction":"n. 灭绝",
+    "extinction event":"n. 灭绝事件",
+    "face":"v. 面对；n. 脸",
+    "famous":"adj. 著名的",
+    "fan":"n. 粉丝",
+    "fellow":"adj. 同伴的",
+    "fight":"v. 斗争",
+    "find":"v. 发现",
+    "fine":"adj. 细小的；美好的",
+    "fine dust":"n. 微尘",
+    "fire":"n. 火；v. 开火",
+    "firestorm":"n. 火风暴",
+    "first":"adj./adv. 第一/首次",
+    "first time":"n. 第一次",
+    "fix":"v. 修理；解决",
+    "government":"n. 政府",
+    "guy":"n. 家伙",
+    "handle":"v. 处理",
+    "hard":"adj./adv. 困难的；努力地",
+    "hate":"v. 憎恨",
+    "heat":"n. 热；v. 加热",
+    "help":"v. 帮助",
+    "high":"adj. 高的",
+    "high cost":"n. 高成本",
+    "highlight":"v. 强调",
+    "hit":"v./n. 击中；热门成功的作品",
+    "hit TV show":"n. 热门电视节目",
+    "hot":"adj. 热的",
+    "hour":"n. 小时",
+    "human":"n. 人类",
+    "ignite":"v. 点燃",
+    "impact":"n. 冲击；影响",
+    "improve":"v. 改善",
+    "include":"v. 包括",
+    "incoming":"adj. 进来的",
+    "incoming missile":"n. 来袭导弹",
+    "index":"n. 指数",
+    "individual":"adj. 个体的",
+    "individual investor":"n. 个人投资者",
+    "insurer":"n. 保险公司",
+    "insurance company":"n. 保险公司",
+    "intense":"adj. 强烈的",
+    "interceptor":"n. 拦截导弹",
+    "interceptor missile":"n. 拦截导弹",
+    "investor":"n. 投资者",
+    "kill":"v. 杀死",
+    "know":"v. 知道",
+    "Korean":"adj. 韩国的",
+    "last":"v. 持续；adj. 最后的",
+    "law":"n. 法律",
+    "lawmaker":"n. 立法者",
+    "layer":"n. 层",
+    "learn":"v. 学习",
+    "leave":"v. 离开；留下",
+    "lethal":"adj. 致命的",
+    "limit":"n. 限制",
+    "local":"adj. 当地的",
+    "local stock market":"n. 当地股票市场",
+    "long":"adj. 长的",
+    "long career":"n. 漫长的职业生涯",
+    "longer eclipse":"n. 更长的日食",
+    "mainland":"n. 大陆",
+    "make":"v. 使；制造",
+    "manager":"n. 经理",
+    "market":"n. 市场",
+    "market volatility":"n. 市场波动",
+    "massive":"adj. 巨大的",
+    "medical":"adj. 医疗的",
+    "medical bill":"n. 医疗账单",
+    "meeting":"n. 会议",
+    "military":"adj. 军事的",
+    "military support":"n. 军事支持",
+    "minute":"n. 分钟",
+    "missile":"n. 导弹",
+    "mobster":"n. 黑帮成员",
+    "money":"n. 钱",
+    "mood":"n. 心情",
+    "moon":"n. 月亮",
+    "movie":"n. 电影",
+    "need":"v./n. 需要",
+    "new":"adj. 新的",
+    "news":"n. 新闻",
+    "next summer":"n. 明年夏天",
+    "occur":"v. 发生",
+    "often":"adv. 常常",
+    "out-of-network":"adj. 网络外的（医疗）",
+    "out-of-network doctor":"n. 网络外医生",
+    "part":"n. 部分",
+    "pass":"v. 通过",
+    "patient":"n. 病人",
+    "performer":"n. 表演者",
+    "personality":"n. 人格；个性",
+    "play":"v. 扮演；玩耍",
+    "president":"n. 总统",
+    "problem":"n. 问题",
+    "raise":"v. 提高；筹集",
+    "rare":"adj. 罕见的",
+    "rare event":"n. 罕见事件",
+    "remember":"v. 记得",
+    "reputation":"n. 声誉",
+    "research":"n. 研究",
+    "retail":"adj. 零售的",
+    "retail investor":"n. 散户",
+    "retail trader":"n. 散户交易者",
+    "risk":"n. 风险",
+    "role":"n. 角色",
+    "rough":"adj. 粗糙的；粗鲁的",
+    "rough personality":"n. 粗犷的性格",
+    "rout":"n. 溃败",
+    "Russian":"adj. 俄罗斯的",
+    "say":"v. 说",
+    "scientist":"n. 科学家",
+    "shake":"v. 动摇",
+    "sharp":"adj. 急剧的；锋利的",
+    "shoot":"v. 射击",
+    "shoot down":"v. 击落",
+    "show":"n. 节目；v. 展示",
+    "situation":"n. 情况",
+    "skywatcher":"n. 天文爱好者",
+    "slow":"v. 减慢",
+    "slow down":"v. 减缓",
+    "solar":"adj. 太阳的",
+    "solar eclipse":"n. 日食",
+    "species":"n. 物种",
+    "stable":"adj. 稳定的",
+    "statement":"n. 声明",
+    "stock":"n. 股票",
+    "stock index":"n. 股票指数",
+    "stock market":"n. 股市",
+    "stop":"v. 停止",
+    "strike":"v. 打击；罢工",
+    "study":"n./v. 研究；学习",
+    "suggest":"v. 建议",
+    "summer":"n. 夏天",
+    "sun":"n. 太阳",
+    "sun's atmosphere":"n. 太阳大气",
+    "support":"n./v. 支持",
+    "surprise":"n./adj. 惊奇；意外的",
+    "surprise medical bill":"n. 意外医疗账单",
+    "sweep":"v. 横扫",
+    "take":"v. 采取；拿",
+    "talented":"adj. 有才能的",
+    "talented performer":"n. 才华横溢的表演者",
+    "temperature":"n. 温度",
+    "time":"n. 时间",
+    "total":"adj. 总计的",
+    "total solar eclipse":"n. 日全食",
+    "tough":"adj. 强硬的",
+    "trader":"n. 交易者",
+    "TV":"n. 电视",
+    "TV show":"n. 电视节目",
+    "Ukrainian":"adj. 乌克兰的",
+    "Ukrainian President":"n. 乌克兰总统",
+    "unexpected":"adj. 意想不到的",
+    "unhappy":"adj. 不满的",
+    "urgent":"adj. 紧急的",
+    "urgent need":"n. 迫切需求",
+    "use":"v. 使用",
+    "visible":"adj. 可见的",
+    "volatility":"n. 波动性",
+    "vow":"v. 发誓",
+    "Western":"adj. 西方的",
+    "Western allies":"n. 西方盟友",
+    "White House":"n. 白宫",
+    "wipe":"v. 擦除；消灭",
+    "wipe out":"v. 消灭",
+    "worldwide":"adv. 全世界",
+    "finance":"n. 金融；v. 为…提供资金",
+    "financial":"adj. 财政的",
+    "invest":"v. 投资",
+    "investment":"n. 投资",
+    "bank":"n. 银行",
+    "banker":"n. 银行家",
+    "banking":"n. 银行业",
+    "loan":"n. 贷款",
+    "credit":"n. 信用；信贷",
+    "bond":"n. 债券",
+    "shareholder":"n. 股东",
+    "trade":"n./v. 贸易；交易",
+    "tariff":"n. 关税",
+    "inflation":"n. 通货膨胀",
+    "recession":"n. 经济衰退",
+    "unemployment":"n. 失业",
+    "profit":"n. 利润",
+    "debt":"n. 债务",
+    "currency":"n. 货币",
+    "exchange":"n./v. 交易所；交换",
+    "interest":"n. 利息；兴趣",
+    "rate":"n. 比率",
+    "tax":"n. 税",
+    "budget":"n. 预算",
+    "revenue":"n. 收入",
+    "expense":"n. 开支",
+    "import":"n./v. 进口",
+    "export":"n./v. 出口",
+    "manufacturing":"n. 制造业",
+    "industry":"n. 工业",
+    "commerce":"n. 商业",
+    "business":"n. 商业；企业",
+    "entrepreneur":"n. 企业家",
+    "consumer":"n. 消费者",
+    "customer":"n. 顾客",
+    "supply":"n./v. 供应",
+    "demand":"n./v. 需求",
+    "price":"n. 价格",
+    "product":"n. 产品",
+    "service":"n. 服务",
+    "production":"n. 生产",
+    "growth":"n. 增长",
+    "development":"n. 发展",
+    "economic":"adj. 经济的",
+    "global":"adj. 全球的",
+    "international":"adj. 国际的",
+    "commercial":"adj. 商业的",
+    "crisis":"n. 危机",
+    "recovery":"n. 复苏",
+    "policy":"n. 政策",
+    "monetary":"adj. 货币的",
+    "fiscal":"adj. 财政的",
+    "domestic":"adj. 国内的",
+    "foreign":"adj. 外国的",
+    "politics":"n. 政治",
+    "political":"adj. 政治的",
+    "politician":"n. 政治家",
+    "campaign":"n. 竞选运动",
+    "election":"n. 选举",
+    "vote":"n./v. 投票",
+    "voter":"n. 选民",
+    "ballot":"n. 选票",
+    "candidate":"n. 候选人",
+    "governor":"n. 州长",
+    "senator":"n. 参议员",
+    "representative":"n. 代表",
+    "administration":"n. 政府；行政",
+    "cabinet":"n. 内阁",
+    "minister":"n. 部长",
+    "official":"n./adj. 官员；官方的",
+    "office":"n. 办公室；职务",
+    "department":"n. 部门",
+    "agency":"n. 机构",
+    "legislation":"n. 立法",
+    "court":"n. 法庭",
+    "judge":"n. 法官",
+    "justice":"n. 司法；正义",
+    "trial":"n. 审判",
+    "crime":"n. 犯罪",
+    "criminal":"n./adj. 罪犯；刑事的",
+    "police":"n. 警察",
+    "army":"n. 军队",
+    "soldier":"n. 士兵",
+    "war":"n. 战争",
+    "peace":"n. 和平",
+    "negotiation":"n. 谈判",
+    "treaty":"n. 条约",
+    "alliance":"n. 联盟",
+    "democracy":"n. 民主",
+    "republic":"n. 共和国",
+    "regime":"n. 政权",
+    "opposition":"n. 反对派",
+    "protest":"n./v. 抗议",
+    "citizen":"n. 公民",
+    "national":"adj. 国家的",
+    "public":"adj./n. 公共的；公众",
+    "security":"n. 安全",
+    "border":"n. 边界",
+    "immigration":"n. 移民",
+    "refugee":"n. 难民",
+    "freedom":"n. 自由",
+    "constitution":"n. 宪法",
+    "parliament":"n. 议会",
+    "science":"n. 科学",
+    "scientific":"adj. 科学的",
+    "discovery":"n. 发现",
+    "theory":"n. 理论",
+    "experiment":"n. 实验",
+    "laboratory":"n. 实验室",
+    "observation":"n. 观察",
+    "analysis":"n. 分析",
+    "data":"n. 数据",
+    "evidence":"n. 证据",
+    "planet":"n. 行星",
+    "star":"n. 星星",
+    "galaxy":"n. 星系",
+    "universe":"n. 宇宙",
+    "orbit":"n./v. 轨道；绕轨道运行",
+    "telescope":"n. 望远镜",
+    "satellite":"n. 卫星",
+    "astronomy":"n. 天文学",
+    "astronomer":"n. 天文学家",
+    "astronaut":"n. 宇航员",
+    "gravity":"n. 重力",
+    "radiation":"n. 辐射",
+    "climate":"n. 气候",
+    "environment":"n. 环境",
+    "pollution":"n. 污染",
+    "renewable":"adj. 可再生的",
+    "carbon":"n. 碳",
+    "emission":"n. 排放",
+    "ecosystem":"n. 生态系统",
+    "biology":"n. 生物学",
+    "chemistry":"n. 化学",
+    "physics":"n. 物理学",
+    "evolution":"n. 进化",
+    "organism":"n. 有机体",
+    "fossil":"n. 化石",
+    "geology":"n. 地质学",
+    "health":"n. 健康",
+    "hospital":"n. 医院",
+    "nurse":"n. 护士",
+    "treatment":"n. 治疗",
+    "medicine":"n. 药",
+    "drug":"n. 药物",
+    "surgery":"n. 手术",
+    "disease":"n. 疾病",
+    "illness":"n. 疾病",
+    "virus":"n. 病毒",
+    "infection":"n. 感染",
+    "vaccine":"n. 疫苗",
+    "healthcare":"n. 医疗保健",
+    "physician":"n. 内科医师",
+    "symptom":"n. 症状",
+    "cure":"n./v. 治愈",
+    "prevent":"v. 预防",
+    "diagnose":"v. 诊断",
+    "emergency":"n. 紧急情况",
+    "injury":"n. 受伤",
+    "therapy":"n. 治疗",
+    "mental":"adj. 心理的",
+    "physical":"adj. 身体的",
+    "condition":"n. 状况",
+    "media":"n. 媒体",
+    "press":"n. 新闻界",
+    "journalist":"n. 记者",
+    "reporter":"n. 记者",
+    "article":"n. 文章",
+    "headline":"n. 标题",
+    "interview":"n./v. 采访",
+    "comment":"n./v. 评论",
+    "opinion":"n. 意见",
+    "editor":"n. 编辑",
+    "publish":"v. 出版",
+    "online":"adj. 在线的",
+    "website":"n. 网站",
+    "network":"n. 网络",
+    "update":"n./v. 更新",
+    "coverage":"n. 报道",
+    "audience":"n. 观众",
+    "channel":"n. 频道",
+    "broadcast":"n./v. 广播",
+    "communication":"n. 交流",
+    "information":"n. 信息",
+    "report":"n./v. 报道",
+    "conclusion":"n. 结论",
+    "result":"n. 结果",
+    "effect":"n. 效果",
+    "factor":"n. 因素",
+    "increase":"n./v. 增加",
+    "decrease":"n./v. 减少",
+    "rise":"n./v. 上升",
+    "decline":"n./v. 下降",
+    "significant":"adj. 显著的",
+    "major":"adj. 主要的",
+    "minor":"adj. 次要的",
+    "important":"adj. 重要的",
+    "necessary":"adj. 必要的",
+    "potential":"adj. 潜在的",
+    "issue":"n. 问题",
+    "solution":"n. 解决方案",
+    "challenge":"n. 挑战",
+    "opportunity":"n. 机会",
+    "safety":"n. 安全",
+    "protection":"n. 保护",
+    "criticism":"n. 批评",
+    "achievement":"n. 成就",
+    "claim":"v./n. 声称",
+    "prove":"v. 证明",
+    "deny":"v. 否认",
+    "admit":"v. 承认",
+    "attempt":"v./n. 尝试",
+    "succeed":"v. 成功",
+    "fail":"v. 失败",
+    "achieve":"v. 实现",
+    "require":"v. 要求",
+    "offer":"v./n. 提供",
+    "accept":"v. 接受",
+    "reject":"v. 拒绝",
+    "argue":"v. 争论",
+    "debate":"n./v. 辩论",
+    "discuss":"v. 讨论",
+    "describe":"v. 描述",
+    "mention":"v. 提到",
+    "express":"v. 表达",
+    "identify":"v. 识别",
+    "determine":"v. 决定",
+    "analyze":"v. 分析",
+    "evaluate":"v. 评估"
+};
+var popover=document.getElementById('word-popover'),popWord=document.getElementById('pop-word'),popPos=document.getElementById('pop-pos'),popMeaning=document.getElementById('pop-meaning'),popClose=document.getElementById('pop-close-btn'),selToolbar=document.getElementById('sel-toolbar'),selWordSpan=document.getElementById('sel-word'),historyList=document.getElementById('history-list'),historyToggle=document.getElementById('history-toggle'),historyBadge=document.getElementById('history-badge'),popoverTimer=null,activeWordEl=null,lookupHistory=[];
+try{var saved=localStorage.getItem('wb_cloud_v2_history');if(saved)lookupHistory=JSON.parse(saved);updateBadge()}catch(e){}
+function norm(w){return w.trim().toLowerCase().replace(/[.,;:!?()"']+$/g,'').replace(/^[.,;:!?()"']+/g,'').replace(/'s$/g,'')}
+function lookup(raw){var w=norm(raw);if(!w||w.length<2)return null;if(DICT[w])return{word:raw.trim(),meaning:DICT[w]};var o=raw.trim().toLowerCase().replace(/[^\w\s-]/g,'');if(DICT[o])return{word:raw.trim(),meaning:DICT[o]};return null}
+function showPopover(x,y,word,meaning){if(popoverTimer){clearTimeout(popoverTimer);popoverTimer=null}var m=meaning.match(/^(\w+\.?)\s*(.*)/);popWord.textContent=word;popPos.textContent=m?m[1]:'';popMeaning.innerHTML='<span class="zh">'+(m?m[2]:meaning)+'</span>';var pw=popover.offsetWidth,ph=popover.offsetHeight,l=x+12,t=y-ph-8;if(t<10)t=y+20;if(l+pw>window.innerWidth-10)l=x-pw-12;if(l<10)l=10;popover.style.left=l+'px';popover.style.top=t+'px';popover.classList.add('visible')}
+function hidePopover(){popover.classList.remove('visible')}
+function addHistory(word,meaning){lookupHistory=lookupHistory.filter(function(h){return h.word!==word});lookupHistory.unshift({word:word,meaning:meaning});if(lookupHistory.length>30)lookupHistory.pop();try{localStorage.setItem('wb_cloud_v2_history',JSON.stringify(lookupHistory))}catch(e){};updateBadge();renderHistory()}
+function updateBadge(){var c=lookupHistory.length;historyBadge.textContent=c;if(c>0)historyBadge.classList.add('show');else historyBadge.classList.remove('show')}
+function renderHistory(){historyList.innerHTML='';var cd=document.createElement('div');cd.id='history-clear';cd.textContent='Clear all';cd.onclick=function(){lookupHistory=[];localStorage.removeItem('wb_cloud_v2_history');updateBadge();renderHistory()};historyList.appendChild(cd);lookupHistory.forEach(function(h){var d=document.createElement('div');d.className='h-item';var m=h.meaning.match(/^(\w+\.?)\s*(.*)/);d.innerHTML='<span class="h-word">'+h.word+'</span><span class="h-zh">'+(m?m[2]:h.meaning)+'</span>';historyList.appendChild(d)})}
+document.querySelectorAll('.news-card p:not(.wim):not(.source), .news-card h3').forEach(function(el){el.addEventListener('click',function(e){var sel=window.getSelection();if(sel.toString().trim())return;var range=document.caretRangeFromPoint(e.clientX,e.clientY);if(!range)return;var tn=range.startContainer;if(tn.nodeType!==Node.TEXT_NODE)return;var text=tn.textContent,off=range.startOffset,start=off;while(start>0&&/[\w'-]/.test(text[start-1]))start--;var end=off;while(end<text.length&&/[\w'-]/.test(text[end]))end++;var w=text.slice(start,end).trim();if(!w||w.length<2)return;var r=lookup(w);if(!r){hidePopover();return}if(activeWordEl)activeWordEl.classList.remove('active');var span=document.createElement('span');span.className='lookup-word active';span.textContent=w;var before=text.slice(0,start),after=text.slice(end);var p=tn.parentNode;p.insertBefore(document.createTextNode(before),tn);p.insertBefore(span,tn);p.insertBefore(document.createTextNode(after),tn);p.removeChild(tn);activeWordEl=span;setTimeout(function(){if(activeWordEl===span)span.classList.remove('active')},3000);var rect=span.getBoundingClientRect();showPopover(rect.left+rect.width/2,rect.top,r.word,r.meaning);addHistory(r.word,r.meaning)})});
+document.addEventListener('mouseup',function(e){setTimeout(function(){var sel=window.getSelection();var text=sel.toString().trim();if(!text||text.length<2||text.length>40){selToolbar.classList.remove('visible');return}var n=sel.anchorNode,ok=false;while(n){if(n.classList&&n.classList.contains('news-card')){ok=true;break}n=n.parentNode}if(!ok){selToolbar.classList.remove('visible');return}var rect=sel.getRangeAt(0).getBoundingClientRect();selWordSpan.textContent=text;var l=rect.left+rect.width/2-selToolbar.offsetWidth/2,t=rect.bottom+8;if(l<10)l=10;if(l+selToolbar.offsetWidth>window.innerWidth-10)l=window.innerWidth-selToolbar.offsetWidth-10;selToolbar.style.left=l+'px';selToolbar.style.top=t+'px';selToolbar.classList.add('visible');selToolbar._st=text},10)});
+selToolbar.addEventListener('click',function(){var text=selToolbar._st;if(!text)return;var pk=text.toLowerCase(),r=null;if(DICT[pk])r={word:text,meaning:DICT[pk]};else{var ws=text.split(/\s+/);for(var i=0;i<ws.length;i++){r=lookup(ws[i]);if(r)break}}if(r){var rect=selToolbar.getBoundingClientRect();showPopover(rect.left+rect.width/2,rect.top,r.word,r.meaning);addHistory(r.word,r.meaning)}selToolbar.classList.remove('visible');window.getSelection().removeAllRanges()});
+document.addEventListener('click',function(e){if(e.target.closest('.news-card'))return;if(popover.contains(e.target))return;if(e.target===selToolbar||selToolbar.contains(e.target))return;if(e.target.closest('#history-panel')||e.target.closest('#sidebar'))return;popoverTimer=setTimeout(hidePopover,200)});
+popover.addEventListener('mouseenter',function(){if(popoverTimer){clearTimeout(popoverTimer);popoverTimer=null}});
+popover.addEventListener('mouseleave',function(){popoverTimer=setTimeout(hidePopover,300)});
+popClose.addEventListener('click',function(e){e.stopPropagation();hidePopover()});
+window.addEventListener('scroll',function(){hidePopover();selToolbar.classList.remove('visible')},{passive:true});
+historyToggle.addEventListener('click',function(e){e.stopPropagation();renderHistory();historyList.classList.toggle('open')});
+document.addEventListener('click',function(e){if(!historyList.contains(e.target)&&e.target!==historyToggle&&!historyToggle.contains(e.target))historyList.classList.remove('open')});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){hidePopover();selToolbar.classList.remove('visible');historyList.classList.remove('open')}});
+// Sidebar toggle (mobile overlay)
+(function(){
+  var sb=document.getElementById('sidebar'),st=document.getElementById('sidebar-toggle'),bd=document.getElementById('sidebar-backdrop');
+  function openSb(){sb.classList.add('open');bd.classList.add('visible');document.body.style.overflow='hidden'}
+  function closeSb(){sb.classList.remove('open');bd.classList.remove('visible');document.body.style.overflow=''}
+  st.addEventListener('click',function(e){e.stopPropagation();sb.classList.contains('open')?closeSb():openSb()});
+  bd.addEventListener('click',closeSb);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&sb.classList.contains('open'))closeSb()});
+  // Close sidebar when a date link is clicked on mobile
+  sb.addEventListener('click',function(e){if(window.innerWidth<=760&&e.target.classList.contains('date-link'))closeSb()});
+  window.addEventListener('resize',function(){if(window.innerWidth>760)closeSb()});
+})();
+// Sidebar archive loader
+(function(){
+  var sd=document.getElementById('sidebar-dates');
+  fetch('/daily-en-news-cloud/archive/index.json',{cache:'no-cache'}).then(function(r){return r.json()}).then(function(dates){
+    if(!dates.length){sd.innerHTML='<p>No archived editions yet.</p>';return}
+    var today='2026-08-03';sd.innerHTML='';
+    dates.forEach(function(d){var a=document.createElement('a');a.className='date-link';a.href='/daily-en-news-cloud/archive/'+d+'.html';a.textContent=d;if(d===today)a.classList.add('active');sd.appendChild(a)})
+  }).catch(function(){sd.innerHTML='<p>Archive index loading...</p>'})
+})();
+updateBadge();
+</script>
+</body>
+</html>
