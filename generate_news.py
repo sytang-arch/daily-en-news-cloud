@@ -94,6 +94,42 @@ SYSTEM_PROMPT_DICT = """You are a TOEIC vocabulary expert. Given English news ar
 
 DICT_RETRY_PROMPT = "\n\n## ATTENTION\nThe dictionary only contained {count} entries — less than 400. REGENERATE with at least 400 entries covering every word from the articles."
 
+# Common English function words — B1 learners already know these, skip them
+COMMON_WORDS = set("""a an the and or but if because when while where why how of to in on at by for with about from into through over under between after before against during without within along across behind beyond near off up down out at be been being am is are was were do does did done have has had having will would can could shall should may might must not no yes this that these those there here what which who whom whose i you he she it we they me him her us them my your his its our their mine yours hers ours theirs myself yourself himself herself itself ourselves themselves another each every either neither other some any all both few many much more most several such some any anybody anyone anything anywhere everybody everyone everything nowhere somebody someone something somewhere nobody none nothing noone""".split())
+
+BATCH_DICT_PROMPT = """You are a TOEIC vocabulary expert. Translate English words into Chinese.
+
+## OUTPUT — valid JSON only:
+{"dictionary": {"word": "pos. 中文释义", ...}}
+
+## RULES
+- Translate EVERY word in the user's list. Do NOT skip any.
+- Key: the word as-is (lowercase). Value: "pos. 中文释义" (e.g. "v. 参加", "n. 消费者").
+- Pick the most common TOEIC-level meaning. Multi-word phrases stay as-is.
+- If a word is a name (capitalized in source), still give the best translation or mark "n. 人名/专名"."""
+
+def extract_all_words(data: dict) -> list[str]:
+    """Extract every unique non-common word from all articles."""
+    words = set()
+    for label in ['politics','economy','research']:
+        for art in data.get(label, []):
+            text = (art.get("title","") + " " + " ".join(art.get("paragraphs",[])))
+            for w in re.findall(r"[A-Za-z][A-Za-z'-]{1,}", text):
+                wl = w.lower()
+                if wl in COMMON_WORDS: continue
+                if len(wl) < 3: continue
+                if wl.endswith("'s"): wl = wl[:-2]
+                words.add(wl)
+    return sorted(words)
+
+def translate_word_batch(words: list[str], max_tok: int = 8000) -> dict:
+    """Translate a batch of words via DeepSeek chat. Returns merged dict."""
+    batch_text = ", ".join(words)
+    d = call_deepseek(BATCH_DICT_PROMPT, f"Translate these {len(words)} words:\n{batch_text}", max_tok=max_tok)
+    result = d.get("dictionary", {})
+    print(f"  Batch ({len(words)} words) -> {len(result)} entries")
+    return result
+
 def call_deepseek(system: str, user_msg: str, max_tok: int = 8000, use_reasoner: bool = False) -> dict:
     import urllib.request as ur
     model = "deepseek-reasoner" if use_reasoner else "deepseek-chat"
@@ -149,39 +185,32 @@ def generate_content(news_summary: str) -> dict:
         print(f"  [FATAL] No articles generated, exiting")
         sys.exit(1)
 
-    # Step 2: Dictionary — reasoner with 50K tokens
-    print(f"[STEP 2/2] Generating dictionary (deepseek-reasoner, max_tok=50000)...")
-    arts_json = json.dumps({k: data.get(k,[]) for k in ['politics','economy','research']}, ensure_ascii=False)
-    d = call_deepseek(SYSTEM_PROMPT_DICT, f"Generate dictionary for these articles:\n{arts_json}", max_tok=50000, use_reasoner=True)
-    dcount = len(d.get("dictionary", {}))
-    print(f"  Dict entries: {dcount}")
+    # Step 2: Full-coverage dictionary via batch translation
+    print(f"\n[STEP 2/2] Building full-coverage dictionary...")
+    words = extract_all_words(data)
+    print(f"  Extracted {len(words)} unique non-common words")
     
-    # If reasoner returned empty (JSON repair failed), fallback to chat
-    if dcount == 0:
-        print(f"  [FALLBACK] Reasoner failed, using chat model for compact dict...")
-        d = call_deepseek(SYSTEM_PROMPT_DICT, f"Generate dictionary:\n{arts_json}", max_tok=8000)
-        dcount = len(d.get("dictionary", {}))
-        print(f"  Chat dict: {dcount}")
-    
-    # If dict too short, retry with reasoner
-    if 0 < dcount < 400:
-        print(f"  [RETRY] Dict too short ({dcount}<400)")
-        try:
-            d2 = call_deepseek(SYSTEM_PROMPT_DICT, arts_json + "\n" + DICT_RETRY_PROMPT.replace("{count}", str(dcount)), max_tok=50000, use_reasoner=True)
-            if d2.get("dictionary"):
-                all_dict = {}
-                all_dict.update(d.get("dictionary", {}))
-                all_dict.update(d2.get("dictionary", {}))
-                data["dictionary"] = all_dict
-                print(f"  Dict after merge: {len(all_dict)}")
-            else:
-                data["dictionary"] = d.get("dictionary", {})
-        except Exception:
-            data["dictionary"] = d.get("dictionary", {})
-            print(f"  Retry failed, using {dcount} entries as-is")
-    else:
+    if not words:
+        print(f"  [WARN] No words extracted, falling back to reasoner dict")
+        arts_json = json.dumps({k: data.get(k,[]) for k in ['politics','economy','research']}, ensure_ascii=False)
+        d = call_deepseek(SYSTEM_PROMPT_DICT, f"Generate dictionary:\n{arts_json}", max_tok=50000, use_reasoner=True)
         data["dictionary"] = d.get("dictionary", {})
-    print(f"  Final dict: {len(data.get('dictionary',{}))} entries")
+        print(f"  Final dict (fallback): {len(data.get('dictionary',{}))} entries")
+        return data
+
+    dictionary = {}
+    BATCH_SIZE = 200
+    for i in range(0, len(words), BATCH_SIZE):
+        batch = words[i:i+BATCH_SIZE]
+        try:
+            batch_dict = translate_word_batch(batch)
+            if batch_dict:
+                dictionary.update(batch_dict)
+        except Exception as e:
+            print(f"  [WARN] Batch {i//BATCH_SIZE+1} failed: {e}")
+    
+    data["dictionary"] = dictionary
+    print(f"  Final dict: {len(dictionary)} entries")
     return data
 
 # ── HTML Template ───────────────────────────────────────
