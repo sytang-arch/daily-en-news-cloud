@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Today's US News — Saturday, August 08, 2026 | English Reading Practice</title>
+<style>
+  :root{
+    --bg:#faf9f7;--card-bg:#fff;--text:#2d2d2d;--text-light:#5a5a5a;--accent-p:#b22234;--accent-e:#1a5f8a;--accent-r:#2d7d46;
+    --gold:#b7933a;--border:#e8e4df;--tag-bg:#f0ede8;--shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+    --shadow-lg:0 12px 40px rgba(0,0,0,.12);--radius:10px;--sidebar-w:200px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:Georgia,'Times New Roman',serif;background:var(--bg);color:var(--text);line-height:1.8;min-height:100vh;padding-left:var(--sidebar-w)}
+  #sidebar{
+    position:fixed;left:0;top:0;width:var(--sidebar-w);height:100vh;background:#2c2c2c;color:#ccc;
+    overflow-y:auto;padding:20px 0;z-index:100;font-family:-apple-system,sans-serif;font-size:.82rem;
+    transition:transform .25s ease
+  }
+  #sidebar h3{color:#fff;font-size:.85rem;padding:8px 16px;border-bottom:1px solid #444;margin-bottom:8px;text-align:center}
+  #sidebar .date-link{display:block;padding:6px 16px;color:#aaa;text-decoration:none;transition:all .15s;border-left:3px solid transparent}
+  #sidebar .date-link:hover{color:#fff;background:#3a3a3a;border-left-color:var(--gold)}
+  #sidebar .date-link.active{color:#fff;background:#3a3a3a;border-left-color:var(--gold);font-weight:600}
+  #sidebar .no-archive{padding:16px;color:#666;font-size:.78rem;text-align:center}
+  #main{margin:0 auto;max-width:780px;padding:32px 28px 60px}
+  header{text-align:center;padding:36px 0 28px;border-bottom:2px solid var(--border);margin-bottom:32px}
+  header h1{font-size:1.75rem;font-weight:700;color:#1a1a1a}
+  header .date{font-size:.9rem;color:var(--text-light)}
+  .meta-bar{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-top:14px;font-size:.82rem;color:var(--text-light)}
+  .meta-bar span{background:var(--tag-bg);padding:4px 14px;border-radius:20px}
+  .section{margin-bottom:40px}
+  .section-title{font-size:1.25rem;font-weight:700;margin-bottom:16px;padding-bottom:6px;border-bottom:3px solid;display:flex;align-items:center;gap:8px}
+  .section-title.politics{color:var(--accent-p);border-color:var(--accent-p)}
+  .section-title.economy{color:var(--accent-e);border-color:var(--accent-e)}
+  .section-title.research{color:var(--accent-r);border-color:var(--accent-r)}
+  .news-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:22px 26px;margin-bottom:16px;box-shadow:var(--shadow);transition:box-shadow .3s,border-color .3s}
+  .news-card:hover{box-shadow:0 3px 12px rgba(0,0,0,.08);border-color:#d8d2c8}
+  .news-card h3{font-size:1.08rem;font-weight:700;margin-bottom:10px;line-height:1.45}
+  .news-card p{font-size:.95rem;color:var(--text-light);margin-bottom:12px;text-align:justify}
+  .news-card .source{font-size:.78rem;color:#999;font-style:italic}
+  .news-card .wim{color:#8a6d20;font-size:.88rem;padding:6px 0 0}
+  .trans-toggle{margin:8px 0 12px;border:1px solid #e0d8c0;border-radius:8px;overflow:hidden}
+  .trans-toggle summary{padding:8px 14px;background:#faf6ec;cursor:pointer;font-size:.85rem;color:#8a6d20;font-weight:600;user-select:none}
+  .trans-toggle .trans-content{padding:12px 16px;background:#fffbee;color:#5a4a2a;font-size:.88rem;line-height:1.8}
+  .trans-toggle .trans-content p{color:#5a4a2a!important;margin-bottom:8px!important}
+  .cloud-badge{display:inline-block;background:#e8f5e9;color:#2d7d46;font-size:.7rem;padding:2px 10px;border-radius:10px;margin-left:8px;vertical-align:middle}
+  .tips{background:#f4f9ff;border-radius:var(--radius);padding:16px 22px;margin-bottom:32px;font-size:.88rem;color:#3a5a7c;line-height:1.7;display:flex;align-items:flex-start;gap:12px}
+  .tips .icon{font-size:1.4rem;flex-shrink:0}
+  .lookup-word{cursor:pointer;border-bottom:1.5px dotted transparent;transition:border-color .2s,background .2s;border-radius:2px;padding:0 1px}
+  .lookup-word:hover{border-bottom-color:var(--gold);background:rgba(183,147,58,.08)}
+  .lookup-word.active{background:rgba(183,147,58,.18);border-bottom-color:var(--gold)}
+  #word-popover{position:fixed;z-index:9999;background:#fffef9;border:1px solid #d8d0b8;border-radius:12px;box-shadow:var(--shadow-lg);padding:18px 22px;min-width:200px;max-width:320px;opacity:0;transform:translateY(8px) scale(.96);transition:opacity .2s cubic-bezier(.16,1,.3,1),transform .25s cubic-bezier(.16,1,.3,1);pointer-events:none;font-family:-apple-system,sans-serif;word-break:break-word}
+  #word-popover.visible{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+  #word-popover .pop-word{font-size:1.25rem;font-weight:700;color:#1a1a1a;margin-bottom:4px;font-family:Georgia,serif}
+  #word-popover .pop-pos{font-size:.75rem;color:#999;text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px}
+  #word-popover .pop-meaning{font-size:.92rem;color:#444;line-height:1.5;padding:8px 12px;background:#faf6ec;border-radius:6px;border-left:3px solid var(--gold)}
+  #word-popover .pop-meaning .zh{color:#6b4c1e;font-weight:600}
+  #word-popover .pop-close{position:absolute;top:8px;right:10px;width:24px;height:24px;border:none;background:none;cursor:pointer;font-size:1rem;color:#bbb;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:color .2s,background .2s}
+  #word-popover .pop-close:hover{color:#666;background:#f0ede8}
+  #sel-toolbar{position:fixed;z-index:9998;background:#2d2d2d;color:#fff;border-radius:8px;padding:6px 14px;font-size:.82rem;font-family:-apple-system,sans-serif;cursor:pointer;opacity:0;transform:translateY(6px);transition:opacity .18s,transform .2s;pointer-events:none;box-shadow:0 6px 20px rgba(0,0,0,.25);white-space:nowrap}
+  #sel-toolbar.visible{opacity:1;transform:translateY(0);pointer-events:auto}
+  #sel-toolbar:hover{background:#3d3d3d}
+  #history-panel{position:fixed;right:24px;bottom:80px;z-index:9990;display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+  #history-toggle{width:44px;height:44px;border-radius:50%;background:#fff;border:1px solid var(--border);box-shadow:0 2px 12px rgba(0,0,0,.08);cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;transition:all .2s;position:relative}
+  #history-toggle:hover{border-color:var(--gold);box-shadow:0 4px 16px rgba(0,0,0,.12)}
+  #history-badge{position:absolute;top:-4px;right:-4px;background:var(--gold);color:#fff;font-size:.65rem;font-family:-apple-system,sans-serif;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 4px;opacity:0;transform:scale(0);transition:all .3s cubic-bezier(.16,1,.3,1)}
+  #history-badge.show{opacity:1;transform:scale(1)}
+  #history-list{background:#fffef9;border:1px solid #d8d0b8;border-radius:12px;box-shadow:var(--shadow-lg);padding:14px 16px;max-height:300px;overflow-y:auto;width:240px;font-family:-apple-system,sans-serif;font-size:.82rem;display:none;flex-direction:column;gap:8px}
+  #history-list.open{display:flex}
+  #history-list .h-item{display:flex;justify-content:space-between;align-items:center;padding:6px 8px;border-radius:6px;cursor:pointer;transition:background .15s;gap:8px}
+  #history-list .h-item:hover{background:#faf6ec}
+  #history-list .h-word{font-weight:600;color:#1a1a1a}
+  #history-list .h-zh{color:#888;font-size:.78rem}
+  #history-clear{text-align:center;font-size:.72rem;color:#bbb;cursor:pointer;padding:4px;border-radius:4px;transition:color .2s}
+  #history-clear:hover{color:#c0392b}
+  footer{text-align:center;padding:24px 0 0;border-top:1px solid var(--border);font-size:.78rem;color:#aaa;margin-top:8px}
+  .news-card p,.news-card h3{-webkit-tap-highlight-color:transparent}
+  #sidebar-toggle{display:none}
+  #sidebar-backdrop{display:none}
+  @media(max-width:760px){
+    body{padding-left:0}
+    #main{margin:0 auto;padding:20px 14px 40px}
+    .news-card{padding:16px 18px}
+    #history-panel{right:12px;bottom:60px}
+    #word-popover{max-width:260px}
+    #sidebar{
+      display:block;position:fixed;left:0;top:0;width:260px;height:100vh;height:100dvh;
+      z-index:300;transform:translateX(-100%);transition:transform .3s cubic-bezier(.4,0,.2,1);
+      box-shadow:4px 0 24px rgba(0,0,0,.3);overflow-y:auto;-webkit-overflow-scrolling:touch
+    }
+    #sidebar.open{transform:translateX(0)}
+    #sidebar-backdrop{
+      display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:299;
+      opacity:0;transition:opacity .3s ease
+    }
+    #sidebar-backdrop.visible{display:block;opacity:1}
+    #sidebar-toggle{
+      display:flex;position:fixed;top:12px;left:12px;z-index:298;
+      width:40px;height:40px;border-radius:50%;background:#2c2c2c;color:#fff;
+      border:none;font-size:1.3rem;cursor:pointer;align-items:center;justify-content:center;
+      box-shadow:0 2px 8px rgba(0,0,0,.25);transition:background .2s;-webkit-tap-highlight-color:transparent;
+      -webkit-user-select:none;user-select:none
+    }
+    #sidebar-toggle:hover{background:#3a3a3a}
+    #sidebar-toggle:active{background:#4a4a4a}
+  }
+  @media(pointer:coarse){.news-card p,.news-card h3{cursor:default}}
+</style>
+</head>
+<body>
+<button id="sidebar-toggle" aria-label="Toggle date archive">&#9776;</button>
+<div id="sidebar-backdrop"></div>
+<div id="sidebar">
+  <h3>&#128197; Past Editions</h3>
+  <div id="sidebar-dates" class="no-archive">Loading...</div>
+</div>
+<div id="main">
+<header>
+  <h1>Today's US News Brief <span class="cloud-badge">&#9729; CLOUD</span></h1>
+  <div class="date">Saturday, August 08, 2026</div>
+  <div class="meta-bar">
+    <span>&#128214; ~30 min read</span><span>&#128272; TOEIC 600+</span><span>&#128451; Politics &middot; Economy &middot; Research</span>
+  </div>
+</header>
+<div class="tips">
+  <span class="icon">&#128161;</span>
+  <div>
+    <strong>Click any word</strong> to look up its Chinese meaning.
+    <strong>Click &ldquo;Chinese Translation&rdquo;</strong> under each article for full Chinese text.
+    Use the <strong>left sidebar</strong> to browse past editions.
+  </div>
+</div>
+<div class="section"><div class="section-title politics">&#127987; POLITICS</div>
+<div class="news-card">
+    <h3>1. China’s exports jump almost a quarter in July</h3>
+    <p>China’s exports rose by almost 25% in July compared with the same month last year, according to official data. The strong growth was driven by high demand for high-tech products, such as computer chips and electric vehicles. This shows that trade remains strong for the world’s second-largest economy, despite global challenges.</p>
+<p>The increase was higher than most experts expected. Some analysts worried that slower global growth would reduce demand for Chinese goods. However, the data suggests that China’s factories are still busy producing goods that other countries need. This is good news for China’s economy, which has been trying to recover from a slow period.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p>根据官方数据，中国7月份的出口与去年同期相比增长了近25%。这一强劲增长是由对高科技产品（如计算机芯片和电动汽车）的高需求推动的。这表明，尽管面临全球挑战，世界第二大经济体的贸易仍然强劲。</p>
+<p>这一增幅高于大多数专家的预期。一些分析师担心，全球增长放缓会减少对中国商品的需求。然而，数据表明，中国的工厂仍在忙着生产其他国家需要的商品。这对中国经济来说是个好消息，因为中国经济一直在努力从缓慢期复苏。</p>
+</div>
+</details>
+    <p class="source">Source: Financial Times — 2026-08-07</p>
+  </div>
+<div class="news-card">
+    <h3>2. Student shoots multiple people at a high school in Thailand, authorities say</h3>
+    <p>Police in Thailand say a student shot several people at a high school outside Bangkok, killing at least six people and wounding several others. The shooting happened at the Debsirin Nonthaburi School in Nonthaburi province, northwest of the capital. A witness told local media that the attacker was a student at the school.</p>
+<p>Authorities have not yet confirmed a motive for the attack. The suspect was arrested shortly after the incident. This is one of the deadliest school shootings in Thailand’s recent history. The government has expressed condolences to the victims’ families and promised a full investigation.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p>泰国警方称，一名学生在曼谷郊外的一所高中枪击多人，造成至少6人死亡，另有数人受伤。枪击事件发生在首都西北部暖武里府的德比林暖武里学校。一位目击者告诉当地媒体，袭击者是该校的一名学生。</p>
+<p>当局尚未确认袭击的动机。嫌疑人在事件发生后不久被捕。这是泰国近年来最致命的校园枪击事件之一。政府已向遇难者家属表示哀悼，并承诺进行全面调查。</p>
+</div>
+</details>
+    <p class="source">Source: Associated Press — 2026-08-07</p>
+  </div>
+<div class="section-title economy">&#128176; ECONOMY</div>
+<div class="news-card">
+    <h3>3. Yen Surrenders Nearly Half Its Gains From US-Japan Intervention</h3>
+    <p>The Japanese yen has lost almost half of the gains it made after the US and Japan intervened in the currency market. This has led traders to think that Japanese authorities might step in again to support the yen. The yen’s value has been falling against the US dollar, which hurts Japan’s economy by making imports more expensive.</p>
+<p>Earlier this week, the US and Japan bought yen to strengthen it, but the effect is fading. Many investors believe the intervention was only a temporary measure. If the yen continues to weaken, the Bank of Japan may raise interest rates or take other actions. This uncertainty affects global markets because Japan is a major economy.</p>
+<p class="wim">&#128161; <strong>What this means for you:</strong> For ordinary Chinese readers, this means that currency fluctuations can affect global trade and prices. If the yen weakens, Japanese products become cheaper for Chinese buyers, but Chinese goods may become more expensive in Japan. It also shows how governments sometimes try to control currency values, which can have ripple effects worldwide.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p>日元已经回吐了美国和日本干预货币市场后涨幅的近一半。这导致交易员认为，日本当局可能再次介入以支撑日元。日元兑美元汇率一直在下跌，这使进口商品更加昂贵，从而损害了日本经济。</p>
+<p>本周早些时候，美国和日本买入日元以使其走强，但效果正在消退。许多投资者认为，干预只是临时措施。如果日元继续走弱，日本央行可能会加息或采取其他行动。这种不确定性影响全球市场，因为日本是一个主要经济体。</p>
+</div>
+</details>
+    <p class="source">Source: Bloomberg — 2026-08-07</p>
+  </div>
+<div class="news-card">
+    <h3>4. China's exports growth beats estimates in July, as AI-driven shipments surge</h3>
+    <p>China’s exports grew more than expected in July, thanks to strong global demand for high-tech parts used in artificial intelligence (AI) products. Shipments of items like semiconductors and computer servers increased sharply. This helped China’s overall trade performance, even as other parts of the economy slow down.</p>
+<p>The data shows that China is becoming a key supplier for the world’s AI industry. Many companies rely on Chinese factories to produce components for AI systems. This trend is likely to continue, as AI technology becomes more popular. However, trade tensions with some countries could create challenges in the future.</p>
+<p class="wim">&#128161; <strong>What this means for you:</strong> For Chinese readers, this means that China's factories are benefiting from the global AI boom. It could lead to more jobs and economic growth. However, it also highlights China's dependence on technology exports, which might be affected by international politics.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p>得益于全球对人工智能（AI）产品所用高科技零部件的强劲需求，中国7月份的出口增长超过预期。半导体和计算机服务器等产品的出货量大幅增加。这有助于中国的整体贸易表现，即使经济其他部分放缓。</p>
+<p>数据显示，中国正在成为全球AI产业的关键供应商。许多公司依赖中国的工厂生产AI系统的组件。随着AI技术越来越普及，这一趋势可能会持续。然而，与一些国家的贸易紧张局势可能会在未来带来挑战。</p>
+</div>
+</details>
+    <p class="source">Source: CNBC — 2026-08-07</p>
+  </div>
+<div class="section-title research">&#128300; RESEARCH</div>
+<div class="news-card">
+    <h3>5. Environmental groups challenge FCC approval of startup’s plan to beam on-demand sunlight from space</h3>
+    <p>Environmental groups are challenging a decision by the US Federal Communications Commission (FCC) that allows a startup to test a system for reflecting sunlight from space. The startup wants to put satellites in orbit that can direct sunlight to specific areas on Earth at night. This could help light up cities or farms, but critics worry about the effects.</p>
+<p>The environmental organizations say the test could lead to a much larger number of satellites in the future. They are concerned that too much artificial light could harm animals and plants, and disrupt natural cycles. The FCC approved the test, but the groups are asking a court to stop it. They want more studies before any big project goes ahead.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p>环保组织正在质疑美国联邦通信委员会（FCC）的一项决定，该决定允许一家初创公司测试从太空反射阳光的系统。该初创公司希望将卫星送入轨道，在夜间将阳光引导到地球上的特定区域。这可能有助于照亮城市或农场，但批评者担心其影响。</p>
+<p>环保组织表示，这次测试可能会导致未来出现更多数量的卫星。他们担心过多的人造光可能伤害动植物，并扰乱自然周期。FCC批准了测试，但这些组织要求法院制止。他们希望在任何大型项目进行之前进行更多研究。</p>
+</div>
+</details>
+    <p class="source">Source: NBC News — 2026-08-06</p>
+  </div>
+<div class="news-card">
+    <h3>6. '1 more step': NASA astronauts conduct 6.5-hour spacewalk to prep ISS for solar array upgrade</h3>
+    <p>Two NASA astronauts, Jessica Meir and Anil Menon, completed a spacewalk outside the International Space Station (ISS) on Thursday. The walk lasted 6.5 hours, and their goal was to prepare the station for new solar arrays. Solar arrays are panels that capture sunlight and turn it into electricity for the station.</p>
+<p>The astronauts installed equipment that will help attach the new solar arrays later. This upgrade will provide more power for the ISS, which is important for future missions. NASA said the spacewalk was successful, and the astronauts returned safely inside. This is one of several spacewalks planned to improve the station’s systems.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p>两名NASA宇航员杰西卡·迈尔和阿尼尔·梅农周四在国际空间站外完成了一次太空行走。行走持续了6.5小时，他们的目标是为新的太阳能电池阵列做准备。太阳能电池阵列是捕捉阳光并将其转化为空间站电力的面板。</p>
+<p>宇航员安装了设备，以帮助稍后连接新的太阳能电池阵列。这次升级将为国际空间站提供更多电力，这对未来的任务很重要。NASA表示太空行走成功，宇航员安全返回舱内。这是计划中改善空间站系统的几次太空行走之一。</p>
+</div>
+</details>
+    <p class="source">Source: Space.com — 2026-08-06</p>
+  </div>
+</div>
+<footer>
+  <p>&#128218; Auto-generated via NewsAPI + DeepSeek | Cloud pipeline &mdash; GitHub Actions | Saturday, August 08, 2026</p>
+</footer>
+</div>
+
+<div id="word-popover">
+  <button class="pop-close" id="pop-close-btn">&times;</button>
+  <div class="pop-word" id="pop-word"></div><div class="pop-pos" id="pop-pos"></div><div class="pop-meaning" id="pop-meaning"></div>
+</div>
+<div id="sel-toolbar">&#128269; Look up "<span id="sel-word"></span>"</div>
+<div id="history-panel">
+  <div id="history-list"><div id="history-clear">Clear all</div></div>
+  <button id="history-toggle" title="Lookup History">&#128214;<span id="history-badge">0</span></button>
+</div>
+
+<script>
+var DICT = {    "according":"prep. 根据",
+    "actions":"n. 行动",
+    "affects":"v. 影响",
+    "again":"adv. 再次",
+    "ahead":"adv. 在前面",
+    "ai-driven":"adj. 人工智能驱动的",
+    "allows":"v. 允许",
+    "almost":"adv. 几乎",
+    "analysts":"n. 分析师",
+    "anil":"n. 人名（阿尼尔）",
+    "animals":"n. 动物",
+    "approval":"n. 批准",
+    "approved":"v. 批准",
+    "areas":"n. 地区",
+    "array":"n. 阵列",
+    "arrays":"n. 阵列",
+    "arrested":"v. 逮捕",
+    "artificial":"adj. 人工的",
+    "asking":"v. 询问",
+    "astronauts":"n. 宇航员",
+    "attach":"v. 附加",
+    "attack":"n./v. 攻击",
+    "attacker":"n. 攻击者",
+    "authorities":"n. 当局",
+    "bangkok":"n. 曼谷",
+    "bank":"n. 银行",
+    "beam":"n. 光束",
+    "beats":"v. 击败",
+    "becomes":"v. 变成",
+    "becoming":"v. 变成",
+    "believe":"v. 相信",
+    "big":"adj. 大的",
+    "bought":"v. 购买",
+    "busy":"adj. 忙碌的",
+    "capital":"n. 首都",
+    "capture":"v. 捕获",
+    "challenge":"n./v. 挑战",
+    "challenges":"n. 挑战",
+    "challenging":"adj. 具有挑战性的",
+    "china":"n. 中国",
+    "chinese":"adj. 中国的",
+    "chips":"n. 芯片",
+    "cities":"n. 城市",
+    "commission":"n. 委员会",
+    "communications":"n. 通信",
+    "companies":"n. 公司",
+    "compared":"v. 比较",
+    "completed":"v. 完成",
+    "components":"n. 组件",
+    "computer":"n. 计算机",
+    "concerned":"adj. 担忧的",
+    "condolences":"n. 哀悼",
+    "conduct":"v. 进行",
+    "confirmed":"v. 确认",
+    "continue":"v. 继续",
+    "continues":"v. 继续",
+    "countries":"n. 国家",
+    "court":"n. 法院",
+    "create":"v. 创造",
+    "critics":"n. 批评者",
+    "currency":"n. 货币",
+    "cycles":"n. 周期",
+    "data":"n. 数据",
+    "deadliest":"adj. 最致命的",
+    "debsirin":"n. 地名（德布西林）",
+    "decision":"n. 决定",
+    "demand":"n./v. 需求",
+    "despite":"prep. 尽管",
+    "direct":"adj. 直接的",
+    "disrupt":"v. 破坏",
+    "dollar":"n. 美元",
+    "driven":"adj. 驱动的",
+    "earlier":"adv. 更早",
+    "earth":"n. 地球",
+    "economy":"n. 经济",
+    "effect":"n. 影响",
+    "effects":"n. 影响",
+    "electric":"adj. 电的",
+    "electricity":"n. 电力",
+    "environmental":"adj. 环境的",
+    "equipment":"n. 设备",
+    "estimates":"n. 估计",
+    "even":"adv. 甚至",
+    "expected":"v. 预期",
+    "expensive":"adj. 昂贵的",
+    "experts":"n. 专家",
+    "exports":"n. 出口",
+    "expressed":"v. 表达",
+    "factories":"n. 工厂",
+    "fading":"v. 消退",
+    "falling":"v. 下降",
+    "families":"n. 家庭",
+    "farms":"n. 农场",
+    "fcc":"n. 美国联邦通信委员会",
+    "federal":"adj. 联邦的",
+    "full":"adj. 满的",
+    "future":"n. 未来",
+    "gains":"n. 收益",
+    "global":"adj. 全球的",
+    "goal":"n. 目标",
+    "goes":"v. 去",
+    "good":"adj. 好的",
+    "goods":"n. 商品",
+    "government":"n. 政府",
+    "grew":"v. 增长",
+    "groups":"n. 群体",
+    "growth":"n. 增长",
+    "half":"n. 一半",
+    "happened":"v. 发生",
+    "harm":"n./v. 伤害",
+    "help":"n./v. 帮助",
+    "helped":"v. 帮助",
+    "high":"adj. 高的",
+    "high-tech":"adj. 高科技的",
+    "higher":"adj. 更高的",
+    "history":"n. 历史",
+    "hour":"n. 小时",
+    "hours":"n. 小时",
+    "however":"adv. 然而",
+    "hurts":"v. 伤害",
+    "important":"adj. 重要的",
+    "imports":"n. 进口",
+    "improve":"v. 改善",
+    "incident":"n. 事件",
+    "increase":"n./v. 增加",
+    "increased":"v. 增加",
+    "industry":"n. 行业",
+    "inside":"prep. 在内部",
+    "installed":"v. 安装",
+    "intelligence":"n. 情报",
+    "interest":"n. 兴趣",
+    "international":"adj. 国际的",
+    "intervened":"v. 干预",
+    "intervention":"n. 干预",
+    "investigation":"n. 调查",
+    "investors":"n. 投资者",
+    "iss":"n. 国际空间站",
+    "items":"n. 物品",
+    "japan":"n. 日本",
+    "japanese":"adj. 日本的",
+    "jessica":"n. 人名（杰西卡）",
+    "july":"n. 七月",
+    "jump":"n./v. 跳跃",
+    "key":"adj. 关键的",
+    "killing":"n. 杀戮",
+    "larger":"adj. 更大的",
+    "last":"adj. 最后的",
+    "lasted":"v. 持续",
+    "later":"adv. 后来",
+    "lead":"v. 领导",
+    "least":"adv. 最少",
+    "led":"v. 领导",
+    "light":"n. 光",
+    "like":"prep. 像",
+    "likely":"adj. 可能的",
+    "local":"adj. 当地的",
+    "lost":"v. 失去",
+    "made":"v. 制造",
+    "major":"adj. 主要的",
+    "making":"v. 制造",
+    "market":"n. 市场",
+    "markets":"n. 市场",
+    "measure":"n./v. 措施",
+    "media":"n. 媒体",
+    "meir":"n. 人名（梅尔）",
+    "menon":"n. 人名（梅农）",
+    "missions":"n. 任务",
+    "month":"n. 月份",
+    "motive":"n. 动机",
+    "multiple":"adj. 多个的",
+    "nasa":"n. 美国国家航空航天局",
+    "natural":"adj. 自然的",
+    "nearly":"adv. 几乎",
+    "need":"n./v. 需要",
+    "new":"adj. 新的",
+    "news":"n. 新闻",
+    "night":"n. 夜晚",
+    "nonthaburi":"n. 地名（暖武里）",
+    "northwest":"n. 西北",
+    "number":"n. 数字",
+    "official":"n. 官员",
+    "on-demand":"adj. 按需的",
+    "one":"num. 一",
+    "only":"adv. 仅仅",
+    "orbit":"n. 轨道",
+    "organizations":"n. 组织",
+    "others":"pron. 其他人",
+    "outside":"prep. 在外面",
+    "overall":"adj. 整体的",
+    "panels":"n. 面板",
+    "parts":"n. 部分",
+    "people":"n. 人们",
+    "performance":"n. 性能",
+    "period":"n. 时期",
+    "plan":"n./v. 计划",
+    "planned":"v. 计划",
+    "plants":"n. 工厂",
+    "police":"n. 警察",
+    "popular":"adj. 受欢迎的",
+    "power":"n. 电力",
+    "prep":"prep. 准备",
+    "prepare":"v. 准备",
+    "produce":"v. 生产；n. 农产品",
+    "producing":"v. 生产（produce的现在分词）",
+    "products":"n. 产品",
+    "project":"n. 项目；v. 计划",
+    "promised":"v. 承诺（promise的过去式）",
+    "provide":"v. 提供",
+    "province":"n. 省",
+    "put":"v. 放置",
+    "quarter":"n. 季度；四分之一",
+    "raise":"v. 提高；筹集",
+    "rates":"n. 比率；费率",
+    "recent":"adj. 最近的",
+    "recover":"v. 恢复",
+    "reduce":"v. 减少",
+    "reflecting":"v. 反映（reflect的现在分词）",
+    "rely":"v. 依赖",
+    "remains":"v. 保持；n. 剩余物",
+    "returned":"v. 返回（return的过去式）",
+    "rose":"v. 上升（rise的过去式）",
+    "safely":"adv. 安全地",
+    "said":"v. 说（say的过去式）",
+    "same":"adj. 相同的",
+    "satellites":"n. 卫星",
+    "say":"v. 说",
+    "school":"n. 学校",
+    "second-largest":"adj. 第二大的",
+    "semiconductors":"n. 半导体",
+    "servers":"n. 服务器",
+    "sharply":"adv. 急剧地",
+    "shipments":"n. 出货量",
+    "shooting":"n. 枪击；v. 射击（shoot的现在分词）",
+    "shootings":"n. 枪击事件",
+    "shoots":"v. 射击（shoot的第三人称单数）",
+    "shortly":"adv. 不久",
+    "shot":"n. 射击；v. 射击（shoot的过去式）",
+    "shows":"v. 显示（show的第三人称单数）",
+    "six":"num. 六",
+    "slow":"adj. 慢的；v. 放慢",
+    "slower":"adj. 更慢的",
+    "solar":"adj. 太阳的",
+    "space":"n. 太空；空间",
+    "spacewalk":"n. 太空行走",
+    "spacewalks":"n. 太空行走（复数）",
+    "specific":"adj. 具体的",
+    "startup":"n. 初创企业",
+    "station":"n. 站；空间站",
+    "step":"n. 步骤",
+    "step'":"n. 步骤（带撇号）",
+    "still":"adv. 仍然",
+    "stop":"v. 停止",
+    "strengthen":"v. 加强",
+    "strong":"adj. 强壮的",
+    "student":"n. 学生",
+    "studies":"n. 研究；v. 学习（study的第三人称单数）",
+    "successful":"adj. 成功的",
+    "suggests":"v. 建议（suggest的第三人称单数）",
+    "sunlight":"n. 阳光",
+    "supplier":"n. 供应商",
+    "support":"v. 支持",
+    "surge":"n. 激增；v. 激增",
+    "surrenders":"v. 投降（surrender的第三人称单数）",
+    "suspect":"n. 嫌疑人；v. 怀疑",
+    "system":"n. 系统",
+    "systems":"n. 系统（复数）",
+    "take":"v. 采取；拿",
+    "technology":"n. 技术",
+    "temporary":"adj. 临时的",
+    "tensions":"n. 紧张局势",
+    "test":"n. 测试；v. 测试",
+    "thailand":"n. 泰国",
+    "than":"conj. 比",
+    "thanks":"n. 感谢",
+    "think":"v. 思考",
+    "thursday":"n. 星期四",
+    "told":"v. 告诉（tell的过去式）",
+    "too":"adv. 也；太",
+    "trade":"n. 贸易；v. 交易",
+    "traders":"n. 交易者",
+    "trend":"n. 趋势",
+    "trying":"v. 尝试（try的现在分词）",
+    "turn":"v. 转变；n. 转弯",
+    "two":"num. 二",
+    "uncertainty":"n. 不确定性",
+    "upgrade":"v. 升级",
+    "us-japan":"adj. 美日的",
+    "used":"v. 使用（use的过去式）；adj. 用过的",
+    "value":"n. 价值",
+    "vehicles":"n. 车辆",
+    "victims":"n. 受害者",
+    "walk":"v. 行走",
+    "want":"v. 想要",
+    "wants":"v. 想要（want的第三人称单数）",
+    "weaken":"v. 削弱",
+    "week":"n. 星期",
+    "witness":"n. 目击者；v. 目击",
+    "world":"n. 世界",
+    "worried":"adj. 担心的",
+    "worry":"v. 担心",
+    "wounding":"v. 伤害（wound的现在分词）",
+    "year":"n. 年",
+    "yen":"n. 日元",
+    "yet":"adv. 还；然而"
+};
+var popover=document.getElementById('word-popover'),popWord=document.getElementById('pop-word'),popPos=document.getElementById('pop-pos'),popMeaning=document.getElementById('pop-meaning'),popClose=document.getElementById('pop-close-btn'),selToolbar=document.getElementById('sel-toolbar'),selWordSpan=document.getElementById('sel-word'),historyList=document.getElementById('history-list'),historyToggle=document.getElementById('history-toggle'),historyBadge=document.getElementById('history-badge'),popoverTimer=null,activeWordEl=null,lookupHistory=[];
+try{var saved=localStorage.getItem('wb_cloud_v2_history');if(saved)lookupHistory=JSON.parse(saved);updateBadge()}catch(e){}
+function norm(w){
+  w=w.trim().toLowerCase().replace(/[.,;:!?()"']+$/g,'').replace(/^[.,;:!?()"']+/g,'').replace(/'s$/g,'');
+  if(!w||w.length<3)return w;
+  var candidates=[w];
+  // try word-form reduction when exact form not in dict (checked by lookup)
+  if(w.length>4&&w.endsWith('ing'))candidates.push(w.slice(0,-3),w.slice(0,-3)+'e');
+  if(w.endsWith('ied'))candidates.push(w.slice(0,-3)+'y');
+  if(w.endsWith('ed'))candidates.push(w.slice(0,-2),w.slice(0,-1));
+  if(w.endsWith('es')&&!w.endsWith('ses'))candidates.push(w.slice(0,-2));
+  if(w.endsWith('s')&&!w.endsWith('ss'))candidates.push(w.slice(0,-1));
+  for(var i=0;i<candidates.length;i++){
+    if(DICT[candidates[i]])return candidates[i];
+  }
+  return w;
+}
+function lookup(raw){var w=norm(raw);if(!w||w.length<2)return null;if(DICT[w])return{word:raw.trim(),meaning:DICT[w]};var o=raw.trim().toLowerCase().replace(/[^\w\s-]/g,'');if(DICT[o])return{word:raw.trim(),meaning:DICT[o]};return null}
+function showPopover(x,y,word,meaning){if(popoverTimer){clearTimeout(popoverTimer);popoverTimer=null}var m=meaning.match(/^(\w+\.?)\s*(.*)/);popWord.textContent=word;popPos.textContent=m?m[1]:'';popMeaning.innerHTML='<span class="zh">'+(m?m[2]:meaning)+'</span>';var pw=popover.offsetWidth,ph=popover.offsetHeight,l=x+12,t=y-ph-8;if(t<10)t=y+20;if(l+pw>window.innerWidth-10)l=x-pw-12;if(l<10)l=10;popover.style.left=l+'px';popover.style.top=t+'px';popover.classList.add('visible')}
+function hidePopover(){popover.classList.remove('visible')}
+function addHistory(word,meaning){lookupHistory=lookupHistory.filter(function(h){return h.word!==word});lookupHistory.unshift({word:word,meaning:meaning});if(lookupHistory.length>30)lookupHistory.pop();try{localStorage.setItem('wb_cloud_v2_history',JSON.stringify(lookupHistory))}catch(e){};updateBadge();renderHistory()}
+function updateBadge(){var c=lookupHistory.length;historyBadge.textContent=c;if(c>0)historyBadge.classList.add('show');else historyBadge.classList.remove('show')}
+function renderHistory(){historyList.innerHTML='';var cd=document.createElement('div');cd.id='history-clear';cd.textContent='Clear all';cd.onclick=function(){lookupHistory=[];localStorage.removeItem('wb_cloud_v2_history');updateBadge();renderHistory()};historyList.appendChild(cd);lookupHistory.forEach(function(h){var d=document.createElement('div');d.className='h-item';var m=h.meaning.match(/^(\w+\.?)\s*(.*)/);d.innerHTML='<span class="h-word">'+h.word+'</span><span class="h-zh">'+(m?m[2]:h.meaning)+'</span>';historyList.appendChild(d)})}
+document.querySelectorAll('.news-card p:not(.wim):not(.source), .news-card h3').forEach(function(el){el.addEventListener('click',function(e){var sel=window.getSelection();if(sel.toString().trim())return;var range=document.caretRangeFromPoint(e.clientX,e.clientY);if(!range)return;var tn=range.startContainer;if(tn.nodeType!==Node.TEXT_NODE)return;var text=tn.textContent,off=range.startOffset,start=off;while(start>0&&/[\w'-]/.test(text[start-1]))start--;var end=off;while(end<text.length&&/[\w'-]/.test(text[end]))end++;var w=text.slice(start,end).trim();if(!w||w.length<2)return;var r=lookup(w);if(!r){hidePopover();return}if(activeWordEl)activeWordEl.classList.remove('active');var span=document.createElement('span');span.className='lookup-word active';span.textContent=w;var before=text.slice(0,start),after=text.slice(end);var p=tn.parentNode;p.insertBefore(document.createTextNode(before),tn);p.insertBefore(span,tn);p.insertBefore(document.createTextNode(after),tn);p.removeChild(tn);activeWordEl=span;setTimeout(function(){if(activeWordEl===span)span.classList.remove('active')},3000);var rect=span.getBoundingClientRect();showPopover(rect.left+rect.width/2,rect.top,r.word,r.meaning);addHistory(r.word,r.meaning)})});
+document.addEventListener('mouseup',function(e){setTimeout(function(){var sel=window.getSelection();var text=sel.toString().trim();if(!text||text.length<2||text.length>40){selToolbar.classList.remove('visible');return}var n=sel.anchorNode,ok=false;while(n){if(n.classList&&n.classList.contains('news-card')){ok=true;break}n=n.parentNode}if(!ok){selToolbar.classList.remove('visible');return}var rect=sel.getRangeAt(0).getBoundingClientRect();selWordSpan.textContent=text;var l=rect.left+rect.width/2-selToolbar.offsetWidth/2,t=rect.bottom+8;if(l<10)l=10;if(l+selToolbar.offsetWidth>window.innerWidth-10)l=window.innerWidth-selToolbar.offsetWidth-10;selToolbar.style.left=l+'px';selToolbar.style.top=t+'px';selToolbar.classList.add('visible');selToolbar._st=text},10)});
+selToolbar.addEventListener('click',function(){var text=selToolbar._st;if(!text)return;var pk=text.toLowerCase(),r=null;if(DICT[pk])r={word:text,meaning:DICT[pk]};else{var ws=text.split(/\s+/);for(var i=0;i<ws.length;i++){r=lookup(ws[i]);if(r)break}}if(r){var rect=selToolbar.getBoundingClientRect();showPopover(rect.left+rect.width/2,rect.top,r.word,r.meaning);addHistory(r.word,r.meaning)}selToolbar.classList.remove('visible');window.getSelection().removeAllRanges()});
+document.addEventListener('click',function(e){if(e.target.closest('.news-card'))return;if(popover.contains(e.target))return;if(e.target===selToolbar||selToolbar.contains(e.target))return;if(e.target.closest('#history-panel')||e.target.closest('#sidebar'))return;popoverTimer=setTimeout(hidePopover,200)});
+popover.addEventListener('mouseenter',function(){if(popoverTimer){clearTimeout(popoverTimer);popoverTimer=null}});
+popover.addEventListener('mouseleave',function(){popoverTimer=setTimeout(hidePopover,300)});
+popClose.addEventListener('click',function(e){e.stopPropagation();hidePopover()});
+window.addEventListener('scroll',function(){hidePopover();selToolbar.classList.remove('visible')},{passive:true});
+historyToggle.addEventListener('click',function(e){e.stopPropagation();renderHistory();historyList.classList.toggle('open')});
+document.addEventListener('click',function(e){if(!historyList.contains(e.target)&&e.target!==historyToggle&&!historyToggle.contains(e.target))historyList.classList.remove('open')});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){hidePopover();selToolbar.classList.remove('visible');historyList.classList.remove('open')}});
+// Sidebar toggle (mobile overlay)
+(function(){
+  var sb=document.getElementById('sidebar'),st=document.getElementById('sidebar-toggle'),bd=document.getElementById('sidebar-backdrop');
+  function openSb(){sb.classList.add('open');bd.classList.add('visible');document.body.style.overflow='hidden'}
+  function closeSb(){sb.classList.remove('open');bd.classList.remove('visible');document.body.style.overflow=''}
+  st.addEventListener('click',function(e){e.stopPropagation();sb.classList.contains('open')?closeSb():openSb()});
+  bd.addEventListener('click',closeSb);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&sb.classList.contains('open'))closeSb()});
+  // Close sidebar when a date link is clicked on mobile
+  sb.addEventListener('click',function(e){if(window.innerWidth<=760&&e.target.classList.contains('date-link'))closeSb()});
+  window.addEventListener('resize',function(){if(window.innerWidth>760)closeSb()});
+})();
+// Sidebar archive loader
+(function(){
+  var sd=document.getElementById('sidebar-dates');
+  fetch('/daily-en-news-cloud/archive/index.json',{cache:'no-cache'}).then(function(r){return r.json()}).then(function(dates){
+    if(!dates.length){sd.innerHTML='<p>No archived editions yet.</p>';return}
+    var today='2026-08-08';sd.innerHTML='';
+    dates.forEach(function(d){var a=document.createElement('a');a.className='date-link';a.href='/daily-en-news-cloud/archive/'+d+'.html';a.textContent=d;if(d===today)a.classList.add('active');sd.appendChild(a)})
+  }).catch(function(){sd.innerHTML='<p>Archive index loading...</p>'})
+})();
+updateBadge();
+</script>
+</body>
+</html>
