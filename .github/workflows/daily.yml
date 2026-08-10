@@ -41,8 +41,25 @@ jobs:
         with:
           path: '_site'
 
-      - name: Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages (attempt 1)
         id: deployment
+        continue-on-error: true
+        uses: actions/deploy-pages@v4
+
+      - name: Wait 60s before retry
+        if: steps.deployment.outcome == 'failure'
+        run: sleep 60
+
+      - name: Deploy to GitHub Pages (attempt 2)
+        id: deployment2
+        continue-on-error: true
+        uses: actions/deploy-pages@v4
+
+      - name: Wait 60s before retry 2
+        if: steps.deployment2.outcome == 'failure'
+        run: sleep 60
+
+      - name: Deploy to GitHub Pages (attempt 3)
         uses: actions/deploy-pages@v4
 
       - name: Commit archive to repo

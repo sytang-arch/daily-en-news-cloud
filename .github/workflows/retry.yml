@@ -1,0 +1,55 @@
+name: Daily Retry Compensation
+
+on:
+  schedule:
+    - cron: '30 14,15,16 * * *'   # UTC 14:30/15:30/16:30 = 北京 22:30/23:30/次日00:30
+  workflow_dispatch:               # manual trigger for testing
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  check-and-retry:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check today's archive online
+        id: check
+        run: |
+          TODAY=$(TZ=Asia/Shanghai date +%F)
+          CODE=$(curl -s -o /dev/null -w "%{http_code}" "https://sytang-arch.github.io/daily-en-news-cloud/archive/${TODAY}.html" || echo 000)
+          echo "today=${TODAY} http=${CODE}"
+          if [ "$CODE" = "200" ]; then
+            echo "OK — today's edition is already live, no retry needed"
+            echo "missing=0" >> "$GITHUB_OUTPUT"
+          else
+            echo "MISSING — today's edition not deployed, will retry"
+            echo "missing=1" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Count today's manual dispatches (anti-loop)
+        if: steps.check.outputs.missing == '1'
+        id: count
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TODAY0=$(date -u +%Y-%m-%dT00:00:00Z)
+          COUNT=$(gh api "repos/${{ github.repository }}/actions/workflows/daily.yml/runs?event=workflow_dispatch&per_page=100" \
+            --jq "[.workflow_runs[] | select(.created_at >= \"${TODAY0}\")] | length")
+          echo "today_dispatch_count=${COUNT}"
+          echo "count=${COUNT}" >> "$GITHUB_OUTPUT"
+
+      - name: Trigger retry (max 3 per day)
+        if: steps.check.outputs.missing == '1' && steps.count.outputs.count < 3
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TODAY=$(TZ=Asia/Shanghai date +%F)
+          gh workflow run daily.yml --ref main
+          echo "Triggered compensation run for ${TODAY}"
+
+      - name: Max retries reached
+        if: steps.check.outputs.missing == '1' && steps.count.outputs.count >= 3
+        run: echo "Daily retry limit (3) reached, give up for today — manual intervention needed"

@@ -68,16 +68,17 @@ SYSTEM_PROMPT_ARTICLES = """You are an expert English teacher and news editor cr
 ## OUTPUT — valid JSON only (NO dictionary field):
 {
   "date": "Thursday, July 30, 2026",
-  "politics": [{"title":"...", "paragraphs":["...","..."], "translation":["中文...","中文..."], "source":"Source: X — YYYY-MM-DD"}, ...],
-  "economy": [{"title":"...", "paragraphs":["...","..."], "translation":["中文...","中文..."], "what_it_means":"...", "source":"Source: X — YYYY-MM-DD"}, ...],
-  "research": [{"title":"...", "paragraphs":["...","..."], "translation":["中文...","中文..."], "source":"Source: X — YYYY-MM-DD"}, ...]
+  "politics": [{"title":"...", "title_translation":"中文标题...", "paragraphs":["...","..."], "translation":["中文...","中文..."], "source":"Source: X — YYYY-MM-DD"}, ...],
+  "economy": [{"title":"...", "title_translation":"中文标题...", "paragraphs":["...","..."], "translation":["中文...","中文..."], "what_it_means":"...", "what_it_means_translation":"中文解释...", "source":"Source: X — YYYY-MM-DD"}, ...],
+  "research": [{"title":"...", "title_translation":"中文标题...", "paragraphs":["...","..."], "translation":["中文...","中文..."], "source":"Source: X — YYYY-MM-DD"}, ...]
 }
 
 ## STRICT REQUIREMENTS
 - EXACTLY 2 articles per category. No more, no less. Total: 6 articles.
 - Each article: EXACTLY 2 English paragraphs (2-4 sentences each) + 2 Chinese translations.
+- ALWAYS include "title_translation": the Chinese translation of the title.
+- Economy articles MUST include "what_it_means" field AND its Chinese translation "what_it_means_translation".
 - English B1+ to B2. Explain technical terms in parentheses.
-- Economy articles MUST include "what_it_means" field.
 - All sources dated within last 2 days. No single person dominates. No C1+ rare words."""
 
 SYSTEM_PROMPT_DICT = """You are a TOEIC vocabulary expert. Given English news articles, build a COMPLETE English-Chinese dictionary.
@@ -243,9 +244,17 @@ def build_html(data: dict) -> str:
             total_articles += 1
             paras_en = "".join(f"<p>{p}</p>\n" for p in art.get("paragraphs",[]))
             trans = art.get("translation",[])
+            # Title translation (new field, optional for backward compatibility)
+            title_zh = art.get("title_translation","")
+            title_zh_html = f'<p class="trans-title">&#128204; <strong>标题：</strong>{title_zh}</p>\n' if title_zh else ""
+            # What-it-means Chinese translation (economy, optional)
+            wim_zh = art.get("what_it_means_translation","")
+            wim_zh_html = f'<p class="trans-wim">&#128161; <strong>这意味着：</strong>{wim_zh}</p>\n' if wim_zh else ""
             trans_html = ""
-            if trans:
-                trans_items = "".join(f"<p>{t}</p>\n" for t in trans)
+            if trans or title_zh or wim_zh:
+                trans_items = title_zh_html
+                trans_items += "".join(f"<p>{t}</p>\n" for t in trans)
+                trans_items += wim_zh_html
                 trans_html = f"""<details class="trans-toggle">
     <summary>&#127760; Chinese Translation (点击展开)</summary>
     <div class="trans-content">{trans_items}</div>
