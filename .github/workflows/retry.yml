@@ -41,8 +41,18 @@ jobs:
           echo "today_dispatch_count=${COUNT}"
           echo "count=${COUNT}" >> "$GITHUB_OUTPUT"
 
-      - name: Trigger retry (max 3 per day)
+      - name: Check if daily is already running (avoid concurrency)
         if: steps.check.outputs.missing == '1' && steps.count.outputs.count < 3
+        id: running
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          RUNNING=$(gh api "repos/${{ github.repository }}/actions/workflows/daily.yml/runs?status=in_progress" \
+            --jq '.total_count')
+          echo "running=${RUNNING}" >> "$GITHUB_OUTPUT"
+
+      - name: Trigger retry (max 3 per day, skip if daily running)
+        if: steps.check.outputs.missing == '1' && steps.count.outputs.count < 3 && steps.running.outputs.running == '0'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -50,6 +60,6 @@ jobs:
           gh workflow run daily.yml --ref main
           echo "Triggered compensation run for ${TODAY}"
 
-      - name: Max retries reached
-        if: steps.check.outputs.missing == '1' && steps.count.outputs.count >= 3
-        run: echo "Daily retry limit (3) reached, give up for today — manual intervention needed"
+      - name: Max retries reached or daily in progress
+        if: steps.check.outputs.missing == '1' && (steps.count.outputs.count >= 3 || steps.running.outputs.running != '0')
+        run: echo "Skipping — daily running or retry limit reached"
