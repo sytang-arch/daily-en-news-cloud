@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Today's US News — Tuesday, August 18, 2026 | English Reading Practice</title>
+<style>
+  :root{
+    --bg:#faf9f7;--card-bg:#fff;--text:#2d2d2d;--text-light:#5a5a5a;--accent-p:#b22234;--accent-e:#1a5f8a;--accent-r:#2d7d46;
+    --gold:#b7933a;--border:#e8e4df;--tag-bg:#f0ede8;--shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+    --shadow-lg:0 12px 40px rgba(0,0,0,.12);--radius:10px;--sidebar-w:200px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:Georgia,'Times New Roman',serif;background:var(--bg);color:var(--text);line-height:1.8;min-height:100vh;padding-left:var(--sidebar-w)}
+  #sidebar{
+    position:fixed;left:0;top:0;width:var(--sidebar-w);height:100vh;background:#2c2c2c;color:#ccc;
+    overflow-y:auto;padding:20px 0;z-index:100;font-family:-apple-system,sans-serif;font-size:.82rem;
+    transition:transform .25s ease
+  }
+  #sidebar h3{color:#fff;font-size:.85rem;padding:8px 16px;border-bottom:1px solid #444;margin-bottom:8px;text-align:center}
+  #sidebar .date-link{display:block;padding:6px 16px;color:#aaa;text-decoration:none;transition:all .15s;border-left:3px solid transparent}
+  #sidebar .date-link:hover{color:#fff;background:#3a3a3a;border-left-color:var(--gold)}
+  #sidebar .date-link.active{color:#fff;background:#3a3a3a;border-left-color:var(--gold);font-weight:600}
+  #sidebar .no-archive{padding:16px;color:#666;font-size:.78rem;text-align:center}
+  #main{margin:0 auto;max-width:780px;padding:32px 28px 60px}
+  header{text-align:center;padding:36px 0 28px;border-bottom:2px solid var(--border);margin-bottom:32px}
+  header h1{font-size:1.75rem;font-weight:700;color:#1a1a1a}
+  header .date{font-size:.9rem;color:var(--text-light)}
+  .meta-bar{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-top:14px;font-size:.82rem;color:var(--text-light)}
+  .meta-bar span{background:var(--tag-bg);padding:4px 14px;border-radius:20px}
+  .section{margin-bottom:40px}
+  .section-title{font-size:1.25rem;font-weight:700;margin-bottom:16px;padding-bottom:6px;border-bottom:3px solid;display:flex;align-items:center;gap:8px}
+  .section-title.politics{color:var(--accent-p);border-color:var(--accent-p)}
+  .section-title.economy{color:var(--accent-e);border-color:var(--accent-e)}
+  .section-title.research{color:var(--accent-r);border-color:var(--accent-r)}
+  .news-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:22px 26px;margin-bottom:16px;box-shadow:var(--shadow);transition:box-shadow .3s,border-color .3s}
+  .news-card:hover{box-shadow:0 3px 12px rgba(0,0,0,.08);border-color:#d8d2c8}
+  .news-card h3{font-size:1.08rem;font-weight:700;margin-bottom:10px;line-height:1.45}
+  .news-card p{font-size:.95rem;color:var(--text-light);margin-bottom:12px;text-align:justify}
+  .news-card .source{font-size:.78rem;color:#999;font-style:italic}
+  .news-card .wim{color:#8a6d20;font-size:.88rem;padding:6px 0 0}
+  .trans-toggle{margin:8px 0 12px;border:1px solid #e0d8c0;border-radius:8px;overflow:hidden}
+  .trans-toggle summary{padding:8px 14px;background:#faf6ec;cursor:pointer;font-size:.85rem;color:#8a6d20;font-weight:600;user-select:none}
+  .trans-toggle .trans-content{padding:12px 16px;background:#fffbee;color:#5a4a2a;font-size:.88rem;line-height:1.8}
+  .trans-toggle .trans-content p{color:#5a4a2a!important;margin-bottom:8px!important}
+  .cloud-badge{display:inline-block;background:#e8f5e9;color:#2d7d46;font-size:.7rem;padding:2px 10px;border-radius:10px;margin-left:8px;vertical-align:middle}
+  .tips{background:#f4f9ff;border-radius:var(--radius);padding:16px 22px;margin-bottom:32px;font-size:.88rem;color:#3a5a7c;line-height:1.7;display:flex;align-items:flex-start;gap:12px}
+  .tips .icon{font-size:1.4rem;flex-shrink:0}
+  .lookup-word{cursor:pointer;border-bottom:1.5px dotted transparent;transition:border-color .2s,background .2s;border-radius:2px;padding:0 1px}
+  .lookup-word:hover{border-bottom-color:var(--gold);background:rgba(183,147,58,.08)}
+  .lookup-word.active{background:rgba(183,147,58,.18);border-bottom-color:var(--gold)}
+  #word-popover{position:fixed;z-index:9999;background:#fffef9;border:1px solid #d8d0b8;border-radius:12px;box-shadow:var(--shadow-lg);padding:18px 22px;min-width:200px;max-width:320px;opacity:0;transform:translateY(8px) scale(.96);transition:opacity .2s cubic-bezier(.16,1,.3,1),transform .25s cubic-bezier(.16,1,.3,1);pointer-events:none;font-family:-apple-system,sans-serif;word-break:break-word}
+  #word-popover.visible{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+  #word-popover .pop-word{font-size:1.25rem;font-weight:700;color:#1a1a1a;margin-bottom:4px;font-family:Georgia,serif}
+  #word-popover .pop-pos{font-size:.75rem;color:#999;text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px}
+  #word-popover .pop-meaning{font-size:.92rem;color:#444;line-height:1.5;padding:8px 12px;background:#faf6ec;border-radius:6px;border-left:3px solid var(--gold)}
+  #word-popover .pop-meaning .zh{color:#6b4c1e;font-weight:600}
+  #word-popover .pop-close{position:absolute;top:8px;right:10px;width:24px;height:24px;border:none;background:none;cursor:pointer;font-size:1rem;color:#bbb;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:color .2s,background .2s}
+  #word-popover .pop-close:hover{color:#666;background:#f0ede8}
+  #sel-toolbar{position:fixed;z-index:9998;background:#2d2d2d;color:#fff;border-radius:8px;padding:6px 14px;font-size:.82rem;font-family:-apple-system,sans-serif;cursor:pointer;opacity:0;transform:translateY(6px);transition:opacity .18s,transform .2s;pointer-events:none;box-shadow:0 6px 20px rgba(0,0,0,.25);white-space:nowrap}
+  #sel-toolbar.visible{opacity:1;transform:translateY(0);pointer-events:auto}
+  #sel-toolbar:hover{background:#3d3d3d}
+  #history-panel{position:fixed;right:24px;bottom:80px;z-index:9990;display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+  #history-toggle{width:44px;height:44px;border-radius:50%;background:#fff;border:1px solid var(--border);box-shadow:0 2px 12px rgba(0,0,0,.08);cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;transition:all .2s;position:relative}
+  #history-toggle:hover{border-color:var(--gold);box-shadow:0 4px 16px rgba(0,0,0,.12)}
+  #history-badge{position:absolute;top:-4px;right:-4px;background:var(--gold);color:#fff;font-size:.65rem;font-family:-apple-system,sans-serif;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 4px;opacity:0;transform:scale(0);transition:all .3s cubic-bezier(.16,1,.3,1)}
+  #history-badge.show{opacity:1;transform:scale(1)}
+  #history-list{background:#fffef9;border:1px solid #d8d0b8;border-radius:12px;box-shadow:var(--shadow-lg);padding:14px 16px;max-height:300px;overflow-y:auto;width:240px;font-family:-apple-system,sans-serif;font-size:.82rem;display:none;flex-direction:column;gap:8px}
+  #history-list.open{display:flex}
+  #history-list .h-item{display:flex;justify-content:space-between;align-items:center;padding:6px 8px;border-radius:6px;cursor:pointer;transition:background .15s;gap:8px}
+  #history-list .h-item:hover{background:#faf6ec}
+  #history-list .h-word{font-weight:600;color:#1a1a1a}
+  #history-list .h-zh{color:#888;font-size:.78rem}
+  #history-clear{text-align:center;font-size:.72rem;color:#bbb;cursor:pointer;padding:4px;border-radius:4px;transition:color .2s}
+  #history-clear:hover{color:#c0392b}
+  footer{text-align:center;padding:24px 0 0;border-top:1px solid var(--border);font-size:.78rem;color:#aaa;margin-top:8px}
+  .news-card p,.news-card h3{-webkit-tap-highlight-color:transparent}
+  #sidebar-toggle{display:none}
+  #sidebar-backdrop{display:none}
+  @media(max-width:760px){
+    body{padding-left:0}
+    #main{margin:0 auto;padding:20px 14px 40px}
+    .news-card{padding:16px 18px}
+    #history-panel{right:12px;bottom:60px}
+    #word-popover{max-width:260px}
+    #sidebar{
+      display:block;position:fixed;left:0;top:0;width:260px;height:100vh;height:100dvh;
+      z-index:300;transform:translateX(-100%);transition:transform .3s cubic-bezier(.4,0,.2,1);
+      box-shadow:4px 0 24px rgba(0,0,0,.3);overflow-y:auto;-webkit-overflow-scrolling:touch
+    }
+    #sidebar.open{transform:translateX(0)}
+    #sidebar-backdrop{
+      display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:299;
+      opacity:0;transition:opacity .3s ease
+    }
+    #sidebar-backdrop.visible{display:block;opacity:1}
+    #sidebar-toggle{
+      display:flex;position:fixed;top:12px;left:12px;z-index:298;
+      width:40px;height:40px;border-radius:50%;background:#2c2c2c;color:#fff;
+      border:none;font-size:1.3rem;cursor:pointer;align-items:center;justify-content:center;
+      box-shadow:0 2px 8px rgba(0,0,0,.25);transition:background .2s;-webkit-tap-highlight-color:transparent;
+      -webkit-user-select:none;user-select:none
+    }
+    #sidebar-toggle:hover{background:#3a3a3a}
+    #sidebar-toggle:active{background:#4a4a4a}
+  }
+  @media(pointer:coarse){.news-card p,.news-card h3{cursor:default}}
+</style>
+</head>
+<body>
+<button id="sidebar-toggle" aria-label="Toggle date archive">&#9776;</button>
+<div id="sidebar-backdrop"></div>
+<div id="sidebar">
+  <h3>&#128197; Past Editions</h3>
+  <div id="sidebar-dates" class="no-archive">Loading...</div>
+</div>
+<div id="main">
+<header>
+  <h1>Today's US News Brief <span class="cloud-badge">&#9729; CLOUD</span></h1>
+  <div class="date">Tuesday, August 18, 2026</div>
+  <div class="meta-bar">
+    <span>&#128214; ~30 min read</span><span>&#128272; TOEIC 600+</span><span>&#128451; Politics &middot; Economy &middot; Research</span>
+  </div>
+</header>
+<div class="tips">
+  <span class="icon">&#128161;</span>
+  <div>
+    <strong>Click any word</strong> to look up its Chinese meaning.
+    <strong>Click &ldquo;Chinese Translation&rdquo;</strong> under each article for full Chinese text.
+    Use the <strong>left sidebar</strong> to browse past editions.
+  </div>
+</div>
+<div class="section"><div class="section-title politics">&#127987; POLITICS</div>
+<div class="news-card">
+    <h3>1. What really happened in Ceuta? Why we may never find out</h3>
+    <p>Hundreds of migrants have again attempted to cross from Morocco into the Spanish territory of Ceuta. This time, Moroccan officials fended them off, raising new questions about the crossing of July 30.</p>
+<p>The incident has sparked debate about border control and migration policies. Many are asking for more transparency, but officials have not provided clear answers.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>休达到底发生了什么？为什么我们可能永远不会知道</p>
+<p>数百名移民再次试图从摩洛哥进入西班牙领土休达。这一次，摩洛哥官员将他们挡了回去，这引发了关于7月30日越境事件的新问题。</p>
+<p>这一事件引发了关于边境控制和移民政策的辩论。许多人要求提高透明度，但官员们没有提供明确的答案。</p>
+</div>
+</details>
+    <p class="source">Source: NPR — 2026-08-16</p>
+  </div>
+<div class="news-card">
+    <h3>2. Kentucky Gov. Andy Beshear says he's 'heard absolutely nothing back from Mitch McConnell'</h3>
+    <p>Kentucky Gov. Andy Beshear said he hasn't heard back from Sen. Mitch McConnell following formal requests for an update on his health last month amid a weekslong hospitalization.</p>
+<p>Beshear expressed concern about the lack of communication, emphasizing the importance of transparency for public officials. McConnell's office has not commented on the matter.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>肯塔基州州长安迪·贝希尔表示，他“完全没有收到米奇·麦康奈尔的回复”</p>
+<p>肯塔基州州长安迪·贝希尔表示，在上个月麦康奈尔参议员因住院数周而正式要求更新其健康状况后，他一直没有收到麦康奈尔的回复。</p>
+<p>贝希尔对缺乏沟通表示担忧，强调公职人员透明度的重要性。麦康奈尔的办公室尚未对此事发表评论。</p>
+</div>
+</details>
+    <p class="source">Source: CBS News — 2026-08-16</p>
+  </div>
+<div class="section-title economy">&#128176; ECONOMY</div>
+<div class="news-card">
+    <h3>3. Stock-Market Calm Masks Fast Shifting Investor Sentiment</h3>
+    <p>While the recent equity-market turbulence is subsiding, options positioning shows how quickly investor sentiment can switch between the extremes of fear and greed.</p>
+<p>Analysts say that despite the calm, the market remains sensitive to news about inflation and interest rates. Investors are advised to stay cautious.</p>
+<p class="wim">&#128161; <strong>What this means for you:</strong> This means that even though stock prices are stable right now, investors are still nervous and can quickly change their minds based on new information.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>股市平静掩盖了投资者情绪的快速转变</p>
+<p>虽然近期股市的动荡正在平息，但期权头寸显示投资者情绪在恐惧和贪婪两个极端之间切换的速度有多快。</p>
+<p>分析师表示，尽管市场平静，但对通胀和利率的消息仍然敏感。建议投资者保持谨慎。</p>
+<p class="trans-wim">&#128161; <strong>这意味着：</strong>这意味着尽管目前股价稳定，但投资者仍然紧张，并可能根据新信息迅速改变主意。</p>
+</div>
+</details>
+    <p class="source">Source: Bloomberg — 2026-08-16</p>
+  </div>
+<div class="news-card">
+    <h3>4. At AI-Fueled Market Party, Wall Street Eyes the Rates Punch Bowl</h3>
+    <p>Enthusiasm for Big Tech and its huge investments in artificial intelligence is powering the stock market to record highs again. With a resilient economy and scorching demand, there’s seemingly only one obstacle that can derail this ride: higher interest rates.</p>
+<p>Investors are closely watching the Federal Reserve's next moves on interest rates. Any hint of a rate hike could cause a sharp market correction.</p>
+<p class="wim">&#128161; <strong>What this means for you:</strong> This means that the stock market's rise is driven by AI investments, but higher interest rates could stop it. Investors are worried about the Federal Reserve's decisions.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>在人工智能推动的市场盛宴中，华尔街紧盯利率这只“潘趣酒碗”</p>
+<p>对大型科技公司及其在人工智能领域巨额投资的热情再次推动股市创下历史新高。由于经济富有韧性且需求旺盛，似乎只有一个障碍可能使这趟列车脱轨：更高的利率。</p>
+<p>投资者正密切关注美联储下一步的利率行动。任何加息暗示都可能导致市场急剧回调。</p>
+<p class="trans-wim">&#128161; <strong>这意味着：</strong>这意味着股市的上涨是由人工智能投资推动的，但更高的利率可能会阻止它。投资者担心美联储的决定。</p>
+</div>
+</details>
+    <p class="source">Source: Bloomberg — 2026-08-16</p>
+  </div>
+<div class="section-title research">&#128300; RESEARCH</div>
+<div class="news-card">
+    <h3>5. Centuries-old physics test could help detect millicharged particles</h3>
+    <p>Theoretical physicists have long predicted the existence of millicharged particles (mCPs), hypothetical particles that carry a very small electric charge. These particles are expected to interact very weakly with ordinary matter and electromagnetic fields.</p>
+<p>A new study suggests that a classic physics experiment, known as the Millikan oil-drop experiment, could be adapted to detect these elusive particles. This could open new doors in particle physics.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>古老的物理测试或有助于探测毫电荷粒子</p>
+<p>理论物理学家长期以来一直预测毫电荷粒子（mCPs）的存在，这是一种带有非常小电荷的假设粒子。预计这些粒子与普通物质和电磁场的相互作用非常微弱。</p>
+<p>一项新研究表明，经典的物理实验——密立根油滴实验——可能被改造来探测这些难以捉摸的粒子。这可能为粒子物理学打开新的大门。</p>
+</div>
+</details>
+    <p class="source">Source: Phys.org — 2026-08-16</p>
+  </div>
+<div class="news-card">
+    <h3>6. 'This goes beyond showcasing technological soft power': China's new moon map signals bold space ambitions (video)</h3>
+    <p>China has released a new geological map of the moon, which is the first of its kind. The map is part of China's broader plan to establish its own standards for planetary mapping.</p>
+<p>Experts say this move signals China's ambition to lead in deep space exploration. The map could also support future lunar missions and resource utilization.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>“这不仅仅是展示技术软实力”：中国的新月球地图标志着大胆的太空雄心（视频）</p>
+<p>中国发布了一张新的月球地质图，这是同类地图中的首张。这张地图是中国为行星测绘建立自己标准的更广泛计划的一部分。</p>
+<p>专家表示，此举标志着中国在深空探索领域领先的雄心。这张地图还可能支持未来的月球任务和资源利用。</p>
+</div>
+</details>
+    <p class="source">Source: Space.com — 2026-08-16</p>
+  </div>
+</div>
+<footer>
+  <p>&#128218; Auto-generated via NewsAPI + DeepSeek | Cloud pipeline &mdash; GitHub Actions | Tuesday, August 18, 2026</p>
+</footer>
+</div>
+
+<div id="word-popover">
+  <button class="pop-close" id="pop-close-btn">&times;</button>
+  <div class="pop-word" id="pop-word"></div><div class="pop-pos" id="pop-pos"></div><div class="pop-meaning" id="pop-meaning"></div>
+</div>
+<div id="sel-toolbar">&#128269; Look up "<span id="sel-word"></span>"</div>
+<div id="history-panel">
+  <div id="history-list"><div id="history-clear">Clear all</div></div>
+  <button id="history-toggle" title="Lookup History">&#128214;<span id="history-badge">0</span></button>
+</div>
+
+<script>
+var DICT = {    "absolutely":"adv. 绝对地",
+    "adapted":"v. 适应",
+    "advised":"v. 建议",
+    "again":"adv. 再次",
+    "ai-fueled":"adj. 由人工智能驱动的",
+    "also":"adv. 也",
+    "ambition":"n. 雄心",
+    "ambitions":"n. 雄心（复数）",
+    "amid":"prep. 在……之中",
+    "analysts":"n. 分析师",
+    "andy":"n. 人名（安迪）",
+    "answers":"n. 答案；v. 回答",
+    "artificial":"adj. 人工的",
+    "asking":"v. 询问",
+    "attempted":"v. 尝试",
+    "back":"adv. 回；n. 背",
+    "beshear":"n. 人名（贝希尔）",
+    "big":"adj. 大的",
+    "bold":"adj. 大胆的",
+    "border":"n. 边界",
+    "bowl":"n. 碗",
+    "broader":"adj. 更广泛的",
+    "calm":"adj. 平静的",
+    "carry":"v. 携带",
+    "cause":"n. 原因；v. 导致",
+    "cautious":"adj. 谨慎的",
+    "centuries-old":"adj. 数百年历史的",
+    "ceuta":"n. 休达（地名）",
+    "charge":"n. 费用；v. 充电",
+    "china":"n. 中国",
+    "classic":"adj. 经典的",
+    "clear":"adj. 清晰的",
+    "closely":"adv. 紧密地",
+    "commented":"v. 评论",
+    "communication":"n. 沟通",
+    "concern":"n. 担忧",
+    "control":"n. 控制",
+    "correction":"n. 修正",
+    "cross":"v. 穿越",
+    "crossing":"n. 穿越",
+    "debate":"n. 辩论",
+    "deep":"adj. 深的",
+    "demand":"n. 需求",
+    "derail":"v. 使脱轨",
+    "despite":"prep. 尽管",
+    "detect":"v. 检测",
+    "doors":"n. 门（复数）",
+    "economy":"n. 经济",
+    "electric":"adj. 电的",
+    "electromagnetic":"adj. 电磁的",
+    "elusive":"adj. 难以捉摸的",
+    "emphasizing":"v. 强调",
+    "enthusiasm":"n. 热情",
+    "equity-market":"n. 股票市场",
+    "establish":"v. 建立",
+    "existence":"n. 存在",
+    "expected":"v. 预期",
+    "experiment":"n. 实验",
+    "experts":"n. 专家",
+    "exploration":"n. 探索",
+    "expressed":"v. 表达",
+    "extremes":"n. 极端",
+    "eyes":"n. 眼睛",
+    "fast":"adj. 快的",
+    "fear":"n. 恐惧",
+    "federal":"adj. 联邦的",
+    "fended":"v. 抵挡",
+    "fields":"n. 领域",
+    "find":"v. 找到",
+    "first":"adj. 第一的",
+    "following":"prep. 在……之后",
+    "formal":"adj. 正式的",
+    "future":"n. 未来",
+    "geological":"adj. 地质的",
+    "goes":"v. 去（第三人称单数）",
+    "gov":"n. 政府（缩写）",
+    "greed":"n. 贪婪",
+    "happened":"v. 发生",
+    "hasn't":"v. 没有（has not）",
+    "he":"pron. 他",
+    "health":"n. 健康",
+    "heard":"v. 听到",
+    "help":"v. 帮助",
+    "higher":"adj. 更高的",
+    "highs":"n. 高点",
+    "hike":"n. 上涨",
+    "hint":"n. 暗示",
+    "hospitalization":"n. 住院",
+    "huge":"adj. 巨大的",
+    "hundreds":"n. 数百",
+    "hypothetical":"adj. 假设的",
+    "importance":"n. 重要性",
+    "incident":"n. 事件",
+    "inflation":"n. 通货膨胀",
+    "intelligence":"n. 智力；情报",
+    "interact":"v. 互动",
+    "interest":"n. 兴趣；利益",
+    "investments":"n. 投资",
+    "investor":"n. 投资者",
+    "investors":"n. 投资者（复数）",
+    "july":"n. 七月",
+    "kentucky":"n. 肯塔基州",
+    "kind":"n. 种类",
+    "known":"v. 知道（过去分词）",
+    "lack":"n. 缺乏",
+    "last":"adj. 最后的",
+    "lead":"v. 领导",
+    "long":"adj. 长的",
+    "lunar":"adj. 月球的",
+    "map":"n. 地图",
+    "mapping":"n. 绘图",
+    "market":"n. 市场",
+    "masks":"n. 口罩",
+    "matter":"n. 事情",
+    "mcconnell":"n. 人名（麦康奈尔）",
+    "mcconnell'":"n. 人名（麦康奈尔的）",
+    "mcps":"n. 蒙哥马利县公立学校（缩写）",
+    "migrants":"n. 移民",
+    "migration":"n. 移民",
+    "millicharged":"adj. 毫电荷的",
+    "millikan":"n. 人名（密立根）",
+    "missions":"n. 任务",
+    "mitch":"n. 人名（米奇）",
+    "month":"n. 月份",
+    "moon":"n. 月球",
+    "moroccan":"adj. 摩洛哥的",
+    "morocco":"n. 摩洛哥",
+    "move":"v. 移动",
+    "moves":"v. 移动（第三人称单数）",
+    "never":"adv. 从不",
+    "new":"adj. 新的",
+    "news":"n. 新闻",
+    "next":"adj. 下一个的",
+    "obstacle":"n. 障碍",
+    "office":"n. 办公室",
+    "officials":"n. 官员",
+    "oil-drop":"n. 油滴",
+    "one":"num. 一",
+    "only":"adv. 仅仅",
+    "open":"v. 打开",
+    "options":"n. 选项",
+    "ordinary":"adj. 普通的",
+    "own":"adj. 自己的",
+    "part":"n. 部分",
+    "particle":"n. 粒子",
+    "particles":"n. 粒子（复数）",
+    "party":"n. 政党；聚会",
+    "physicists":"n. 物理学家",
+    "physics":"n. 物理学",
+    "plan":"n. 计划",
+    "planetary":"adj. 行星的",
+    "policies":"n. 政策",
+    "positioning":"n. 定位",
+    "power'":"n. 力量（所有格）",
+    "powering":"v. 为……提供动力",
+    "predicted":"v. 预测",
+    "provided":"v. 提供",
+    "public":"adj. 公共的",
+    "punch":"n. 重击",
+    "questions":"n. 问题",
+    "quickly":"adv. 快速地",
+    "raising":"v. 提高",
+    "rate":"n. 比率",
+    "rates":"n. 利率",
+    "really":"adv. 真正地",
+    "recent":"adj. 最近的",
+    "record":"n. 记录",
+    "released":"v. 发布",
+    "remains":"v. 保持",
+    "requests":"n. 请求",
+    "reserve":"n. 储备",
+    "resilient":"adj. 有韧性的",
+    "resource":"n. 资源",
+    "ride":"n. 乘坐",
+    "said":"v. 说（过去式）",
+    "say":"v. 说",
+    "says":"v. 说（第三人称单数）",
+    "scorching":"adj. 灼热的",
+    "seemingly":"adv. 似乎",
+    "sen":"n. 参议员（缩写）",
+    "sensitive":"adj. 敏感的",
+    "sentiment":"n. 情绪",
+    "sharp":"adj. 急剧的",
+    "shifting":"v. 转变",
+    "showcasing":"v. 展示",
+    "shows":"v. 显示",
+    "signals":"n. 信号",
+    "small":"adj. 小的",
+    "soft":"adj. 软的",
+    "space":"n. 太空",
+    "spanish":"adj. 西班牙的",
+    "sparked":"v. 引发",
+    "standards":"n. 标准",
+    "stay":"v. 保持",
+    "stock":"n. 股票",
+    "stock-market":"n. 股票市场",
+    "street":"n. 街道",
+    "study":"n. 研究",
+    "subsiding":"v. 消退",
+    "suggests":"v. 表明",
+    "support":"v. 支持",
+    "switch":"v. 切换",
+    "tech":"n. 技术",
+    "technological":"adj. 技术的",
+    "territory":"n. 领土",
+    "test":"n. 测试",
+    "theoretical":"adj. 理论的",
+    "time":"n. 时间",
+    "transparency":"n. 透明",
+    "turbulence":"n. 湍流",
+    "update":"v. 更新",
+    "utilization":"n. 利用",
+    "very":"adv. 非常",
+    "video":"n. 视频",
+    "wall":"n. 墙壁",
+    "watching":"v. 观看",
+    "weakly":"adv. 虚弱地",
+    "weekslong":"adj. 持续数周的"
+};
+var popover=document.getElementById('word-popover'),popWord=document.getElementById('pop-word'),popPos=document.getElementById('pop-pos'),popMeaning=document.getElementById('pop-meaning'),popClose=document.getElementById('pop-close-btn'),selToolbar=document.getElementById('sel-toolbar'),selWordSpan=document.getElementById('sel-word'),historyList=document.getElementById('history-list'),historyToggle=document.getElementById('history-toggle'),historyBadge=document.getElementById('history-badge'),popoverTimer=null,activeWordEl=null,lookupHistory=[];
+try{var saved=localStorage.getItem('wb_cloud_v2_history');if(saved)lookupHistory=JSON.parse(saved);updateBadge()}catch(e){}
+function norm(w){
+  w=w.trim().toLowerCase().replace(/[.,;:!?()"']+$/g,'').replace(/^[.,;:!?()"']+/g,'').replace(/'s$/g,'');
+  if(!w||w.length<3)return w;
+  var candidates=[w];
+  // try word-form reduction when exact form not in dict (checked by lookup)
+  if(w.length>4&&w.endsWith('ing'))candidates.push(w.slice(0,-3),w.slice(0,-3)+'e');
+  if(w.endsWith('ied'))candidates.push(w.slice(0,-3)+'y');
+  if(w.endsWith('ed'))candidates.push(w.slice(0,-2),w.slice(0,-1));
+  if(w.endsWith('es')&&!w.endsWith('ses'))candidates.push(w.slice(0,-2));
+  if(w.endsWith('s')&&!w.endsWith('ss'))candidates.push(w.slice(0,-1));
+  for(var i=0;i<candidates.length;i++){
+    if(DICT[candidates[i]])return candidates[i];
+  }
+  return w;
+}
+function lookup(raw){var w=norm(raw);if(!w||w.length<2)return null;if(DICT[w])return{word:raw.trim(),meaning:DICT[w]};var o=raw.trim().toLowerCase().replace(/[^\w\s-]/g,'');if(DICT[o])return{word:raw.trim(),meaning:DICT[o]};return null}
+function showPopover(x,y,word,meaning){if(popoverTimer){clearTimeout(popoverTimer);popoverTimer=null}var m=meaning.match(/^(\w+\.?)\s*(.*)/);popWord.textContent=word;popPos.textContent=m?m[1]:'';popMeaning.innerHTML='<span class="zh">'+(m?m[2]:meaning)+'</span>';var pw=popover.offsetWidth,ph=popover.offsetHeight,l=x+12,t=y-ph-8;if(t<10)t=y+20;if(l+pw>window.innerWidth-10)l=x-pw-12;if(l<10)l=10;popover.style.left=l+'px';popover.style.top=t+'px';popover.classList.add('visible')}
+function hidePopover(){popover.classList.remove('visible')}
+function addHistory(word,meaning){lookupHistory=lookupHistory.filter(function(h){return h.word!==word});lookupHistory.unshift({word:word,meaning:meaning});if(lookupHistory.length>30)lookupHistory.pop();try{localStorage.setItem('wb_cloud_v2_history',JSON.stringify(lookupHistory))}catch(e){};updateBadge();renderHistory()}
+function updateBadge(){var c=lookupHistory.length;historyBadge.textContent=c;if(c>0)historyBadge.classList.add('show');else historyBadge.classList.remove('show')}
+function renderHistory(){historyList.innerHTML='';var cd=document.createElement('div');cd.id='history-clear';cd.textContent='Clear all';cd.onclick=function(){lookupHistory=[];localStorage.removeItem('wb_cloud_v2_history');updateBadge();renderHistory()};historyList.appendChild(cd);lookupHistory.forEach(function(h){var d=document.createElement('div');d.className='h-item';var m=h.meaning.match(/^(\w+\.?)\s*(.*)/);d.innerHTML='<span class="h-word">'+h.word+'</span><span class="h-zh">'+(m?m[2]:h.meaning)+'</span>';historyList.appendChild(d)})}
+document.querySelectorAll('.news-card p:not(.wim):not(.source), .news-card h3').forEach(function(el){el.addEventListener('click',function(e){var sel=window.getSelection();if(sel.toString().trim())return;var range=document.caretRangeFromPoint(e.clientX,e.clientY);if(!range)return;var tn=range.startContainer;if(tn.nodeType!==Node.TEXT_NODE)return;var text=tn.textContent,off=range.startOffset,start=off;while(start>0&&/[\w'-]/.test(text[start-1]))start--;var end=off;while(end<text.length&&/[\w'-]/.test(text[end]))end++;var w=text.slice(start,end).trim();if(!w||w.length<2)return;var r=lookup(w);if(!r){hidePopover();return}if(activeWordEl)activeWordEl.classList.remove('active');var span=document.createElement('span');span.className='lookup-word active';span.textContent=w;var before=text.slice(0,start),after=text.slice(end);var p=tn.parentNode;p.insertBefore(document.createTextNode(before),tn);p.insertBefore(span,tn);p.insertBefore(document.createTextNode(after),tn);p.removeChild(tn);activeWordEl=span;setTimeout(function(){if(activeWordEl===span)span.classList.remove('active')},3000);var rect=span.getBoundingClientRect();showPopover(rect.left+rect.width/2,rect.top,r.word,r.meaning);addHistory(r.word,r.meaning)})});
+document.addEventListener('mouseup',function(e){setTimeout(function(){var sel=window.getSelection();var text=sel.toString().trim();if(!text||text.length<2||text.length>40){selToolbar.classList.remove('visible');return}var n=sel.anchorNode,ok=false;while(n){if(n.classList&&n.classList.contains('news-card')){ok=true;break}n=n.parentNode}if(!ok){selToolbar.classList.remove('visible');return}var rect=sel.getRangeAt(0).getBoundingClientRect();selWordSpan.textContent=text;var l=rect.left+rect.width/2-selToolbar.offsetWidth/2,t=rect.bottom+8;if(l<10)l=10;if(l+selToolbar.offsetWidth>window.innerWidth-10)l=window.innerWidth-selToolbar.offsetWidth-10;selToolbar.style.left=l+'px';selToolbar.style.top=t+'px';selToolbar.classList.add('visible');selToolbar._st=text},10)});
+selToolbar.addEventListener('click',function(){var text=selToolbar._st;if(!text)return;var pk=text.toLowerCase(),r=null;if(DICT[pk])r={word:text,meaning:DICT[pk]};else{var ws=text.split(/\s+/);for(var i=0;i<ws.length;i++){r=lookup(ws[i]);if(r)break}}if(r){var rect=selToolbar.getBoundingClientRect();showPopover(rect.left+rect.width/2,rect.top,r.word,r.meaning);addHistory(r.word,r.meaning)}selToolbar.classList.remove('visible');window.getSelection().removeAllRanges()});
+document.addEventListener('click',function(e){if(e.target.closest('.news-card'))return;if(popover.contains(e.target))return;if(e.target===selToolbar||selToolbar.contains(e.target))return;if(e.target.closest('#history-panel')||e.target.closest('#sidebar'))return;popoverTimer=setTimeout(hidePopover,200)});
+popover.addEventListener('mouseenter',function(){if(popoverTimer){clearTimeout(popoverTimer);popoverTimer=null}});
+popover.addEventListener('mouseleave',function(){popoverTimer=setTimeout(hidePopover,300)});
+popClose.addEventListener('click',function(e){e.stopPropagation();hidePopover()});
+window.addEventListener('scroll',function(){hidePopover();selToolbar.classList.remove('visible')},{passive:true});
+historyToggle.addEventListener('click',function(e){e.stopPropagation();renderHistory();historyList.classList.toggle('open')});
+document.addEventListener('click',function(e){if(!historyList.contains(e.target)&&e.target!==historyToggle&&!historyToggle.contains(e.target))historyList.classList.remove('open')});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){hidePopover();selToolbar.classList.remove('visible');historyList.classList.remove('open')}});
+// Sidebar toggle (mobile overlay)
+(function(){
+  var sb=document.getElementById('sidebar'),st=document.getElementById('sidebar-toggle'),bd=document.getElementById('sidebar-backdrop');
+  function openSb(){sb.classList.add('open');bd.classList.add('visible');document.body.style.overflow='hidden'}
+  function closeSb(){sb.classList.remove('open');bd.classList.remove('visible');document.body.style.overflow=''}
+  st.addEventListener('click',function(e){e.stopPropagation();sb.classList.contains('open')?closeSb():openSb()});
+  bd.addEventListener('click',closeSb);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&sb.classList.contains('open'))closeSb()});
+  // Close sidebar when a date link is clicked on mobile
+  sb.addEventListener('click',function(e){if(window.innerWidth<=760&&e.target.classList.contains('date-link'))closeSb()});
+  window.addEventListener('resize',function(){if(window.innerWidth>760)closeSb()});
+})();
+// Sidebar archive loader
+(function(){
+  var sd=document.getElementById('sidebar-dates');
+  fetch('/daily-en-news-cloud/archive/index.json',{cache:'no-cache'}).then(function(r){return r.json()}).then(function(dates){
+    if(!dates.length){sd.innerHTML='<p>No archived editions yet.</p>';return}
+    var today='2026-08-18';sd.innerHTML='';
+    dates.forEach(function(d){var a=document.createElement('a');a.className='date-link';a.href='/daily-en-news-cloud/archive/'+d+'.html';a.textContent=d;if(d===today)a.classList.add('active');sd.appendChild(a)})
+  }).catch(function(){sd.innerHTML='<p>Archive index loading...</p>'})
+})();
+updateBadge();
+</script>
+</body>
+</html>
