@@ -500,7 +500,7 @@ def update_archive(html: str, today: str = TODAY):
             dates = json.load(f)
     if today not in dates:
         dates.append(today)
-        dates.sort(reverse=True)   # 最新日期在最上
+    dates.sort(reverse=True)   # 最新日期在最上（每次写回前都重排）
     with open(idx_path, "w") as f:
         json.dump(dates, f)
     print(f"  Archive index updated: {len(dates)} entries")
