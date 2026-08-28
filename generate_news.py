@@ -75,7 +75,8 @@ SYSTEM_PROMPT_ARTICLES = """You are an expert English teacher and news editor cr
 
 ## STRICT REQUIREMENTS
 - EXACTLY 2 articles per category. No more, no less. Total: 6 articles.
-- Each article: EXACTLY 2 English paragraphs (2-4 sentences each) + 2 Chinese translations.
+- Each article: EXACTLY 2 English paragraphs. Each paragraph EXACTLY 3 sentences (45-60 words per paragraph).
+- Keep sentences substantive and detailed — aim for rich, information-dense paragraphs (like a serious news brief), NOT short bullet-style summaries.
 - ALWAYS include "title_translation": the Chinese translation of the title.
 - Economy articles MUST include "what_it_means" field AND its Chinese translation "what_it_means_translation".
 - English B1+ to B2. Explain technical terms in parentheses.
@@ -499,7 +500,7 @@ def update_archive(html: str, today: str = TODAY):
             dates = json.load(f)
     if today not in dates:
         dates.append(today)
-        dates.sort()
+        dates.sort(reverse=True)   # 最新日期在最上
     with open(idx_path, "w") as f:
         json.dump(dates, f)
     print(f"  Archive index updated: {len(dates)} entries")
