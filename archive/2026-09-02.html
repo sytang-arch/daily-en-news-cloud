@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Today's US News — Wednesday, September 02, 2026 | English Reading Practice</title>
+<style>
+  :root{
+    --bg:#faf9f7;--card-bg:#fff;--text:#2d2d2d;--text-light:#5a5a5a;--accent-p:#b22234;--accent-e:#1a5f8a;--accent-r:#2d7d46;
+    --gold:#b7933a;--border:#e8e4df;--tag-bg:#f0ede8;--shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+    --shadow-lg:0 12px 40px rgba(0,0,0,.12);--radius:10px;--sidebar-w:200px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:Georgia,'Times New Roman',serif;background:var(--bg);color:var(--text);line-height:1.8;min-height:100vh;padding-left:var(--sidebar-w)}
+  #sidebar{
+    position:fixed;left:0;top:0;width:var(--sidebar-w);height:100vh;background:#2c2c2c;color:#ccc;
+    overflow-y:auto;padding:20px 0;z-index:100;font-family:-apple-system,sans-serif;font-size:.82rem;
+    transition:transform .25s ease
+  }
+  #sidebar h3{color:#fff;font-size:.85rem;padding:8px 16px;border-bottom:1px solid #444;margin-bottom:8px;text-align:center}
+  #sidebar .date-link{display:block;padding:6px 16px;color:#aaa;text-decoration:none;transition:all .15s;border-left:3px solid transparent}
+  #sidebar .date-link:hover{color:#fff;background:#3a3a3a;border-left-color:var(--gold)}
+  #sidebar .date-link.active{color:#fff;background:#3a3a3a;border-left-color:var(--gold);font-weight:600}
+  #sidebar .no-archive{padding:16px;color:#666;font-size:.78rem;text-align:center}
+  #main{margin:0 auto;max-width:780px;padding:32px 28px 60px}
+  header{text-align:center;padding:36px 0 28px;border-bottom:2px solid var(--border);margin-bottom:32px}
+  header h1{font-size:1.75rem;font-weight:700;color:#1a1a1a}
+  header .date{font-size:.9rem;color:var(--text-light)}
+  .meta-bar{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-top:14px;font-size:.82rem;color:var(--text-light)}
+  .meta-bar span{background:var(--tag-bg);padding:4px 14px;border-radius:20px}
+  .section{margin-bottom:40px}
+  .section-title{font-size:1.25rem;font-weight:700;margin-bottom:16px;padding-bottom:6px;border-bottom:3px solid;display:flex;align-items:center;gap:8px}
+  .section-title.politics{color:var(--accent-p);border-color:var(--accent-p)}
+  .section-title.economy{color:var(--accent-e);border-color:var(--accent-e)}
+  .section-title.research{color:var(--accent-r);border-color:var(--accent-r)}
+  .news-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:22px 26px;margin-bottom:16px;box-shadow:var(--shadow);transition:box-shadow .3s,border-color .3s}
+  .news-card:hover{box-shadow:0 3px 12px rgba(0,0,0,.08);border-color:#d8d2c8}
+  .news-card h3{font-size:1.08rem;font-weight:700;margin-bottom:10px;line-height:1.45}
+  .news-card p{font-size:.95rem;color:var(--text-light);margin-bottom:12px;text-align:justify}
+  .news-card .source{font-size:.78rem;color:#999;font-style:italic}
+  .news-card .wim{color:#8a6d20;font-size:.88rem;padding:6px 0 0}
+  .trans-toggle{margin:8px 0 12px;border:1px solid #e0d8c0;border-radius:8px;overflow:hidden}
+  .trans-toggle summary{padding:8px 14px;background:#faf6ec;cursor:pointer;font-size:.85rem;color:#8a6d20;font-weight:600;user-select:none}
+  .trans-toggle .trans-content{padding:12px 16px;background:#fffbee;color:#5a4a2a;font-size:.88rem;line-height:1.8}
+  .trans-toggle .trans-content p{color:#5a4a2a!important;margin-bottom:8px!important}
+  .cloud-badge{display:inline-block;background:#e8f5e9;color:#2d7d46;font-size:.7rem;padding:2px 10px;border-radius:10px;margin-left:8px;vertical-align:middle}
+  .tips{background:#f4f9ff;border-radius:var(--radius);padding:16px 22px;margin-bottom:32px;font-size:.88rem;color:#3a5a7c;line-height:1.7;display:flex;align-items:flex-start;gap:12px}
+  .tips .icon{font-size:1.4rem;flex-shrink:0}
+  .lookup-word{cursor:pointer;border-bottom:1.5px dotted transparent;transition:border-color .2s,background .2s;border-radius:2px;padding:0 1px}
+  .lookup-word:hover{border-bottom-color:var(--gold);background:rgba(183,147,58,.08)}
+  .lookup-word.active{background:rgba(183,147,58,.18);border-bottom-color:var(--gold)}
+  #word-popover{position:fixed;z-index:9999;background:#fffef9;border:1px solid #d8d0b8;border-radius:12px;box-shadow:var(--shadow-lg);padding:18px 22px;min-width:200px;max-width:320px;opacity:0;transform:translateY(8px) scale(.96);transition:opacity .2s cubic-bezier(.16,1,.3,1),transform .25s cubic-bezier(.16,1,.3,1);pointer-events:none;font-family:-apple-system,sans-serif;word-break:break-word}
+  #word-popover.visible{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+  #word-popover .pop-word{font-size:1.25rem;font-weight:700;color:#1a1a1a;margin-bottom:4px;font-family:Georgia,serif}
+  #word-popover .pop-pos{font-size:.75rem;color:#999;text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px}
+  #word-popover .pop-meaning{font-size:.92rem;color:#444;line-height:1.5;padding:8px 12px;background:#faf6ec;border-radius:6px;border-left:3px solid var(--gold)}
+  #word-popover .pop-meaning .zh{color:#6b4c1e;font-weight:600}
+  #word-popover .pop-close{position:absolute;top:8px;right:10px;width:24px;height:24px;border:none;background:none;cursor:pointer;font-size:1rem;color:#bbb;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:color .2s,background .2s}
+  #word-popover .pop-close:hover{color:#666;background:#f0ede8}
+  #sel-toolbar{position:fixed;z-index:9998;background:#2d2d2d;color:#fff;border-radius:8px;padding:6px 14px;font-size:.82rem;font-family:-apple-system,sans-serif;cursor:pointer;opacity:0;transform:translateY(6px);transition:opacity .18s,transform .2s;pointer-events:none;box-shadow:0 6px 20px rgba(0,0,0,.25);white-space:nowrap}
+  #sel-toolbar.visible{opacity:1;transform:translateY(0);pointer-events:auto}
+  #sel-toolbar:hover{background:#3d3d3d}
+  #history-panel{position:fixed;right:24px;bottom:80px;z-index:9990;display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+  #history-toggle{width:44px;height:44px;border-radius:50%;background:#fff;border:1px solid var(--border);box-shadow:0 2px 12px rgba(0,0,0,.08);cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;transition:all .2s;position:relative}
+  #history-toggle:hover{border-color:var(--gold);box-shadow:0 4px 16px rgba(0,0,0,.12)}
+  #history-badge{position:absolute;top:-4px;right:-4px;background:var(--gold);color:#fff;font-size:.65rem;font-family:-apple-system,sans-serif;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 4px;opacity:0;transform:scale(0);transition:all .3s cubic-bezier(.16,1,.3,1)}
+  #history-badge.show{opacity:1;transform:scale(1)}
+  #history-list{background:#fffef9;border:1px solid #d8d0b8;border-radius:12px;box-shadow:var(--shadow-lg);padding:14px 16px;max-height:300px;overflow-y:auto;width:240px;font-family:-apple-system,sans-serif;font-size:.82rem;display:none;flex-direction:column;gap:8px}
+  #history-list.open{display:flex}
+  #history-list .h-item{display:flex;justify-content:space-between;align-items:center;padding:6px 8px;border-radius:6px;cursor:pointer;transition:background .15s;gap:8px}
+  #history-list .h-item:hover{background:#faf6ec}
+  #history-list .h-word{font-weight:600;color:#1a1a1a}
+  #history-list .h-zh{color:#888;font-size:.78rem}
+  #history-clear{text-align:center;font-size:.72rem;color:#bbb;cursor:pointer;padding:4px;border-radius:4px;transition:color .2s}
+  #history-clear:hover{color:#c0392b}
+  footer{text-align:center;padding:24px 0 0;border-top:1px solid var(--border);font-size:.78rem;color:#aaa;margin-top:8px}
+  .news-card p,.news-card h3{-webkit-tap-highlight-color:transparent}
+  #sidebar-toggle{display:none}
+  #sidebar-backdrop{display:none}
+  @media(max-width:760px){
+    body{padding-left:0}
+    #main{margin:0 auto;padding:20px 14px 40px}
+    .news-card{padding:16px 18px}
+    #history-panel{right:12px;bottom:60px}
+    #word-popover{max-width:260px}
+    #sidebar{
+      display:block;position:fixed;left:0;top:0;width:260px;height:100vh;height:100dvh;
+      z-index:300;transform:translateX(-100%);transition:transform .3s cubic-bezier(.4,0,.2,1);
+      box-shadow:4px 0 24px rgba(0,0,0,.3);overflow-y:auto;-webkit-overflow-scrolling:touch
+    }
+    #sidebar.open{transform:translateX(0)}
+    #sidebar-backdrop{
+      display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:299;
+      opacity:0;transition:opacity .3s ease
+    }
+    #sidebar-backdrop.visible{display:block;opacity:1}
+    #sidebar-toggle{
+      display:flex;position:fixed;top:12px;left:12px;z-index:298;
+      width:40px;height:40px;border-radius:50%;background:#2c2c2c;color:#fff;
+      border:none;font-size:1.3rem;cursor:pointer;align-items:center;justify-content:center;
+      box-shadow:0 2px 8px rgba(0,0,0,.25);transition:background .2s;-webkit-tap-highlight-color:transparent;
+      -webkit-user-select:none;user-select:none
+    }
+    #sidebar-toggle:hover{background:#3a3a3a}
+    #sidebar-toggle:active{background:#4a4a4a}
+  }
+  @media(pointer:coarse){.news-card p,.news-card h3{cursor:default}}
+</style>
+</head>
+<body>
+<button id="sidebar-toggle" aria-label="Toggle date archive">&#9776;</button>
+<div id="sidebar-backdrop"></div>
+<div id="sidebar">
+  <h3>&#128197; Past Editions</h3>
+  <div id="sidebar-dates" class="no-archive">Loading...</div>
+</div>
+<div id="main">
+<header>
+  <h1>Today's US News Brief <span class="cloud-badge">&#9729; CLOUD</span></h1>
+  <div class="date">Wednesday, September 02, 2026</div>
+  <div class="meta-bar">
+    <span>&#128214; ~30 min read</span><span>&#128272; TOEIC 600+</span><span>&#128451; Politics &middot; Economy &middot; Research</span>
+  </div>
+</header>
+<div class="tips">
+  <span class="icon">&#128161;</span>
+  <div>
+    <strong>Click any word</strong> to look up its Chinese meaning.
+    <strong>Click &ldquo;Chinese Translation&rdquo;</strong> under each article for full Chinese text.
+    Use the <strong>left sidebar</strong> to browse past editions.
+  </div>
+</div>
+<div class="section"><div class="section-title politics">&#127987; POLITICS</div>
+<div class="news-card">
+    <h3>1. Putin unleashes new fury on Ukraine as report exposes fear hanging over war’s end</h3>
+    <p>Russia launched nearly 1,500 drones in four days, according to Ukrainian officials, as Moscow aims to exhaust Ukraine's air defenses and civilian morale. Volodymyr Zelenskyy stated that the attacks, including daytime strikes on Kyiv, are designed to wear down the country. The intensified assault comes amid reports that Russian leadership fears an unfavorable end to the war.</p>
+<p>The drone barrage has disrupted daily life in the capital, forcing residents to shelter frequently and causing power outages. Analysts suggest that Moscow is trying to weaken Ukraine's resolve before potential peace negotiations. Meanwhile, Western allies have pledged additional air defense systems to help counter the relentless attacks.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>普京对乌克兰发动新一轮猛烈攻击，报告揭露战争结束前的恐惧阴影</p>
+<p>据乌克兰官员称，俄罗斯在四天内发射了近1500架无人机，旨在消耗乌克兰的防空系统和民众士气。泽连斯基表示，这些袭击（包括对基辅的白天打击）旨在拖垮国家。在报道称俄罗斯领导层担心战争以不利方式结束之际，攻击加剧。</p>
+<p>无人机袭击打乱了首都的日常生活，迫使居民频繁避难并导致停电。分析人士认为，莫斯科正试图在可能的和平谈判前削弱乌克兰的决心。与此同时，西方盟友承诺提供更多防空系统以帮助应对无情的攻击。</p>
+</div>
+</details>
+    <p class="source">Source: Fox News — 2026-08-31</p>
+  </div>
+<div class="news-card">
+    <h3>2. Retaliation on Kharg Island weighed as US-Iran hostilies reignite</h3>
+    <p>U.S.-Iran hostilities are escalating again as President Trump weighs possible retaliation targeting Iran's Kharg Island, a crucial oil-export hub in the Strait of Hormuz. The island handles nearly 90% of Iran's crude oil exports, making it a strategic target. Any strike could disrupt global oil supplies and raise prices significantly.</p>
+<p>The conflict risks widening across the Middle East, with Iranian officials threatening to close the Strait of Hormuz if attacked. The U.S. has increased its naval presence in the region as a deterrent. Diplomats are urging both sides to de-escalate, but no talks are currently scheduled.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>美伊敌对重新燃起，考虑对哈尔克岛进行报复</p>
+<p>随着特朗普总统考虑对伊朗在霍尔木兹海峡的重要石油出口枢纽哈尔克岛进行可能的报复，美伊敌对行动再次升级。该岛处理伊朗近90%的原油出口，使其成为战略目标。任何打击都可能扰乱全球石油供应并大幅推高价格。</p>
+<p>冲突有扩大至整个中东的风险，伊朗官员威胁称，如果遭到攻击，将关闭霍尔木兹海峡。美国已加强在该地区的海军存在以起到威慑作用。外交官敦促双方缓和局势，但目前尚未安排任何会谈。</p>
+</div>
+</details>
+    <p class="source">Source: Fox News — 2026-08-31</p>
+  </div>
+<div class="section-title economy">&#128176; ECONOMY</div>
+<div class="news-card">
+    <h3>3. Stock Market Today: Dow Skids, Oil Stocks Pop As Trump Says This On Iran; PG&E Plunges (Live Coverage)</h3>
+    <p>The Dow Jones index dropped on Monday as tensions between the U.S. and Iran escalated, while oil prices jumped due to supply concerns. Oil stocks like Exxon and Chevron gained as investors anticipated higher energy costs. In contrast, PG&E shares plunged after the utility announced a potential liability related to wildfires.</p>
+<p>Defense stocks lagged as investors rotated into energy sectors, reflecting uncertainty about the geopolitical situation. Analysts noted that the market is reacting to the possibility of supply disruptions in the Middle East. The volatility is expected to continue as investors monitor the latest developments.</p>
+<p class="wim">&#128161; <strong>What this means for you:</strong> This means that geopolitical events like U.S.-Iran tensions can quickly affect stock markets, especially oil prices and related company shares. Investors should watch for such news to make informed decisions.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>今日股市：道指下跌，特朗普就伊朗发表言论后石油股上涨；PG&E暴跌（实时报道）</p>
+<p>周一，随着美伊紧张局势升级，道琼斯指数下跌，而由于供应担忧，油价跳涨。埃克森和雪佛龙等石油股上涨，因为投资者预期能源成本上升。相比之下，PG&E股价暴跌，此前该公用事业公司宣布了与野火相关的潜在责任。</p>
+<p>随着投资者轮换至能源板块，国防股表现落后，反映出对地缘政治局势的不确定性。分析师指出，市场正在对中东供应中断的可能性做出反应。随着投资者关注最新进展，波动预计将持续。</p>
+<p class="trans-wim">&#128161; <strong>这意味着：</strong>这意味着美伊紧张等地缘政治事件会迅速影响股市，尤其是油价和相关公司股票。投资者应关注此类新闻以做出明智决策。</p>
+</div>
+</details>
+    <p class="source">Source: Investor's Business Daily — 2026-08-31</p>
+  </div>
+<div class="news-card">
+    <h3>4. Fuel supplier sues distributor for nearly $4M over gas allegedly sold at Trump-promoted Freedom Fuel stations</h3>
+    <p>Mansfield Oil has filed a lawsuit against KRSM, alleging that the distributor failed to pay nearly $4 million for more than 1.1 million gallons of fuel. The fuel was reportedly sold through stations branded as 'Freedom Fuel', which were promoted by former President Trump. The lawsuit claims breach of contract and seeks damages.</p>
+<p>This legal dispute highlights the risks in the fuel distribution business, especially when political figures are involved in branding. KRSM has not yet responded publicly to the allegations. Industry observers say such lawsuits can affect the reputation of the brands involved.</p>
+<p class="wim">&#128161; <strong>What this means for you:</strong> This means that business disputes can arise even with high-profile endorsements, and legal action is a way to resolve unpaid debts. It also shows how political branding can have commercial consequences.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>燃料供应商起诉分销商，索赔近400万美元，涉及在特朗普推广的“自由燃料”加油站销售的汽油</p>
+<p>曼斯菲尔德石油已对KRSM提起诉讼，指控该分销商未能支付超过110万加仑燃料的近400万美元款项。据报道，这些燃料通过以“自由燃料”为品牌的加油站销售，该品牌得到前总统特朗普的推广。诉讼声称违反合同并要求赔偿。</p>
+<p>这一法律纠纷凸显了燃料分销业务中的风险，尤其是在政治人物参与品牌推广的情况下。KRSM尚未公开回应这些指控。行业观察人士表示，此类诉讼可能影响相关品牌的声誉。</p>
+<p class="trans-wim">&#128161; <strong>这意味着：</strong>这意味着即使有高调的代言，商业纠纷也可能出现，而法律行动是解决未付债务的一种方式。这也表明政治品牌推广可能带来商业后果。</p>
+</div>
+</details>
+    <p class="source">Source: Fox Business — 2026-08-31</p>
+  </div>
+<div class="section-title research">&#128300; RESEARCH</div>
+<div class="news-card">
+    <h3>5. Physicists finally put Feynman's path integral to the test</h3>
+    <p>For nearly 80 years, physicists have relied on a thought experiment created by Richard Feynman to predict how quantum particles behave. The path integral approach suggests that particles take every possible path simultaneously, and the sum of these paths gives the probability of a particle's final position. For the first time, researchers in China have tested this trick directly in the lab.</p>
+<p>The experiment used a specially designed interferometer to measure the contributions of multiple paths. The results matched Feynman's predictions with high precision, confirming the theory's validity. This could lead to new insights in quantum computing and other technologies.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>物理学家终于对费曼路径积分进行了检验</p>
+<p>近80年来，物理学家一直依赖理查德·费曼提出的思想实验来预测量子粒子的行为。路径积分方法表明，粒子同时走所有可能的路径，而这些路径的总和给出了粒子最终位置的概率。中国的研究人员首次在实验室直接检验了这一技巧。</p>
+<p>该实验使用了一种特殊设计的干涉仪来测量多条路径的贡献。结果与费曼的预测高度吻合，证实了该理论的有效性。这可能为量子计算和其他技术带来新的见解。</p>
+</div>
+</details>
+    <p class="source">Source: Phys.org — 2026-08-31</p>
+  </div>
+<div class="news-card">
+    <h3>6. Scientists discover massive 'thermal anomaly' beneath the surface of Mars</h3>
+    <p>Scientists have discovered a massive 'thermal anomaly' beneath the surface of Mars, suggesting that the planet's interior is not as uniform as previously thought. The anomaly was detected using data from the InSight lander, which measured heat flow from the planet's interior. This finding challenges the assumption that planetary bodies are generally spherically symmetric.</p>
+<p>The anomaly indicates significant variations in temperature and composition deep within Mars. Researchers believe this could be due to ancient volcanic activity or differences in crustal thickness. Understanding these variations helps scientists learn more about Mars' geological history and its potential for habitability.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>科学家在火星表面下发现巨大“热异常”</p>
+<p>科学家在火星表面下发现了一个巨大的“热异常”，表明火星内部并非像以前认为的那样均匀。该异常是通过洞察号着陆器测量行星内部热流的数据发现的。这一发现挑战了行星体通常呈球对称的假设。</p>
+<p>该异常表明火星深处的温度和成分存在显著变化。研究人员认为，这可能是由于古老的火山活动或地壳厚度的差异所致。了解这些变化有助于科学家更多地了解火星的地质历史及其宜居潜力。</p>
+</div>
+</details>
+    <p class="source">Source: Space.com — 2026-08-31</p>
+  </div>
+</div>
+<footer>
+  <p>&#128218; Auto-generated via NewsAPI + DeepSeek | Cloud pipeline &mdash; GitHub Actions | Wednesday, September 02, 2026</p>
+</footer>
+</div>
+
+<div id="word-popover">
+  <button class="pop-close" id="pop-close-btn">&times;</button>
+  <div class="pop-word" id="pop-word"></div><div class="pop-pos" id="pop-pos"></div><div class="pop-meaning" id="pop-meaning"></div>
+</div>
+<div id="sel-toolbar">&#128269; Look up "<span id="sel-word"></span>"</div>
+<div id="history-panel">
+  <div id="history-list"><div id="history-clear">Clear all</div></div>
+  <button id="history-toggle" title="Lookup History">&#128214;<span id="history-badge">0</span></button>
+</div>
+
+<script>
+var DICT = {    "according":"adv. 根据",
+    "activity":"n. 活动",
+    "additional":"adj. 额外的",
+    "affect":"v. 影响",
+    "again":"adv. 再次",
+    "aims":"n. 目标",
+    "air":"n. 空气",
+    "allegations":"n. 指控",
+    "allegedly":"adv. 据称",
+    "alleging":"v. 指控",
+    "allies":"n. 盟友",
+    "amid":"prep. 在...之中",
+    "analysts":"n. 分析师",
+    "ancient":"adj. 古代的",
+    "announced":"v. 宣布",
+    "anomaly":"n. 异常",
+    "anomaly'":"n. 异常",
+    "anticipated":"v. 预期",
+    "approach":"n. 方法",
+    "assault":"n. 攻击",
+    "assumption":"n. 假设",
+    "attacked":"v. 攻击",
+    "attacks":"n. 攻击",
+    "barrage":"n. 弹幕",
+    "behave":"v. 表现",
+    "believe":"v. 相信",
+    "beneath":"prep. 在...之下",
+    "bodies":"n. 尸体",
+    "branded":"v. 品牌化",
+    "branding":"n. 品牌化",
+    "brands":"n. 品牌",
+    "breach":"n. 违反",
+    "business":"n. 商业",
+    "capital":"n. 资本",
+    "causing":"v. 引起",
+    "challenges":"n. 挑战",
+    "chevron":"n. 雪佛龙",
+    "china":"n. 中国",
+    "civilian":"adj. 平民的",
+    "claims":"n. 索赔",
+    "close":"v. 关闭",
+    "comes":"v. 来",
+    "composition":"n. 构成",
+    "computing":"n. 计算",
+    "concerns":"n. 担忧",
+    "confirming":"v. 确认",
+    "conflict":"n. 冲突",
+    "continue":"v. 继续",
+    "contract":"n. 合同",
+    "contrast":"n. 对比",
+    "contributions":"n. 贡献",
+    "costs":"n. 成本",
+    "counter":"n. 计数器",
+    "country":"n. 国家",
+    "coverage":"n. 覆盖",
+    "created":"v. 创造",
+    "crucial":"adj. 关键的",
+    "crude":"adj. 粗糙的",
+    "crustal":"adj. 地壳的",
+    "currently":"adv. 目前",
+    "daily":"adj. 每日的",
+    "damages":"n. 损害赔偿",
+    "data":"n. 数据",
+    "days":"n. 天",
+    "daytime":"n. 白天",
+    "de-escalate":"v. 缓和",
+    "deep":"adj. 深的",
+    "defense":"n. 防御",
+    "defenses":"n. 防御工事",
+    "designed":"v. 设计",
+    "detected":"v. 检测",
+    "deterrent":"n. 威慑",
+    "developments":"n. 发展",
+    "differences":"n. 差异",
+    "diplomats":"n. 外交官",
+    "directly":"adv. 直接地",
+    "discover":"v. 发现",
+    "discovered":"v. 发现",
+    "dispute":"n. 争端",
+    "disrupt":"v. 扰乱",
+    "disrupted":"v. 扰乱",
+    "disruptions":"n. 扰乱",
+    "distribution":"n. 分配",
+    "distributor":"n. 经销商",
+    "dow":"n. 道琼斯",
+    "drone":"n. 无人机",
+    "drones":"n. 无人机",
+    "dropped":"v. 下降",
+    "due":"adj. 到期的",
+    "east":"n. 东方",
+    "end":"n. 结束",
+    "energy":"n. 能源",
+    "escalated":"v. 升级",
+    "escalating":"v. 升级",
+    "especially":"adv. 尤其",
+    "exhaust":"n. 排气",
+    "expected":"v. 预期",
+    "experiment":"n. 实验",
+    "exports":"n. 出口",
+    "exposes":"v. 暴露",
+    "exxon":"n. 埃克森",
+    "failed":"v. 失败",
+    "fear":"n. 恐惧",
+    "fears":"n. 恐惧",
+    "feynman":"n. 费曼",
+    "figures":"n. 数字",
+    "filed":"v. 提交",
+    "final":"adj. 最终的",
+    "finally":"adv. 最终",
+    "finding":"n. 发现",
+    "first":"adj. 第一的",
+    "flow":"n. 流动",
+    "forcing":"v. 迫使",
+    "former":"adj. 以前的",
+    "four":"num. 四",
+    "freedom":"n. 自由",
+    "frequently":"adv. 频繁地",
+    "fuel":"n. 燃料",
+    "fuel'":"n. 燃料",
+    "fury":"n. 愤怒",
+    "gained":"v. 获得",
+    "gallons":"n. 加仑",
+    "gas":"n. 气体",
+    "generally":"adv. 通常",
+    "geological":"adj. 地质的",
+    "geopolitical":"adj. 地缘政治的",
+    "gives":"v. 给予",
+    "global":"adj. 全球的",
+    "habitability":"n. 可居住性",
+    "handles":"v. 处理",
+    "hanging":"v. 悬挂",
+    "heat":"n. 热",
+    "help":"v. 帮助",
+    "helps":"v. 帮助",
+    "high":"adj. 高的",
+    "higher":"adj. 更高的",
+    "highlights":"v. 强调",
+    "history":"n. 历史",
+    "hormuz":"n. 霍尔木兹",
+    "hostilies":"n. 敌对行动",
+    "hostilities":"n. 敌对行动",
+    "hub":"n. 中心",
+    "including":"prep. 包括",
+    "increased":"v. 增加",
+    "index":"n. 指数",
+    "indicates":"v. 表明",
+    "industry":"n. 工业",
+    "insight":"n. 洞察力",
+    "insights":"n. 洞察力",
+    "integral":"adj. 完整的",
+    "intensified":"v. 加剧",
+    "interferometer":"n. 干涉仪",
+    "interior":"n. 内部",
+    "investors":"n. 投资者",
+    "involved":"v. 涉及",
+    "iran":"n. 伊朗",
+    "iranian":"adj. 伊朗的",
+    "island":"n. 岛屿",
+    "jones":"n. 琼斯",
+    "jumped":"v. 跳跃",
+    "kharg":"n. 哈尔克",
+    "krsm":"n. 克拉斯姆",
+    "kyiv":"n. 基辅",
+    "lab":"n. 实验室",
+    "lagged":"v. 滞后",
+    "lander":"n. 着陆器",
+    "latest":"adj. 最新的",
+    "launched":"v. 发射",
+    "lawsuit":"n. 诉讼",
+    "lawsuits":"n. 诉讼",
+    "lead":"v. 领导",
+    "leadership":"n. 领导力",
+    "learn":"v. 学习",
+    "legal":"adj. 法律的",
+    "liability":"n. 责任",
+    "life":"n. 生活",
+    "like":"prep. 像",
+    "live":"v. 生活",
+    "making":"v. 制造",
+    "mansfield":"n. 曼斯菲尔德",
+    "market":"n. 市场",
+    "mars":"n. 火星",
+    "mars'":"n. 火星",
+    "massive":"adj. 巨大的",
+    "matched":"v. 匹配",
+    "meanwhile":"adv. 同时",
+    "measure":"v. 测量",
+    "measured":"v. 测量",
+    "middle":"adj. 中间的",
+    "million":"num. 百万",
+    "monday":"n. 星期一",
+    "monitor":"v. 监控",
+    "morale":"n. 士气",
+    "moscow":"n. 莫斯科",
+    "multiple":"adj. 多个的",
+    "naval":"adj. 海军的",
+    "nearly":"adv. 几乎",
+    "negotiations":"n. 谈判",
+    "new":"adj. 新的",
+    "noted":"v. 注意到",
+    "observers":"n. 观察者",
+    "officials":"n. 官员",
+    "oil":"n. 石油",
+    "oil-export":"n. 石油出口",
+    "outages":"n. 停电",
+    "particle":"n. 粒子",
+    "particles":"n. 粒子",
+    "path":"n. 路径",
+    "paths":"n. 路径",
+    "pay":"v. 支付",
+    "peace":"n. 和平",
+    "physicists":"n. 物理学家",
+    "planet":"n. 行星",
+    "planetary":"adj. 行星的",
+    "pledged":"v. 承诺",
+    "plunged":"v. 暴跌",
+    "plunges":"v. 暴跌",
+    "political":"adj. 政治的",
+    "pop":"v. 突然出现",
+    "position":"n. 位置",
+    "possibility":"n. 可能性",
+    "possible":"adj. 可能的",
+    "potential":"n. 潜力",
+    "power":"n. 力量",
+    "precision":"n. 精确",
+    "predict":"v. 预测",
+    "predictions":"n. 预测",
+    "presence":"n. 存在",
+    "president":"n. 总统",
+    "previously":"adv. 以前",
+    "prices":"n. 价格",
+    "probability":"n. 概率",
+    "promoted":"v. 促进",
+    "publicly":"adv. 公开地",
+    "put":"v. 放置",
+    "putin":"n. 普京",
+    "quantum":"n. 量子",
+    "raise":"v. 提高",
+    "reacting":"v. 反应",
+    "reflecting":"v. 反映",
+    "region":"n. 地区",
+    "reignite":"v. 重新点燃",
+    "related":"adj. 相关的",
+    "relentless":"adj. 无情的",
+    "relied":"v. 依赖",
+    "report":"n. 报告",
+    "reportedly":"adv. 据报道",
+    "reports":"n. 报告",
+    "reputation":"n. 声誉",
+    "researchers":"n. 研究人员",
+    "residents":"n. 居民",
+    "resolve":"v. 解决",
+    "responded":"v. 回应",
+    "results":"n. 结果",
+    "retaliation":"n. 报复",
+    "richard":"n. 理查德",
+    "risks":"n. 风险",
+    "rotated":"v. 旋转",
+    "russia":"n. 俄罗斯",
+    "russian":"adj. 俄罗斯的",
+    "say":"v. 说",
+    "says":"v. 说",
+    "scheduled":"v. 安排",
+    "scientists":"n. 科学家",
+    "sectors":"n. 部门",
+    "seeks":"v. 寻求",
+    "shares":"n. 股份",
+    "shelter":"n. 避难所",
+    "sides":"n. 方面",
+    "significant":"adj. 重要的",
+    "significantly":"adv. 显著地",
+    "simultaneously":"adv. 同时",
+    "situation":"n. 情况",
+    "skids":"n. 滑道",
+    "sold":"v. 出售",
+    "specially":"adv. 特别地",
+    "spherically":"adv. 球状地",
+    "stated":"v. 声明",
+    "stations":"n. 站",
+    "stock":"n. 股票",
+    "stocks":"n. 股票",
+    "strait":"n. 海峡",
+    "strategic":"adj. 战略的",
+    "strike":"v. 打击",
+    "strikes":"v. 打击",
+    "sues":"v. 起诉",
+    "suggest":"v. 建议",
+    "suggesting":"v. 建议",
+    "suggests":"v. 建议",
+    "sum":"n. 金额",
+    "supplier":"n. 供应商",
+    "supplies":"n. 供应品",
+    "supply":"n. 供应",
+    "surface":"n. 表面",
+    "symmetric":"adj. 对称的",
+    "systems":"n. 系统",
+    "take":"v. 采取",
+    "talks":"n. 会谈",
+    "target":"n. 目标",
+    "targeting":"v. 瞄准",
+    "technologies":"n. 技术",
+    "temperature":"n. 温度",
+    "tensions":"n. 紧张局势",
+    "test":"n. 测试",
+    "tested":"v. 测试",
+    "than":"conj. 比",
+    "theory":"n. 理论",
+    "thermal":"adj. 热的",
+    "thickness":"n. 厚度",
+    "thought":"n. 想法",
+    "threatening":"v. 威胁",
+    "time":"n. 时间",
+    "today":"adv. 今天",
+    "trick":"n. 诡计",
+    "trump":"n. 特朗普",
+    "trump-promoted":"adj. 特朗普推动的",
+    "trying":"v. 尝试",
+    "ukraine":"n. 乌克兰",
+    "ukrainian":"adj. 乌克兰的",
+    "uncertainty":"n. 不确定性",
+    "understanding":"n. 理解",
+    "unfavorable":"adj. 不利的",
+    "uniform":"adj. 均匀的",
+    "unleashes":"v. 释放",
+    "urging":"v. 敦促",
+    "us-iran":"adj. 美伊的",
+    "used":"v. 使用",
+    "using":"v. 使用",
+    "utility":"n. 公用事业",
+    "validity":"n. 有效性",
+    "variations":"n. 变化",
+    "volatility":"n. 波动性",
+    "volcanic":"adj. 火山的",
+    "volodymyr":"n. 弗拉基米尔",
+    "war":"n. 战争",
+    "weaken":"v. 削弱",
+    "wear":"v. 磨损",
+    "weighed":"v. 权衡",
+    "weighs":"v. 权衡",
+    "western":"adj. 西方的",
+    "widening":"v. 扩大",
+    "wildfires":"n. 野火",
+    "years":"n. 年",
+    "yet":"adv. 然而",
+    "zelenskyy":"n. 泽连斯基"
+};
+var popover=document.getElementById('word-popover'),popWord=document.getElementById('pop-word'),popPos=document.getElementById('pop-pos'),popMeaning=document.getElementById('pop-meaning'),popClose=document.getElementById('pop-close-btn'),selToolbar=document.getElementById('sel-toolbar'),selWordSpan=document.getElementById('sel-word'),historyList=document.getElementById('history-list'),historyToggle=document.getElementById('history-toggle'),historyBadge=document.getElementById('history-badge'),popoverTimer=null,activeWordEl=null,lookupHistory=[];
+try{var saved=localStorage.getItem('wb_cloud_v2_history');if(saved)lookupHistory=JSON.parse(saved);updateBadge()}catch(e){}
+function norm(w){
+  w=w.trim().toLowerCase().replace(/[.,;:!?()"']+$/g,'').replace(/^[.,;:!?()"']+/g,'').replace(/'s$/g,'');
+  if(!w||w.length<3)return w;
+  var candidates=[w];
+  // try word-form reduction when exact form not in dict (checked by lookup)
+  if(w.length>4&&w.endsWith('ing'))candidates.push(w.slice(0,-3),w.slice(0,-3)+'e');
+  if(w.endsWith('ied'))candidates.push(w.slice(0,-3)+'y');
+  if(w.endsWith('ed'))candidates.push(w.slice(0,-2),w.slice(0,-1));
+  if(w.endsWith('es')&&!w.endsWith('ses'))candidates.push(w.slice(0,-2));
+  if(w.endsWith('s')&&!w.endsWith('ss'))candidates.push(w.slice(0,-1));
+  for(var i=0;i<candidates.length;i++){
+    if(DICT[candidates[i]])return candidates[i];
+  }
+  return w;
+}
+function lookup(raw){var w=norm(raw);if(!w||w.length<2)return null;if(DICT[w])return{word:raw.trim(),meaning:DICT[w]};var o=raw.trim().toLowerCase().replace(/[^\w\s-]/g,'');if(DICT[o])return{word:raw.trim(),meaning:DICT[o]};return null}
+function showPopover(x,y,word,meaning){if(popoverTimer){clearTimeout(popoverTimer);popoverTimer=null}var m=meaning.match(/^(\w+\.?)\s*(.*)/);popWord.textContent=word;popPos.textContent=m?m[1]:'';popMeaning.innerHTML='<span class="zh">'+(m?m[2]:meaning)+'</span>';var pw=popover.offsetWidth,ph=popover.offsetHeight,l=x+12,t=y-ph-8;if(t<10)t=y+20;if(l+pw>window.innerWidth-10)l=x-pw-12;if(l<10)l=10;popover.style.left=l+'px';popover.style.top=t+'px';popover.classList.add('visible')}
+function hidePopover(){popover.classList.remove('visible')}
+function addHistory(word,meaning){lookupHistory=lookupHistory.filter(function(h){return h.word!==word});lookupHistory.unshift({word:word,meaning:meaning});if(lookupHistory.length>30)lookupHistory.pop();try{localStorage.setItem('wb_cloud_v2_history',JSON.stringify(lookupHistory))}catch(e){};updateBadge();renderHistory()}
+function updateBadge(){var c=lookupHistory.length;historyBadge.textContent=c;if(c>0)historyBadge.classList.add('show');else historyBadge.classList.remove('show')}
+function renderHistory(){historyList.innerHTML='';var cd=document.createElement('div');cd.id='history-clear';cd.textContent='Clear all';cd.onclick=function(){lookupHistory=[];localStorage.removeItem('wb_cloud_v2_history');updateBadge();renderHistory()};historyList.appendChild(cd);lookupHistory.forEach(function(h){var d=document.createElement('div');d.className='h-item';var m=h.meaning.match(/^(\w+\.?)\s*(.*)/);d.innerHTML='<span class="h-word">'+h.word+'</span><span class="h-zh">'+(m?m[2]:h.meaning)+'</span>';historyList.appendChild(d)})}
+document.querySelectorAll('.news-card p:not(.wim):not(.source), .news-card h3').forEach(function(el){el.addEventListener('click',function(e){var sel=window.getSelection();if(sel.toString().trim())return;var range=document.caretRangeFromPoint(e.clientX,e.clientY);if(!range)return;var tn=range.startContainer;if(tn.nodeType!==Node.TEXT_NODE)return;var text=tn.textContent,off=range.startOffset,start=off;while(start>0&&/[\w'-]/.test(text[start-1]))start--;var end=off;while(end<text.length&&/[\w'-]/.test(text[end]))end++;var w=text.slice(start,end).trim();if(!w||w.length<2)return;var r=lookup(w);if(!r){hidePopover();return}if(activeWordEl)activeWordEl.classList.remove('active');var span=document.createElement('span');span.className='lookup-word active';span.textContent=w;var before=text.slice(0,start),after=text.slice(end);var p=tn.parentNode;p.insertBefore(document.createTextNode(before),tn);p.insertBefore(span,tn);p.insertBefore(document.createTextNode(after),tn);p.removeChild(tn);activeWordEl=span;setTimeout(function(){if(activeWordEl===span)span.classList.remove('active')},3000);var rect=span.getBoundingClientRect();showPopover(rect.left+rect.width/2,rect.top,r.word,r.meaning);addHistory(r.word,r.meaning)})});
+document.addEventListener('mouseup',function(e){setTimeout(function(){var sel=window.getSelection();var text=sel.toString().trim();if(!text||text.length<2||text.length>40){selToolbar.classList.remove('visible');return}var n=sel.anchorNode,ok=false;while(n){if(n.classList&&n.classList.contains('news-card')){ok=true;break}n=n.parentNode}if(!ok){selToolbar.classList.remove('visible');return}var rect=sel.getRangeAt(0).getBoundingClientRect();selWordSpan.textContent=text;var l=rect.left+rect.width/2-selToolbar.offsetWidth/2,t=rect.bottom+8;if(l<10)l=10;if(l+selToolbar.offsetWidth>window.innerWidth-10)l=window.innerWidth-selToolbar.offsetWidth-10;selToolbar.style.left=l+'px';selToolbar.style.top=t+'px';selToolbar.classList.add('visible');selToolbar._st=text},10)});
+selToolbar.addEventListener('click',function(){var text=selToolbar._st;if(!text)return;var pk=text.toLowerCase(),r=null;if(DICT[pk])r={word:text,meaning:DICT[pk]};else{var ws=text.split(/\s+/);for(var i=0;i<ws.length;i++){r=lookup(ws[i]);if(r)break}}if(r){var rect=selToolbar.getBoundingClientRect();showPopover(rect.left+rect.width/2,rect.top,r.word,r.meaning);addHistory(r.word,r.meaning)}selToolbar.classList.remove('visible');window.getSelection().removeAllRanges()});
+document.addEventListener('click',function(e){if(e.target.closest('.news-card'))return;if(popover.contains(e.target))return;if(e.target===selToolbar||selToolbar.contains(e.target))return;if(e.target.closest('#history-panel')||e.target.closest('#sidebar'))return;popoverTimer=setTimeout(hidePopover,200)});
+popover.addEventListener('mouseenter',function(){if(popoverTimer){clearTimeout(popoverTimer);popoverTimer=null}});
+popover.addEventListener('mouseleave',function(){popoverTimer=setTimeout(hidePopover,300)});
+popClose.addEventListener('click',function(e){e.stopPropagation();hidePopover()});
+window.addEventListener('scroll',function(){hidePopover();selToolbar.classList.remove('visible')},{passive:true});
+historyToggle.addEventListener('click',function(e){e.stopPropagation();renderHistory();historyList.classList.toggle('open')});
+document.addEventListener('click',function(e){if(!historyList.contains(e.target)&&e.target!==historyToggle&&!historyToggle.contains(e.target))historyList.classList.remove('open')});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){hidePopover();selToolbar.classList.remove('visible');historyList.classList.remove('open')}});
+// Sidebar toggle (mobile overlay)
+(function(){
+  var sb=document.getElementById('sidebar'),st=document.getElementById('sidebar-toggle'),bd=document.getElementById('sidebar-backdrop');
+  function openSb(){sb.classList.add('open');bd.classList.add('visible');document.body.style.overflow='hidden'}
+  function closeSb(){sb.classList.remove('open');bd.classList.remove('visible');document.body.style.overflow=''}
+  st.addEventListener('click',function(e){e.stopPropagation();sb.classList.contains('open')?closeSb():openSb()});
+  bd.addEventListener('click',closeSb);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&sb.classList.contains('open'))closeSb()});
+  // Close sidebar when a date link is clicked on mobile
+  sb.addEventListener('click',function(e){if(window.innerWidth<=760&&e.target.classList.contains('date-link'))closeSb()});
+  window.addEventListener('resize',function(){if(window.innerWidth>760)closeSb()});
+})();
+// Sidebar archive loader
+(function(){
+  var sd=document.getElementById('sidebar-dates');
+  fetch('/daily-en-news-cloud/archive/index.json',{cache:'no-cache'}).then(function(r){return r.json()}).then(function(dates){
+    if(!dates.length){sd.innerHTML='<p>No archived editions yet.</p>';return}
+    var today='2026-09-02';sd.innerHTML='';
+    dates.forEach(function(d){var a=document.createElement('a');a.className='date-link';a.href='/daily-en-news-cloud/archive/'+d+'.html';a.textContent=d;if(d===today)a.classList.add('active');sd.appendChild(a)})
+  }).catch(function(){sd.innerHTML='<p>Archive index loading...</p>'})
+})();
+updateBadge();
+</script>
+</body>
+</html>
