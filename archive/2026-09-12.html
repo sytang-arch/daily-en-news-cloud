@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Today's US News — Saturday, September 12, 2026 | English Reading Practice</title>
+<style>
+  :root{
+    --bg:#faf9f7;--card-bg:#fff;--text:#2d2d2d;--text-light:#5a5a5a;--accent-p:#b22234;--accent-e:#1a5f8a;--accent-r:#2d7d46;
+    --gold:#b7933a;--border:#e8e4df;--tag-bg:#f0ede8;--shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+    --shadow-lg:0 12px 40px rgba(0,0,0,.12);--radius:10px;--sidebar-w:200px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:Georgia,'Times New Roman',serif;background:var(--bg);color:var(--text);line-height:1.8;min-height:100vh;padding-left:var(--sidebar-w)}
+  #sidebar{
+    position:fixed;left:0;top:0;width:var(--sidebar-w);height:100vh;background:#2c2c2c;color:#ccc;
+    overflow-y:auto;padding:20px 0;z-index:100;font-family:-apple-system,sans-serif;font-size:.82rem;
+    transition:transform .25s ease
+  }
+  #sidebar h3{color:#fff;font-size:.85rem;padding:8px 16px;border-bottom:1px solid #444;margin-bottom:8px;text-align:center}
+  #sidebar .date-link{display:block;padding:6px 16px;color:#aaa;text-decoration:none;transition:all .15s;border-left:3px solid transparent}
+  #sidebar .date-link:hover{color:#fff;background:#3a3a3a;border-left-color:var(--gold)}
+  #sidebar .date-link.active{color:#fff;background:#3a3a3a;border-left-color:var(--gold);font-weight:600}
+  #sidebar .no-archive{padding:16px;color:#666;font-size:.78rem;text-align:center}
+  #main{margin:0 auto;max-width:780px;padding:32px 28px 60px}
+  header{text-align:center;padding:36px 0 28px;border-bottom:2px solid var(--border);margin-bottom:32px}
+  header h1{font-size:1.75rem;font-weight:700;color:#1a1a1a}
+  header .date{font-size:.9rem;color:var(--text-light)}
+  .meta-bar{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-top:14px;font-size:.82rem;color:var(--text-light)}
+  .meta-bar span{background:var(--tag-bg);padding:4px 14px;border-radius:20px}
+  .section{margin-bottom:40px}
+  .section-title{font-size:1.25rem;font-weight:700;margin-bottom:16px;padding-bottom:6px;border-bottom:3px solid;display:flex;align-items:center;gap:8px}
+  .section-title.politics{color:var(--accent-p);border-color:var(--accent-p)}
+  .section-title.economy{color:var(--accent-e);border-color:var(--accent-e)}
+  .section-title.research{color:var(--accent-r);border-color:var(--accent-r)}
+  .news-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:22px 26px;margin-bottom:16px;box-shadow:var(--shadow);transition:box-shadow .3s,border-color .3s}
+  .news-card:hover{box-shadow:0 3px 12px rgba(0,0,0,.08);border-color:#d8d2c8}
+  .news-card h3{font-size:1.08rem;font-weight:700;margin-bottom:10px;line-height:1.45}
+  .news-card p{font-size:.95rem;color:var(--text-light);margin-bottom:12px;text-align:justify}
+  .news-card .source{font-size:.78rem;color:#999;font-style:italic}
+  .news-card .wim{color:#8a6d20;font-size:.88rem;padding:6px 0 0}
+  .trans-toggle{margin:8px 0 12px;border:1px solid #e0d8c0;border-radius:8px;overflow:hidden}
+  .trans-toggle summary{padding:8px 14px;background:#faf6ec;cursor:pointer;font-size:.85rem;color:#8a6d20;font-weight:600;user-select:none}
+  .trans-toggle .trans-content{padding:12px 16px;background:#fffbee;color:#5a4a2a;font-size:.88rem;line-height:1.8}
+  .trans-toggle .trans-content p{color:#5a4a2a!important;margin-bottom:8px!important}
+  .cloud-badge{display:inline-block;background:#e8f5e9;color:#2d7d46;font-size:.7rem;padding:2px 10px;border-radius:10px;margin-left:8px;vertical-align:middle}
+  .tips{background:#f4f9ff;border-radius:var(--radius);padding:16px 22px;margin-bottom:32px;font-size:.88rem;color:#3a5a7c;line-height:1.7;display:flex;align-items:flex-start;gap:12px}
+  .tips .icon{font-size:1.4rem;flex-shrink:0}
+  .lookup-word{cursor:pointer;border-bottom:1.5px dotted transparent;transition:border-color .2s,background .2s;border-radius:2px;padding:0 1px}
+  .lookup-word:hover{border-bottom-color:var(--gold);background:rgba(183,147,58,.08)}
+  .lookup-word.active{background:rgba(183,147,58,.18);border-bottom-color:var(--gold)}
+  #word-popover{position:fixed;z-index:9999;background:#fffef9;border:1px solid #d8d0b8;border-radius:12px;box-shadow:var(--shadow-lg);padding:18px 22px;min-width:200px;max-width:320px;opacity:0;transform:translateY(8px) scale(.96);transition:opacity .2s cubic-bezier(.16,1,.3,1),transform .25s cubic-bezier(.16,1,.3,1);pointer-events:none;font-family:-apple-system,sans-serif;word-break:break-word}
+  #word-popover.visible{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+  #word-popover .pop-word{font-size:1.25rem;font-weight:700;color:#1a1a1a;margin-bottom:4px;font-family:Georgia,serif}
+  #word-popover .pop-pos{font-size:.75rem;color:#999;text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px}
+  #word-popover .pop-meaning{font-size:.92rem;color:#444;line-height:1.5;padding:8px 12px;background:#faf6ec;border-radius:6px;border-left:3px solid var(--gold)}
+  #word-popover .pop-meaning .zh{color:#6b4c1e;font-weight:600}
+  #word-popover .pop-close{position:absolute;top:8px;right:10px;width:24px;height:24px;border:none;background:none;cursor:pointer;font-size:1rem;color:#bbb;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:color .2s,background .2s}
+  #word-popover .pop-close:hover{color:#666;background:#f0ede8}
+  #sel-toolbar{position:fixed;z-index:9998;background:#2d2d2d;color:#fff;border-radius:8px;padding:6px 14px;font-size:.82rem;font-family:-apple-system,sans-serif;cursor:pointer;opacity:0;transform:translateY(6px);transition:opacity .18s,transform .2s;pointer-events:none;box-shadow:0 6px 20px rgba(0,0,0,.25);white-space:nowrap}
+  #sel-toolbar.visible{opacity:1;transform:translateY(0);pointer-events:auto}
+  #sel-toolbar:hover{background:#3d3d3d}
+  #history-panel{position:fixed;right:24px;bottom:80px;z-index:9990;display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+  #history-toggle{width:44px;height:44px;border-radius:50%;background:#fff;border:1px solid var(--border);box-shadow:0 2px 12px rgba(0,0,0,.08);cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;transition:all .2s;position:relative}
+  #history-toggle:hover{border-color:var(--gold);box-shadow:0 4px 16px rgba(0,0,0,.12)}
+  #history-badge{position:absolute;top:-4px;right:-4px;background:var(--gold);color:#fff;font-size:.65rem;font-family:-apple-system,sans-serif;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 4px;opacity:0;transform:scale(0);transition:all .3s cubic-bezier(.16,1,.3,1)}
+  #history-badge.show{opacity:1;transform:scale(1)}
+  #history-list{background:#fffef9;border:1px solid #d8d0b8;border-radius:12px;box-shadow:var(--shadow-lg);padding:14px 16px;max-height:300px;overflow-y:auto;width:240px;font-family:-apple-system,sans-serif;font-size:.82rem;display:none;flex-direction:column;gap:8px}
+  #history-list.open{display:flex}
+  #history-list .h-item{display:flex;justify-content:space-between;align-items:center;padding:6px 8px;border-radius:6px;cursor:pointer;transition:background .15s;gap:8px}
+  #history-list .h-item:hover{background:#faf6ec}
+  #history-list .h-word{font-weight:600;color:#1a1a1a}
+  #history-list .h-zh{color:#888;font-size:.78rem}
+  #history-clear{text-align:center;font-size:.72rem;color:#bbb;cursor:pointer;padding:4px;border-radius:4px;transition:color .2s}
+  #history-clear:hover{color:#c0392b}
+  footer{text-align:center;padding:24px 0 0;border-top:1px solid var(--border);font-size:.78rem;color:#aaa;margin-top:8px}
+  .news-card p,.news-card h3{-webkit-tap-highlight-color:transparent}
+  #sidebar-toggle{display:none}
+  #sidebar-backdrop{display:none}
+  @media(max-width:760px){
+    body{padding-left:0}
+    #main{margin:0 auto;padding:20px 14px 40px}
+    .news-card{padding:16px 18px}
+    #history-panel{right:12px;bottom:60px}
+    #word-popover{max-width:260px}
+    #sidebar{
+      display:block;position:fixed;left:0;top:0;width:260px;height:100vh;height:100dvh;
+      z-index:300;transform:translateX(-100%);transition:transform .3s cubic-bezier(.4,0,.2,1);
+      box-shadow:4px 0 24px rgba(0,0,0,.3);overflow-y:auto;-webkit-overflow-scrolling:touch
+    }
+    #sidebar.open{transform:translateX(0)}
+    #sidebar-backdrop{
+      display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:299;
+      opacity:0;transition:opacity .3s ease
+    }
+    #sidebar-backdrop.visible{display:block;opacity:1}
+    #sidebar-toggle{
+      display:flex;position:fixed;top:12px;left:12px;z-index:298;
+      width:40px;height:40px;border-radius:50%;background:#2c2c2c;color:#fff;
+      border:none;font-size:1.3rem;cursor:pointer;align-items:center;justify-content:center;
+      box-shadow:0 2px 8px rgba(0,0,0,.25);transition:background .2s;-webkit-tap-highlight-color:transparent;
+      -webkit-user-select:none;user-select:none
+    }
+    #sidebar-toggle:hover{background:#3a3a3a}
+    #sidebar-toggle:active{background:#4a4a4a}
+  }
+  @media(pointer:coarse){.news-card p,.news-card h3{cursor:default}}
+</style>
+</head>
+<body>
+<button id="sidebar-toggle" aria-label="Toggle date archive">&#9776;</button>
+<div id="sidebar-backdrop"></div>
+<div id="sidebar">
+  <h3>&#128197; Past Editions</h3>
+  <div id="sidebar-dates" class="no-archive">Loading...</div>
+</div>
+<div id="main">
+<header>
+  <h1>Today's US News Brief <span class="cloud-badge">&#9729; CLOUD</span></h1>
+  <div class="date">Saturday, September 12, 2026</div>
+  <div class="meta-bar">
+    <span>&#128214; ~30 min read</span><span>&#128272; TOEIC 600+</span><span>&#128451; Politics &middot; Economy &middot; Research</span>
+  </div>
+</header>
+<div class="tips">
+  <span class="icon">&#128161;</span>
+  <div>
+    <strong>Click any word</strong> to look up its Chinese meaning.
+    <strong>Click &ldquo;Chinese Translation&rdquo;</strong> under each article for full Chinese text.
+    Use the <strong>left sidebar</strong> to browse past editions.
+  </div>
+</div>
+<div class="section"><div class="section-title politics">&#127987; POLITICS</div>
+<div class="news-card">
+    <h3>1. Appeals Court Rejects Trump Request to Lift Block on Postal Service Rule for Mail Ballots</h3>
+    <p>A federal appeals court on Thursday denied the Trump administration's request to lift a lower court order that had blocked new Postal Service rules for mail ballots. The rules would have taken effect before the midterm elections in November. The appeals court said the changes could cause confusion for voters who plan to vote by mail.</p>
+<p>The lower court had paused the rules after states and voting rights groups sued, arguing that the Postal Service was not created to set election policy. The Trump administration argued the rules were needed to prevent fraud, but critics said they would slow down mail delivery. The case is likely to continue in court in the coming weeks.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>上诉法院驳回特朗普请求，维持邮寄选票邮政新规禁令</p>
+<p>周四，一家联邦上诉法院驳回了特朗普政府的请求，拒绝解除下级法院对邮政局邮寄选票新规的禁令。这些规定原本将在11月中期选举前生效。上诉法院表示，这些变化可能会给计划邮寄投票的选民带来困惑。</p>
+<p>下级法院在多个州和投票权组织提起诉讼后暂停了这些规定，他们认为邮政局并非为制定选举政策而设立。特朗普政府辩称这些规定是为了防止舞弊，但批评者称它们会减慢邮件投递速度。此案可能会在未来几周继续审理。</p>
+</div>
+</details>
+    <p class="source">Source: CBS News — 2026-09-10</p>
+  </div>
+<div class="news-card">
+    <h3>2. Supreme Court Blocks Missouri's Attempt to Use Newly Drawn Republican Congressional Map</h3>
+    <p>The U.S. Supreme Court on Thursday blocked an attempt by a Republican state official in Missouri to use a newly drawn congressional map for this year's elections. The map would have likely given Republicans an advantage in several districts. The Court's order means the state may have to use an older map or a court-approved one instead.</p>
+<p>The dispute is part of a larger national fight over redistricting (the process of drawing voting district lines) after the 2020 census. In many states, courts have stepped in when maps are challenged as unfair. Missouri officials said they would review the decision and decide their next steps.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>最高法院阻止密苏里州使用新绘制的共和党国会选区图</p>
+<p>周四，美国最高法院阻止了密苏里州一名共和党州官员试图在今年选举中使用新绘制的国会选区图的尝试。该地图可能会让共和党在多个选区占据优势。最高法院的命令意味着该州可能不得不使用旧地图或法院批准的地图。</p>
+<p>这场争议是2020年人口普查后全国范围内关于重新划分选区（绘制投票区界线的过程）的更大斗争的一部分。在许多州，当地图被质疑不公平时，法院会介入。密苏里州官员表示他们将审查该裁决并决定下一步行动。</p>
+</div>
+</details>
+    <p class="source">Source: NBC News — 2026-09-10</p>
+  </div>
+<div class="section-title economy">&#128176; ECONOMY</div>
+<div class="news-card">
+    <h3>3. OpenAI Targets Work of Wall Street Junior Bankers with New ChatGPT for Financial Services</h3>
+    <p>OpenAI launched ChatGPT for Financial Services on Thursday, aiming at the labor-intensive research, modeling, and pitchbook tasks traditionally handled by junior bankers. The new tool can help draft documents, analyze financial data, and prepare presentations more quickly. OpenAI said the product is designed to assist, not replace, human workers.</p>
+<p>Banks have been testing AI tools to reduce costs and speed up deal work. Junior bankers often spend long hours on repetitive tasks like building spreadsheets and formatting pitchbooks (sales documents for clients). Analysts say the new product could change how banks train and staff their entry-level teams.</p>
+<p class="wim">&#128161; <strong>What this means for you:</strong> This launch shows how AI is moving into specialized professional work. For banks, it could mean fewer hours for junior staff on routine tasks, but also new questions about training and job roles. For workers, it is a reminder that AI skills are becoming more important in finance.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>OpenAI推出金融服务版ChatGPT，瞄准华尔街初级银行家的工作</p>
+<p>周四，OpenAI推出了金融服务版ChatGPT，瞄准传统上由初级银行家处理的研究、建模和推介材料等劳动密集型任务。这一新工具可以帮助更快地起草文件、分析财务数据和准备演示文稿。OpenAI表示，该产品旨在辅助而非取代人类员工。</p>
+<p>银行一直在测试人工智能工具以降低成本并加快交易工作。初级银行家经常花费大量时间在重复性任务上，比如制作电子表格和排版推介材料（给客户的销售文件）。分析人士表示，新产品可能会改变银行培训和配备初级团队的方式。</p>
+<p class="trans-wim">&#128161; <strong>这意味着：</strong>这次发布表明人工智能正在进入专业工作领域。对银行来说，这可能意味着初级员工在常规任务上花费的时间减少，但也带来了关于培训和职位的新问题。对员工来说，这提醒人们人工智能技能在金融领域正变得越来越重要。</p>
+</div>
+</details>
+    <p class="source">Source: CNBC — 2026-09-10</p>
+  </div>
+<div class="news-card">
+    <h3>4. Ford Announces $1 Billion Investment at Kentucky Plant Following DOT Criticism on China</h3>
+    <p>Ford Motor on Thursday announced a $1 billion investment to build a new paint shop at its important truck plant in Kentucky. The move comes after the Department of Transportation criticized the company's ties to China. Ford said the investment will create jobs and improve production quality at the plant.</p>
+<p>The Kentucky plant builds some of Ford's most profitable trucks, including the Super Duty. A new paint shop can help the company meet demand and reduce delays. The announcement is also seen as a response to political pressure to keep manufacturing and supply chains in the United States.</p>
+<p class="wim">&#128161; <strong>What this means for you:</strong> Ford's investment shows how political pressure and trade tensions can shape company decisions. By spending money in the U.S., Ford may improve its image and avoid criticism. For the local economy, the new paint shop could mean more jobs and stronger manufacturing activity.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>在交通部批评中国后，福特宣布在肯塔基工厂投资10亿美元</p>
+<p>周四，福特汽车宣布投资10亿美元，在其位于肯塔基州的重要卡车工厂建设新的涂装车间。此举是在交通部批评该公司与中国的关系之后做出的。福特表示，这笔投资将创造就业机会并提高工厂的生产质量。</p>
+<p>肯塔基工厂生产福特一些最赚钱的卡车，包括Super Duty。新的涂装车间可以帮助公司满足需求并减少延误。这一宣布也被视为对政治压力的回应，要求将制造业和供应链留在美国。</p>
+<p class="trans-wim">&#128161; <strong>这意味着：</strong>福特的投资表明政治压力和贸易紧张局势如何影响公司决策。通过在美国投资，福特可能改善其形象并避免批评。对当地经济来说，新涂装车间可能意味着更多就业和更强的制造业活动。</p>
+</div>
+</details>
+    <p class="source">Source: CNBC — 2026-09-10</p>
+  </div>
+<div class="section-title research">&#128300; RESEARCH</div>
+<div class="news-card">
+    <h3>5. First-Ever Adult Tyrannosaurus Rex Trackway Discovered in North Dakota Badlands</h3>
+    <p>Paleontologists have identified the first known trackway (a series of footprints) made by a full-grown Tyrannosaurus rex in the North Dakota badlands. The discovery was announced this week and includes several clear footprints preserved in rock. Scientists say the tracks provide rare evidence of how the giant dinosaur moved.</p>
+<p>The trackway was found in an area known for dinosaur fossils and is estimated to be about 66 million years old. Researchers used 3D scanning to study the prints without damaging them. The team plans to publish a detailed study and continue searching for more tracks in the region.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>北达科他州荒地首次发现成年霸王龙足迹</p>
+<p>古生物学家在北达科他州荒地发现了已知的第一条由成年霸王龙留下的足迹（一系列脚印）。这一发现于本周公布，包括几个清晰保存在岩石中的脚印。科学家表示，这些足迹为这种巨型恐龙的移动方式提供了罕见证据。</p>
+<p>这条足迹发现于以恐龙化石闻名的地区，估计约有6600万年历史。研究人员使用3D扫描来研究这些脚印而不损坏它们。团队计划发表详细研究，并继续在该地区寻找更多足迹。</p>
+</div>
+</details>
+    <p class="source">Source: CBS News — 2026-09-10</p>
+  </div>
+<div class="news-card">
+    <h3>6. Little Mercury May Be Shrinking Faster Than Scientists Expected</h3>
+    <p>A new study shows that Mercury, the smallest planet in our solar system, may be shrinking faster than expected. Scientists from the German Aerospace Center reported Thursday that Mercury's shrinkage may be 30% greater than previously believed. They say this represents a loss in diameter of several kilometers over billions of years.</p>
+<p>Mercury's surface is covered with wrinkles and cliffs called scarps, which form as the planet cools and contracts. The new findings suggest the cooling is still active and stronger than earlier models predicted. The research helps scientists better understand how small rocky planets change over time.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>小水星可能比科学家预期收缩得更快</p>
+<p>一项新研究表明，太阳系中最小的行星水星可能比预期收缩得更快。德国航空航天中心的科学家周四报告称，水星的收缩可能比之前认为的要大30%。他们表示，这意味着在数十亿年间直径损失了数公里。</p>
+<p>水星表面布满被称为断崖的皱纹和悬崖，这些是在行星冷却和收缩时形成的。新发现表明冷却仍在活跃，且比早期模型预测的更强。这项研究有助于科学家更好地理解小型岩石行星如何随时间变化。</p>
+</div>
+</details>
+    <p class="source">Source: Associated Press — 2026-09-10</p>
+  </div>
+</div>
+<footer>
+  <p>&#128218; Auto-generated via NewsAPI + DeepSeek | Cloud pipeline &mdash; GitHub Actions | Saturday, September 12, 2026</p>
+</footer>
+</div>
+
+<div id="word-popover">
+  <button class="pop-close" id="pop-close-btn">&times;</button>
+  <div class="pop-word" id="pop-word"></div><div class="pop-pos" id="pop-pos"></div><div class="pop-meaning" id="pop-meaning"></div>
+</div>
+<div id="sel-toolbar">&#128269; Look up "<span id="sel-word"></span>"</div>
+<div id="history-panel">
+  <div id="history-list"><div id="history-clear">Clear all</div></div>
+  <button id="history-toggle" title="Lookup History">&#128214;<span id="history-badge">0</span></button>
+</div>
+
+<script>
+var DICT = {    "active":"adj. 活跃的；积极的",
+    "administration":"n. 管理；行政；政府",
+    "adult":"n. 成年人 adj. 成年的",
+    "advantage":"n. 优势；有利条件",
+    "aerospace":"n. 航空航天（工业）",
+    "aiming":"v. 瞄准；旨在（aim的现在分词）",
+    "also":"adv. 也；而且",
+    "analysts":"n. 分析师（analyst的复数）",
+    "analyze":"v. 分析",
+    "announced":"v. 宣布（announce的过去式/过去分词）",
+    "announcement":"n. 公告；宣布",
+    "announces":"v. 宣布（announce的第三人称单数）",
+    "appeals":"n. 上诉；吸引力 v. 呼吁（appeal的第三人称单数）",
+    "area":"n. 地区；领域；面积",
+    "argued":"v. 争论；主张（argue的过去式/过去分词）",
+    "arguing":"v. 争论；主张（argue的现在分词）",
+    "assist":"v. 协助；帮助",
+    "attempt":"n./v. 尝试；试图",
+    "badlands":"n. 荒地；恶地（地名）",
+    "ballots":"n. 选票（ballot的复数）",
+    "bankers":"n. 银行家（banker的复数）",
+    "banks":"n. 银行（bank的复数）",
+    "believed":"v. 相信；认为（believe的过去式/过去分词）",
+    "better":"adj./adv. 更好的；更好地",
+    "billion":"n. 十亿",
+    "billions":"n. 数十亿",
+    "block":"n. 街区；块 v. 阻塞",
+    "blocked":"v. 阻塞；封锁（block的过去式/过去分词）",
+    "blocks":"n. 街区；块（block的复数）v. 阻塞（第三人称单数）",
+    "build":"v. 建造 n. 体格",
+    "building":"n. 建筑物 v. 建造（build的现在分词）",
+    "builds":"v. 建造（build的第三人称单数）",
+    "called":"v. 称为；打电话（call的过去式/过去分词）",
+    "case":"n. 案例；情况；案件",
+    "cause":"n. 原因；事业 v. 引起",
+    "census":"n. 人口普查",
+    "center":"n. 中心 v. 集中",
+    "chains":"n. 连锁店；链条（chain的复数）",
+    "challenged":"v. 挑战；质疑（challenge的过去式/过去分词）",
+    "change":"n./v. 改变；零钱",
+    "changes":"n. 变化（change的复数）v. 改变（第三人称单数）",
+    "chatgpt":"n. 聊天生成预训练转换器（OpenAI产品）",
+    "china":"n. 中国",
+    "clear":"adj. 清楚的 v. 清除",
+    "clients":"n. 客户（client的复数）",
+    "cliffs":"n. 悬崖（cliff的复数）",
+    "comes":"v. 来（come的第三人称单数）",
+    "coming":"v. 来（come的现在分词）adj. 即将到来的",
+    "company":"n. 公司；陪伴",
+    "confusion":"n. 混乱；困惑",
+    "congressional":"adj. 国会的",
+    "continue":"v. 继续",
+    "contracts":"n. 合同（contract的复数）v. 收缩（第三人称单数）",
+    "cooling":"n. 冷却 v. 冷却（cool的现在分词）",
+    "cools":"v. 冷却（cool的第三人称单数）",
+    "costs":"n. 成本；费用（cost的复数）v. 花费（第三人称单数）",
+    "court":"n. 法院；球场",
+    "court-approved":"adj. 法院批准的",
+    "courts":"n. 法院；球场（court的复数）",
+    "covered":"v. 覆盖；报道（cover的过去式/过去分词）",
+    "create":"v. 创造；创建",
+    "created":"v. 创造（create的过去式/过去分词）",
+    "criticism":"n. 批评；指责",
+    "criticized":"v. 批评（criticize的过去式/过去分词）",
+    "critics":"n. 批评家；评论家（critic的复数）",
+    "dakota":"n. 达科他（美国地名）",
+    "damaging":"adj. 有害的 v. 损害（damage的现在分词）",
+    "data":"n. 数据",
+    "deal":"n. 交易 v. 处理；经营",
+    "decide":"v. 决定",
+    "decision":"n. 决定；决策",
+    "delays":"n. 延误（delay的复数）v. 延误（第三人称单数）",
+    "delivery":"n. 交付；递送",
+    "demand":"n./v. 需求；要求",
+    "denied":"v. 否认；拒绝（deny的过去式/过去分词）",
+    "department":"n. 部门；系",
+    "designed":"v. 设计（design的过去式/过去分词）",
+    "detailed":"adj. 详细的 v. 详述（detail的过去式/过去分词）",
+    "diameter":"n. 直径",
+    "dinosaur":"n. 恐龙",
+    "discovered":"v. 发现（discover的过去式/过去分词）",
+    "discovery":"n. 发现",
+    "dispute":"n./v. 争议；纠纷",
+    "district":"n. 地区；区域",
+    "districts":"n. 地区（district的复数）",
+    "documents":"n. 文件（document的复数）",
+    "dot":"n. 点 v. 加点",
+    "draft":"n. 草稿；草案 v. 起草",
+    "drawing":"n. 图画；绘画",
+    "drawn":"v. 画；拉（draw的过去分词）",
+    "duty":"n. 职责；义务；关税",
+    "earlier":"adj./adv. 较早的；更早地",
+    "effect":"n. 影响；效果",
+    "election":"n. 选举",
+    "elections":"n. 选举（election的复数）",
+    "entry-level":"adj. 入门级的",
+    "estimated":"v. 估计（estimate的过去式/过去分词）",
+    "evidence":"n. 证据",
+    "expected":"v. 预期（expect的过去式/过去分词）",
+    "faster":"adj./adv. 更快的；更快地",
+    "federal":"adj. 联邦的",
+    "fight":"n./v. 战斗；斗争",
+    "financial":"adj. 金融的；财务的",
+    "findings":"n. 调查结果；发现（finding的复数）",
+    "first":"adj./adv. 第一；首先",
+    "first-ever":"adj. 首次的",
+    "following":"adj. 下列的 prep. 在……之后",
+    "footprints":"n. 足迹（footprint的复数）",
+    "ford":"n. 福特（汽车品牌/人名）",
+    "form":"n. 表格；形式 v. 形成",
+    "formatting":"n. 格式化 v. 格式化（format的现在分词）",
+    "fossils":"n. 化石（fossil的复数）",
+    "found":"v. 发现（find的过去式/过去分词）；建立",
+    "fraud":"n. 欺诈；诈骗",
+    "full-grown":"adj. 成年的；长成的",
+    "german":"adj. 德国的 n. 德国人；德语",
+    "giant":"adj. 巨大的 n. 巨人",
+    "given":"v. 给（give的过去分词）adj. 给定的",
+    "greater":"adj. 更大的",
+    "groups":"n. 团体；组（group的复数）",
+    "handled":"v. 处理（handle的过去式/过去分词）",
+    "help":"n./v. 帮助",
+    "helps":"v. 帮助（help的第三人称单数）",
+    "hours":"n. 小时（hour的复数）",
+    "human":"adj. 人类的 n. 人",
+    "identified":"v. 识别；确认（identify的过去式/过去分词）",
+    "important":"adj. 重要的",
+    "improve":"v. 改善；提高",
+    "includes":"v. 包括（include的第三人称单数）",
+    "including":"prep. 包括",
+    "instead":"adv. 代替；反而",
+    "investment":"n. 投资",
+    "jobs":"n. 工作（job的复数）",
+    "junior":"adj. 初级的；年少的 n. 大三学生",
+    "keep":"v. 保持；保留",
+    "kentucky":"n. 肯塔基（美国州名）",
+    "kilometers":"n. 千米；公里（kilometer的复数）",
+    "known":"adj. 已知的 v. 知道（know的过去分词）",
+    "labor-intensive":"adj. 劳动密集型的",
+    "larger":"adj. 更大的",
+    "launched":"v. 发射；推出（launch的过去式/过去分词）",
+    "lift":"v. 举起；提升 n. 电梯",
+    "like":"prep. 像 v. 喜欢",
+    "likely":"adj. 可能的 adv. 可能",
+    "lines":"n. 线路；线条（line的复数）",
+    "little":"adj. 小的；少的 adv. 很少",
+    "long":"adj. 长的 adv. 长久地",
+    "loss":"n. 损失；亏损",
+    "lower":"adj. 较低的 v. 降低",
+    "made":"v. 制造（make的过去式/过去分词）",
+    "mail":"n. 邮件 v. 邮寄",
+    "manufacturing":"n. 制造业 v. 制造（manufacture的现在分词）",
+    "map":"n. 地图 v. 绘制地图",
+    "maps":"n. 地图（map的复数）",
+    "means":"n. 手段；方法 v. 意味着（mean的第三人称单数）",
+    "meet":"v. 满足；遇见",
+    "mercury":"n. 水星；水银",
+    "midterm":"n./adj. 期中（的）；中期（的）",
+    "million":"n. 百万",
+    "missouri":"n. 密苏里（美国州名）",
+    "modeling":"n. 建模；模型制作",
+    "models":"n. 模型；模特（model的复数）",
+    "motor":"n. 马达；发动机 adj. 机动的",
+    "move":"v. 移动；搬家 n. 行动",
+    "moved":"v. 移动（move的过去式/过去分词）",
+    "national":"adj. 国家的；全国的",
+    "needed":"v. 需要（need的过去式/过去分词）",
+    "new":"adj. 新的",
+    "newly":"adv. 新近地；最近",
+    "next":"adj. 下一个的 adv. 接下来",
+    "north":"n. 北方 adj. 北方的",
+    "november":"n. 十一月",
+    "official":"adj. 官方的 n. 官员",
+    "officials":"n. 官员（official的复数）",
+    "often":"adv. 经常",
+    "old":"adj. 老的；旧的",
+    "older":"adj. 更老的；更旧的",
+    "one":"num. 一 pron. 一个人",
+    "openai":"n. 开放人工智能（公司名）",
+    "order":"n. 订单；命令 v. 订购",
+    "paint":"n. 油漆 v. 绘画",
+    "paleontologists":"n. 古生物学家（paleontologist的复数）",
+    "part":"n. 部分；零件",
+    "paused":"v. 暂停（pause的过去式/过去分词）",
+    "pitchbook":"n. 融资推介书（商业术语）",
+    "pitchbooks":"n. 融资推介书（pitchbook的复数）",
+    "plan":"n./v. 计划",
+    "planet":"n. 行星",
+    "planets":"n. 行星（planet的复数）",
+    "plans":"n. 计划（plan的复数）v. 计划（第三人称单数）",
+    "plant":"n. 工厂；植物 v. 种植",
+    "policy":"n. 政策；保险单",
+    "political":"adj. 政治的",
+    "postal":"adj. 邮政的",
+    "predicted":"v. 预测（predict的过去式/过去分词）",
+    "prepare":"v. 准备",
+    "presentations":"n. 演示；报告（presentation的复数）",
+    "preserved":"v. 保存；保护（preserve的过去式/过去分词）",
+    "pressure":"n. 压力 v. 施压",
+    "prevent":"v. 防止；预防",
+    "previously":"adv. 先前，以前",
+    "prints":"n. 印刷品；v. 打印（print的三单形式）",
+    "process":"n. 过程，流程；v. 处理",
+    "product":"n. 产品",
+    "production":"n. 生产，产量",
+    "profitable":"adj. 有利可图的，盈利的",
+    "provide":"v. 提供",
+    "publish":"v. 出版，发表",
+    "quality":"n. 质量，品质",
+    "quickly":"adv. 快速地",
+    "rare":"adj. 稀有的，罕见的",
+    "redistricting":"n. 重新划分选区",
+    "reduce":"v. 减少，降低",
+    "region":"n. 地区，区域",
+    "rejects":"v. 拒绝（reject的三单形式）；n. 废品",
+    "repetitive":"adj. 重复的",
+    "replace":"v. 替换，取代",
+    "reported":"v. 报告（report的过去式/过去分词）；adj. 据报道的",
+    "represents":"v. 代表（represent的三单形式）",
+    "republican":"adj. 共和党的；n. 共和党人",
+    "republicans":"n. 共和党人（复数）",
+    "request":"n./v. 请求，要求",
+    "research":"n./v. 研究，调查",
+    "researchers":"n. 研究人员（复数）",
+    "response":"n. 回应，响应",
+    "review":"n./v. 审查，回顾；评论",
+    "rex":"n. 国王（拉丁语）；专名（如T. rex霸王龙）",
+    "rights":"n. 权利（复数）",
+    "rock":"n. 岩石；v. 摇晃",
+    "rocky":"adj. 岩石的，多岩石的；摇晃的",
+    "rule":"n. 规则；v. 统治，裁定",
+    "rules":"n. 规则（复数）；v. 统治（rule的三单形式）",
+    "said":"v. 说（say的过去式/过去分词）",
+    "sales":"n. 销售（复数）",
+    "say":"v. 说",
+    "scanning":"n./v. 扫描",
+    "scarps":"n. 陡坡，悬崖（复数）",
+    "scientists":"n. 科学家（复数）",
+    "searching":"v. 搜索（search的现在分词）；n. 搜索",
+    "seen":"v. 看见（see的过去分词）",
+    "series":"n. 系列",
+    "service":"n. 服务",
+    "services":"n. 服务（复数）",
+    "set":"v. 设置；n. 一套",
+    "shop":"n. 商店；v. 购物",
+    "shows":"v. 显示（show的三单形式）；n. 节目（复数）",
+    "shrinkage":"n. 收缩，缩减",
+    "shrinking":"v. 收缩（shrink的现在分词）；adj. 收缩的",
+    "slow":"adj. 缓慢的；v. 减速",
+    "small":"adj. 小的",
+    "smallest":"adj. 最小的",
+    "solar":"adj. 太阳的，太阳能的",
+    "speed":"n. 速度；v. 加速",
+    "spend":"v. 花费",
+    "spreadsheets":"n. 电子表格（复数）",
+    "staff":"n. 员工，职员",
+    "state":"n. 州；状态；v. 陈述",
+    "states":"n. 州（复数）；v. 陈述（state的三单形式）",
+    "stepped":"v. 踏，走（step的过去式/过去分词）",
+    "steps":"n. 步骤（复数）",
+    "still":"adv. 仍然；adj. 静止的",
+    "street":"n. 街道",
+    "stronger":"adj. 更强的",
+    "study":"n./v. 研究，学习",
+    "sued":"v. 起诉（sue的过去式/过去分词）",
+    "suggest":"v. 建议，暗示",
+    "super":"adj. 超级的；adv. 非常",
+    "supply":"n./v. 供应",
+    "supreme":"adj. 最高的，至上的",
+    "surface":"n. 表面",
+    "system":"n. 系统",
+    "taken":"v. 拿，取（take的过去分词）",
+    "targets":"n. 目标（复数）；v. 以…为目标（target的三单形式）",
+    "tasks":"n. 任务（复数）",
+    "team":"n. 团队",
+    "teams":"n. 团队（复数）",
+    "testing":"n./v. 测试",
+    "than":"conj. 比",
+    "thursday":"n. 星期四",
+    "ties":"n. 领带；关系（复数）；v. 系（tie的三单形式）",
+    "time":"n. 时间",
+    "tool":"n. 工具",
+    "tools":"n. 工具（复数）",
+    "tracks":"n. 轨道；足迹（复数）；v. 追踪（track的三单形式）",
+    "trackway":"n. 轨道，路径",
+    "traditionally":"adv. 传统上",
+    "train":"n. 火车；v. 培训",
+    "transportation":"n. 运输",
+    "truck":"n. 卡车",
+    "trucks":"n. 卡车（复数）",
+    "trump":"n. 特朗普（姓氏）；v. 胜过",
+    "tyrannosaurus":"n. 霸王龙",
+    "understand":"v. 理解",
+    "unfair":"adj. 不公平的",
+    "united":"adj. 联合的，统一的",
+    "use":"v./n. 使用",
+    "used":"v. 使用（use的过去式/过去分词）；adj. 用过的",
+    "vote":"n./v. 投票",
+    "voters":"n. 选民（复数）",
+    "voting":"n./v. 投票",
+    "wall":"n. 墙",
+    "week":"n. 周，星期",
+    "weeks":"n. 周（复数）",
+    "work":"n./v. 工作",
+    "workers":"n. 工人（复数）",
+    "wrinkles":"n. 皱纹（复数）；v. 起皱（wrinkle的三单形式）",
+    "year":"n. 年",
+    "years":"n. 年（复数）"
+};
+var popover=document.getElementById('word-popover'),popWord=document.getElementById('pop-word'),popPos=document.getElementById('pop-pos'),popMeaning=document.getElementById('pop-meaning'),popClose=document.getElementById('pop-close-btn'),selToolbar=document.getElementById('sel-toolbar'),selWordSpan=document.getElementById('sel-word'),historyList=document.getElementById('history-list'),historyToggle=document.getElementById('history-toggle'),historyBadge=document.getElementById('history-badge'),popoverTimer=null,activeWordEl=null,lookupHistory=[];
+try{var saved=localStorage.getItem('wb_cloud_v2_history');if(saved)lookupHistory=JSON.parse(saved);updateBadge()}catch(e){}
+function norm(w){
+  w=w.trim().toLowerCase().replace(/[.,;:!?()"']+$/g,'').replace(/^[.,;:!?()"']+/g,'').replace(/'s$/g,'');
+  if(!w||w.length<3)return w;
+  var candidates=[w];
+  // try word-form reduction when exact form not in dict (checked by lookup)
+  if(w.length>4&&w.endsWith('ing'))candidates.push(w.slice(0,-3),w.slice(0,-3)+'e');
+  if(w.endsWith('ied'))candidates.push(w.slice(0,-3)+'y');
+  if(w.endsWith('ed'))candidates.push(w.slice(0,-2),w.slice(0,-1));
+  if(w.endsWith('es')&&!w.endsWith('ses'))candidates.push(w.slice(0,-2));
+  if(w.endsWith('s')&&!w.endsWith('ss'))candidates.push(w.slice(0,-1));
+  for(var i=0;i<candidates.length;i++){
+    if(DICT[candidates[i]])return candidates[i];
+  }
+  return w;
+}
+function lookup(raw){var w=norm(raw);if(!w||w.length<2)return null;if(DICT[w])return{word:raw.trim(),meaning:DICT[w]};var o=raw.trim().toLowerCase().replace(/[^\w\s-]/g,'');if(DICT[o])return{word:raw.trim(),meaning:DICT[o]};return null}
+function showPopover(x,y,word,meaning){if(popoverTimer){clearTimeout(popoverTimer);popoverTimer=null}var m=meaning.match(/^(\w+\.?)\s*(.*)/);popWord.textContent=word;popPos.textContent=m?m[1]:'';popMeaning.innerHTML='<span class="zh">'+(m?m[2]:meaning)+'</span>';var pw=popover.offsetWidth,ph=popover.offsetHeight,l=x+12,t=y-ph-8;if(t<10)t=y+20;if(l+pw>window.innerWidth-10)l=x-pw-12;if(l<10)l=10;popover.style.left=l+'px';popover.style.top=t+'px';popover.classList.add('visible')}
+function hidePopover(){popover.classList.remove('visible')}
+function addHistory(word,meaning){lookupHistory=lookupHistory.filter(function(h){return h.word!==word});lookupHistory.unshift({word:word,meaning:meaning});if(lookupHistory.length>30)lookupHistory.pop();try{localStorage.setItem('wb_cloud_v2_history',JSON.stringify(lookupHistory))}catch(e){};updateBadge();renderHistory()}
+function updateBadge(){var c=lookupHistory.length;historyBadge.textContent=c;if(c>0)historyBadge.classList.add('show');else historyBadge.classList.remove('show')}
+function renderHistory(){historyList.innerHTML='';var cd=document.createElement('div');cd.id='history-clear';cd.textContent='Clear all';cd.onclick=function(){lookupHistory=[];localStorage.removeItem('wb_cloud_v2_history');updateBadge();renderHistory()};historyList.appendChild(cd);lookupHistory.forEach(function(h){var d=document.createElement('div');d.className='h-item';var m=h.meaning.match(/^(\w+\.?)\s*(.*)/);d.innerHTML='<span class="h-word">'+h.word+'</span><span class="h-zh">'+(m?m[2]:h.meaning)+'</span>';historyList.appendChild(d)})}
+document.querySelectorAll('.news-card p:not(.wim):not(.source), .news-card h3').forEach(function(el){el.addEventListener('click',function(e){var sel=window.getSelection();if(sel.toString().trim())return;var range=document.caretRangeFromPoint(e.clientX,e.clientY);if(!range)return;var tn=range.startContainer;if(tn.nodeType!==Node.TEXT_NODE)return;var text=tn.textContent,off=range.startOffset,start=off;while(start>0&&/[\w'-]/.test(text[start-1]))start--;var end=off;while(end<text.length&&/[\w'-]/.test(text[end]))end++;var w=text.slice(start,end).trim();if(!w||w.length<2)return;var r=lookup(w);if(!r){hidePopover();return}if(activeWordEl)activeWordEl.classList.remove('active');var span=document.createElement('span');span.className='lookup-word active';span.textContent=w;var before=text.slice(0,start),after=text.slice(end);var p=tn.parentNode;p.insertBefore(document.createTextNode(before),tn);p.insertBefore(span,tn);p.insertBefore(document.createTextNode(after),tn);p.removeChild(tn);activeWordEl=span;setTimeout(function(){if(activeWordEl===span)span.classList.remove('active')},3000);var rect=span.getBoundingClientRect();showPopover(rect.left+rect.width/2,rect.top,r.word,r.meaning);addHistory(r.word,r.meaning)})});
+document.addEventListener('mouseup',function(e){setTimeout(function(){var sel=window.getSelection();var text=sel.toString().trim();if(!text||text.length<2||text.length>40){selToolbar.classList.remove('visible');return}var n=sel.anchorNode,ok=false;while(n){if(n.classList&&n.classList.contains('news-card')){ok=true;break}n=n.parentNode}if(!ok){selToolbar.classList.remove('visible');return}var rect=sel.getRangeAt(0).getBoundingClientRect();selWordSpan.textContent=text;var l=rect.left+rect.width/2-selToolbar.offsetWidth/2,t=rect.bottom+8;if(l<10)l=10;if(l+selToolbar.offsetWidth>window.innerWidth-10)l=window.innerWidth-selToolbar.offsetWidth-10;selToolbar.style.left=l+'px';selToolbar.style.top=t+'px';selToolbar.classList.add('visible');selToolbar._st=text},10)});
+selToolbar.addEventListener('click',function(){var text=selToolbar._st;if(!text)return;var pk=text.toLowerCase(),r=null;if(DICT[pk])r={word:text,meaning:DICT[pk]};else{var ws=text.split(/\s+/);for(var i=0;i<ws.length;i++){r=lookup(ws[i]);if(r)break}}if(r){var rect=selToolbar.getBoundingClientRect();showPopover(rect.left+rect.width/2,rect.top,r.word,r.meaning);addHistory(r.word,r.meaning)}selToolbar.classList.remove('visible');window.getSelection().removeAllRanges()});
+document.addEventListener('click',function(e){if(e.target.closest('.news-card'))return;if(popover.contains(e.target))return;if(e.target===selToolbar||selToolbar.contains(e.target))return;if(e.target.closest('#history-panel')||e.target.closest('#sidebar'))return;popoverTimer=setTimeout(hidePopover,200)});
+popover.addEventListener('mouseenter',function(){if(popoverTimer){clearTimeout(popoverTimer);popoverTimer=null}});
+popover.addEventListener('mouseleave',function(){popoverTimer=setTimeout(hidePopover,300)});
+popClose.addEventListener('click',function(e){e.stopPropagation();hidePopover()});
+window.addEventListener('scroll',function(){hidePopover();selToolbar.classList.remove('visible')},{passive:true});
+historyToggle.addEventListener('click',function(e){e.stopPropagation();renderHistory();historyList.classList.toggle('open')});
+document.addEventListener('click',function(e){if(!historyList.contains(e.target)&&e.target!==historyToggle&&!historyToggle.contains(e.target))historyList.classList.remove('open')});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){hidePopover();selToolbar.classList.remove('visible');historyList.classList.remove('open')}});
+// Sidebar toggle (mobile overlay)
+(function(){
+  var sb=document.getElementById('sidebar'),st=document.getElementById('sidebar-toggle'),bd=document.getElementById('sidebar-backdrop');
+  function openSb(){sb.classList.add('open');bd.classList.add('visible');document.body.style.overflow='hidden'}
+  function closeSb(){sb.classList.remove('open');bd.classList.remove('visible');document.body.style.overflow=''}
+  st.addEventListener('click',function(e){e.stopPropagation();sb.classList.contains('open')?closeSb():openSb()});
+  bd.addEventListener('click',closeSb);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&sb.classList.contains('open'))closeSb()});
+  // Close sidebar when a date link is clicked on mobile
+  sb.addEventListener('click',function(e){if(window.innerWidth<=760&&e.target.classList.contains('date-link'))closeSb()});
+  window.addEventListener('resize',function(){if(window.innerWidth>760)closeSb()});
+})();
+// Sidebar archive loader
+(function(){
+  var sd=document.getElementById('sidebar-dates');
+  fetch('/daily-en-news-cloud/archive/index.json',{cache:'no-cache'}).then(function(r){return r.json()}).then(function(dates){
+    if(!dates.length){sd.innerHTML='<p>No archived editions yet.</p>';return}
+    var today='2026-09-12';sd.innerHTML='';
+    dates.forEach(function(d){var a=document.createElement('a');a.className='date-link';a.href='/daily-en-news-cloud/archive/'+d+'.html';a.textContent=d;if(d===today)a.classList.add('active');sd.appendChild(a)})
+  }).catch(function(){sd.innerHTML='<p>Archive index loading...</p>'})
+})();
+updateBadge();
+</script>
+</body>
+</html>
