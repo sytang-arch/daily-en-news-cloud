@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Today's US News — Saturday, September 26, 2026 | English Reading Practice</title>
+<style>
+  :root{
+    --bg:#faf9f7;--card-bg:#fff;--text:#2d2d2d;--text-light:#5a5a5a;--accent-p:#b22234;--accent-e:#1a5f8a;--accent-r:#2d7d46;
+    --gold:#b7933a;--border:#e8e4df;--tag-bg:#f0ede8;--shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+    --shadow-lg:0 12px 40px rgba(0,0,0,.12);--radius:10px;--sidebar-w:200px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:Georgia,'Times New Roman',serif;background:var(--bg);color:var(--text);line-height:1.8;min-height:100vh;padding-left:var(--sidebar-w)}
+  #sidebar{
+    position:fixed;left:0;top:0;width:var(--sidebar-w);height:100vh;background:#2c2c2c;color:#ccc;
+    overflow-y:auto;padding:20px 0;z-index:100;font-family:-apple-system,sans-serif;font-size:.82rem;
+    transition:transform .25s ease
+  }
+  #sidebar h3{color:#fff;font-size:.85rem;padding:8px 16px;border-bottom:1px solid #444;margin-bottom:8px;text-align:center}
+  #sidebar .date-link{display:block;padding:6px 16px;color:#aaa;text-decoration:none;transition:all .15s;border-left:3px solid transparent}
+  #sidebar .date-link:hover{color:#fff;background:#3a3a3a;border-left-color:var(--gold)}
+  #sidebar .date-link.active{color:#fff;background:#3a3a3a;border-left-color:var(--gold);font-weight:600}
+  #sidebar .no-archive{padding:16px;color:#666;font-size:.78rem;text-align:center}
+  #main{margin:0 auto;max-width:780px;padding:32px 28px 60px}
+  header{text-align:center;padding:36px 0 28px;border-bottom:2px solid var(--border);margin-bottom:32px}
+  header h1{font-size:1.75rem;font-weight:700;color:#1a1a1a}
+  header .date{font-size:.9rem;color:var(--text-light)}
+  .meta-bar{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-top:14px;font-size:.82rem;color:var(--text-light)}
+  .meta-bar span{background:var(--tag-bg);padding:4px 14px;border-radius:20px}
+  .section{margin-bottom:40px}
+  .section-title{font-size:1.25rem;font-weight:700;margin-bottom:16px;padding-bottom:6px;border-bottom:3px solid;display:flex;align-items:center;gap:8px}
+  .section-title.politics{color:var(--accent-p);border-color:var(--accent-p)}
+  .section-title.economy{color:var(--accent-e);border-color:var(--accent-e)}
+  .section-title.research{color:var(--accent-r);border-color:var(--accent-r)}
+  .news-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:22px 26px;margin-bottom:16px;box-shadow:var(--shadow);transition:box-shadow .3s,border-color .3s}
+  .news-card:hover{box-shadow:0 3px 12px rgba(0,0,0,.08);border-color:#d8d2c8}
+  .news-card h3{font-size:1.08rem;font-weight:700;margin-bottom:10px;line-height:1.45}
+  .news-card p{font-size:.95rem;color:var(--text-light);margin-bottom:12px;text-align:justify}
+  .news-card .source{font-size:.78rem;color:#999;font-style:italic}
+  .news-card .wim{color:#8a6d20;font-size:.88rem;padding:6px 0 0}
+  .trans-toggle{margin:8px 0 12px;border:1px solid #e0d8c0;border-radius:8px;overflow:hidden}
+  .trans-toggle summary{padding:8px 14px;background:#faf6ec;cursor:pointer;font-size:.85rem;color:#8a6d20;font-weight:600;user-select:none}
+  .trans-toggle .trans-content{padding:12px 16px;background:#fffbee;color:#5a4a2a;font-size:.88rem;line-height:1.8}
+  .trans-toggle .trans-content p{color:#5a4a2a!important;margin-bottom:8px!important}
+  .cloud-badge{display:inline-block;background:#e8f5e9;color:#2d7d46;font-size:.7rem;padding:2px 10px;border-radius:10px;margin-left:8px;vertical-align:middle}
+  .tips{background:#f4f9ff;border-radius:var(--radius);padding:16px 22px;margin-bottom:32px;font-size:.88rem;color:#3a5a7c;line-height:1.7;display:flex;align-items:flex-start;gap:12px}
+  .tips .icon{font-size:1.4rem;flex-shrink:0}
+  .lookup-word{cursor:pointer;border-bottom:1.5px dotted transparent;transition:border-color .2s,background .2s;border-radius:2px;padding:0 1px}
+  .lookup-word:hover{border-bottom-color:var(--gold);background:rgba(183,147,58,.08)}
+  .lookup-word.active{background:rgba(183,147,58,.18);border-bottom-color:var(--gold)}
+  #word-popover{position:fixed;z-index:9999;background:#fffef9;border:1px solid #d8d0b8;border-radius:12px;box-shadow:var(--shadow-lg);padding:18px 22px;min-width:200px;max-width:320px;opacity:0;transform:translateY(8px) scale(.96);transition:opacity .2s cubic-bezier(.16,1,.3,1),transform .25s cubic-bezier(.16,1,.3,1);pointer-events:none;font-family:-apple-system,sans-serif;word-break:break-word}
+  #word-popover.visible{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+  #word-popover .pop-word{font-size:1.25rem;font-weight:700;color:#1a1a1a;margin-bottom:4px;font-family:Georgia,serif}
+  #word-popover .pop-pos{font-size:.75rem;color:#999;text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px}
+  #word-popover .pop-meaning{font-size:.92rem;color:#444;line-height:1.5;padding:8px 12px;background:#faf6ec;border-radius:6px;border-left:3px solid var(--gold)}
+  #word-popover .pop-meaning .zh{color:#6b4c1e;font-weight:600}
+  #word-popover .pop-close{position:absolute;top:8px;right:10px;width:24px;height:24px;border:none;background:none;cursor:pointer;font-size:1rem;color:#bbb;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:color .2s,background .2s}
+  #word-popover .pop-close:hover{color:#666;background:#f0ede8}
+  #sel-toolbar{position:fixed;z-index:9998;background:#2d2d2d;color:#fff;border-radius:8px;padding:6px 14px;font-size:.82rem;font-family:-apple-system,sans-serif;cursor:pointer;opacity:0;transform:translateY(6px);transition:opacity .18s,transform .2s;pointer-events:none;box-shadow:0 6px 20px rgba(0,0,0,.25);white-space:nowrap}
+  #sel-toolbar.visible{opacity:1;transform:translateY(0);pointer-events:auto}
+  #sel-toolbar:hover{background:#3d3d3d}
+  #history-panel{position:fixed;right:24px;bottom:80px;z-index:9990;display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+  #history-toggle{width:44px;height:44px;border-radius:50%;background:#fff;border:1px solid var(--border);box-shadow:0 2px 12px rgba(0,0,0,.08);cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;transition:all .2s;position:relative}
+  #history-toggle:hover{border-color:var(--gold);box-shadow:0 4px 16px rgba(0,0,0,.12)}
+  #history-badge{position:absolute;top:-4px;right:-4px;background:var(--gold);color:#fff;font-size:.65rem;font-family:-apple-system,sans-serif;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 4px;opacity:0;transform:scale(0);transition:all .3s cubic-bezier(.16,1,.3,1)}
+  #history-badge.show{opacity:1;transform:scale(1)}
+  #history-list{background:#fffef9;border:1px solid #d8d0b8;border-radius:12px;box-shadow:var(--shadow-lg);padding:14px 16px;max-height:300px;overflow-y:auto;width:240px;font-family:-apple-system,sans-serif;font-size:.82rem;display:none;flex-direction:column;gap:8px}
+  #history-list.open{display:flex}
+  #history-list .h-item{display:flex;justify-content:space-between;align-items:center;padding:6px 8px;border-radius:6px;cursor:pointer;transition:background .15s;gap:8px}
+  #history-list .h-item:hover{background:#faf6ec}
+  #history-list .h-word{font-weight:600;color:#1a1a1a}
+  #history-list .h-zh{color:#888;font-size:.78rem}
+  #history-clear{text-align:center;font-size:.72rem;color:#bbb;cursor:pointer;padding:4px;border-radius:4px;transition:color .2s}
+  #history-clear:hover{color:#c0392b}
+  footer{text-align:center;padding:24px 0 0;border-top:1px solid var(--border);font-size:.78rem;color:#aaa;margin-top:8px}
+  .news-card p,.news-card h3{-webkit-tap-highlight-color:transparent}
+  #sidebar-toggle{display:none}
+  #sidebar-backdrop{display:none}
+  @media(max-width:760px){
+    body{padding-left:0}
+    #main{margin:0 auto;padding:20px 14px 40px}
+    .news-card{padding:16px 18px}
+    #history-panel{right:12px;bottom:60px}
+    #word-popover{max-width:260px}
+    #sidebar{
+      display:block;position:fixed;left:0;top:0;width:260px;height:100vh;height:100dvh;
+      z-index:300;transform:translateX(-100%);transition:transform .3s cubic-bezier(.4,0,.2,1);
+      box-shadow:4px 0 24px rgba(0,0,0,.3);overflow-y:auto;-webkit-overflow-scrolling:touch
+    }
+    #sidebar.open{transform:translateX(0)}
+    #sidebar-backdrop{
+      display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:299;
+      opacity:0;transition:opacity .3s ease
+    }
+    #sidebar-backdrop.visible{display:block;opacity:1}
+    #sidebar-toggle{
+      display:flex;position:fixed;top:12px;left:12px;z-index:298;
+      width:40px;height:40px;border-radius:50%;background:#2c2c2c;color:#fff;
+      border:none;font-size:1.3rem;cursor:pointer;align-items:center;justify-content:center;
+      box-shadow:0 2px 8px rgba(0,0,0,.25);transition:background .2s;-webkit-tap-highlight-color:transparent;
+      -webkit-user-select:none;user-select:none
+    }
+    #sidebar-toggle:hover{background:#3a3a3a}
+    #sidebar-toggle:active{background:#4a4a4a}
+  }
+  @media(pointer:coarse){.news-card p,.news-card h3{cursor:default}}
+</style>
+</head>
+<body>
+<button id="sidebar-toggle" aria-label="Toggle date archive">&#9776;</button>
+<div id="sidebar-backdrop"></div>
+<div id="sidebar">
+  <h3>&#128197; Past Editions</h3>
+  <div id="sidebar-dates" class="no-archive">Loading...</div>
+</div>
+<div id="main">
+<header>
+  <h1>Today's US News Brief <span class="cloud-badge">&#9729; CLOUD</span></h1>
+  <div class="date">Saturday, September 26, 2026</div>
+  <div class="meta-bar">
+    <span>&#128214; ~30 min read</span><span>&#128272; TOEIC 600+</span><span>&#128451; Politics &middot; Economy &middot; Research</span>
+  </div>
+</header>
+<div class="tips">
+  <span class="icon">&#128161;</span>
+  <div>
+    <strong>Click any word</strong> to look up its Chinese meaning.
+    <strong>Click &ldquo;Chinese Translation&rdquo;</strong> under each article for full Chinese text.
+    Use the <strong>left sidebar</strong> to browse past editions.
+  </div>
+</div>
+<div class="section"><div class="section-title politics">&#127987; POLITICS</div>
+<div class="news-card">
+    <h3>1. Ethiopia's Army Says It Repelled TPLF Attacks in Fresh Tigray Fighting</h3>
+    <p>Ethiopia's national army announced on Thursday that its soldiers had fought off new attacks by the Tigray People's Liberation Front (TPLF, a political and former armed group in the northern Tigray region). Military officials said the clashes caused casualties on the TPLF side, though independent observers have not yet confirmed these numbers. The statement was the army's first public comment since reports of fresh fighting began to spread earlier this week.</p>
+<p>The renewed violence has raised deep fears that the country could slide back into a full civil war, which killed hundreds of thousands of people between 2020 and 2022. International diplomats are urging both sides to return to the peace agreement signed in Pretoria, South Africa, in November 2022. Aid groups warn that any new conflict would make it even harder to deliver food and medicine to civilians in the region.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>埃塞俄比亚军方称在提格雷新冲突中击退了提格雷人民解放阵线的进攻</p>
+<p>埃塞俄比亚国家军队周四宣布，其士兵击退了提格雷人民解放阵线（TPLF，提格雷北部地区的一个政治和原武装组织）的新一轮进攻。军方官员表示，冲突在TPLF一方造成伤亡，但独立观察人士尚未证实这些数字。这是自本周早些时候新一轮战斗消息传开以来，军方的首次公开评论。</p>
+<p>新一轮暴力引发了人们的深切担忧：该国可能重新陷入全面内战，2020年至2022年间的内战已导致数十万人死亡。国际外交官敦促双方回到2022年11月在南非比勒陀利亚签署的和平协议。援助组织警告称，任何新的冲突都将使向该地区平民运送食品和药品变得更加困难。</p>
+</div>
+</details>
+    <p class="source">Source: BBC — 2026-09-24</p>
+  </div>
+<div class="news-card">
+    <h3>2. Trump Hosts China's Xi at White House as They Navigate AI, Trade Tensions and Taiwan</h3>
+    <p>President Donald Trump welcomed Chinese President Xi Jinping to the White House on Thursday for a day of meetings and a state dinner. The two leaders are trying to extend a tariff truce (a temporary pause in new import taxes) that has calmed global markets for several months. They also discussed the growing rivalry between their countries in advanced artificial intelligence (AI, computer systems that can learn and make decisions).</p>
+<p>The talks come at a delicate moment for Taiwan, the self-governing island that Beijing claims as its own territory. Washington and Beijing also remain divided over technology exports, military activity in the South China Sea, and the rules for using AI in weapons and surveillance. Analysts say even a small agreement on trade would be a significant result from this high-level meeting.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>特朗普在白宫接待中国国家主席习近平，双方应对人工智能、贸易紧张与台湾问题</p>
+<p>美国总统唐纳德·特朗普周四在白宫欢迎中国国家主席习近平，进行了一天的会谈和国宴。两位领导人正试图延长一项关税休战（暂时停止征收新进口税），该休战已使全球市场平静了数月。他们还讨论了两国在先进人工智能（AI，能够学习和做出决策的计算机系统）领域日益激烈的竞争。</p>
+<p>此次会谈正值台湾问题的微妙时刻。台湾是自治岛屿，北京声称其为本国领土。华盛顿和北京在技术出口、南海军事活动以及人工智能在武器和监控中的使用规则方面仍存在分歧。分析人士表示，即使是在贸易方面达成小规模协议，也将是这次高层会晤的重要成果。</p>
+</div>
+</details>
+    <p class="source">Source: CBS News — 2026-09-24</p>
+  </div>
+<div class="section-title economy">&#128176; ECONOMY</div>
+<div class="news-card">
+    <h3>3. KFC Opens a Texas Restaurant to Test Ideas for Reclaiming Its Fried Chicken Crown</h3>
+    <p>KFC has been losing ground in its home market to fast-growing fried chicken rivals like Raising Cane's and Chick-fil-A. On Thursday, the global chain opened a new restaurant in Texas to test fresh ideas, including a simpler menu, faster service, and new crispy chicken recipes. The company hopes these changes will attract younger customers who currently choose competitors for quick, affordable meals.</p>
+<p>The Texas location will serve as a laboratory where KFC can measure customer reactions before rolling out successful ideas to thousands of stores across the United States. KFC still operates more than 30,000 restaurants worldwide, but its U.S. sales have been flat for several years. Executives say the brand must adapt to local tastes and modern dining habits to regain its leading position in the fried chicken market.</p>
+<p class="wim">&#128161; <strong>What this means for you:</strong> KFC's test restaurant shows how even huge global brands must constantly innovate to stay competitive. If the Texas experiment succeeds, it could reshape how KFC operates in the U.S. and influence other fast-food chains facing similar pressure from newer rivals.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>肯德基在得克萨斯州开设餐厅，测试夺回炸鸡王冠的新点子</p>
+<p>肯德基在本土市场节节败退，输给了Raising Cane's和Chick-fil-A等快速增长的炸鸡竞争对手。周四，这家全球连锁企业在得克萨斯州开设了一家新餐厅，测试新点子，包括更简单的菜单、更快的服务和新的脆皮炸鸡配方。公司希望这些变化能吸引目前选择竞争对手购买快捷实惠餐食的年轻顾客。</p>
+<p>得克萨斯州的这家门店将作为实验室，肯德基可以在向全美数千家门店推广成功经验之前，衡量顾客的反应。肯德基在全球仍拥有超过3万家餐厅，但其美国销售额已连续多年持平。高管们表示，该品牌必须适应当地口味和现代用餐习惯，才能重新夺回炸鸡市场的领先地位。</p>
+<p class="trans-wim">&#128161; <strong>这意味着：</strong>肯德基的测试餐厅表明，即使是大型全球品牌也必须不断创新才能保持竞争力。如果得克萨斯州的实验成功，它可能重塑肯德基在美国的运营方式，并影响其他面临类似来自新对手压力的快餐连锁企业。</p>
+</div>
+</details>
+    <p class="source">Source: Associated Press — 2026-09-24</p>
+  </div>
+<div class="news-card">
+    <h3>4. Chinese Auto Companies Race Ahead on EV Technology, Achieving 5-Minute Ultrafast Charging</h3>
+    <p>Major Chinese automaker Geely has unveiled new ultrafast charging technology that can recharge an electric vehicle (EV) battery from 10% to 70% in just 4.5 minutes. This breakthrough places Geely alongside BYD and CATL, two other Chinese companies that have recently announced similar fast-charging advances. The race for faster charging is seen as critical to convincing more drivers to switch from gasoline cars to electric ones.</p>
+<p>Currently, even the fastest public chargers in the United States and Europe typically need 15 to 30 minutes to add significant range to an EV. Chinese companies are investing heavily in charging infrastructure (the network of stations where EVs plug in) and battery chemistry to reduce wait times. If these technologies prove reliable and safe, they could give Chinese automakers a major advantage in global export markets.</p>
+<p class="wim">&#128161; <strong>What this means for you:</strong> Faster charging could remove one of the biggest barriers to EV adoption: long waiting times. If Chinese companies can deliver on these promises, they may dominate the global EV market, pressuring Western automakers to catch up quickly or lose market share.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>中国汽车公司在电动汽车技术上领先，实现5分钟超快充电</p>
+<p>中国主要汽车制造商吉利发布了新的超快充电技术，可以在短短4.5分钟内将电动汽车（EV）电池从10%充至70%。这一突破使吉利与比亚迪和宁德时代并列，这两家中国公司最近也宣布了类似的快速充电进展。更快的充电速度被视为说服更多驾驶者从汽油车转向电动汽车的关键。</p>
+<p>目前，美国和欧洲最快的公共充电桩通常也需要15到30分钟才能为电动汽车增加可观的续航里程。中国企业正在大力投资充电基础设施（电动汽车插电的站点网络）和电池化学技术，以减少等待时间。如果这些技术被证明可靠且安全，它们可能使中国汽车制造商在全球出口市场中获得重大优势。</p>
+<p class="trans-wim">&#128161; <strong>这意味着：</strong>更快的充电速度可以消除电动汽车普及的最大障碍之一：漫长的等待时间。如果中国企业能够兑现这些承诺，它们可能会主导全球电动汽车市场，迫使西方汽车制造商迅速追赶，否则就会失去市场份额。</p>
+</div>
+</details>
+    <p class="source">Source: Associated Press — 2026-09-24</p>
+  </div>
+<div class="section-title research">&#128300; RESEARCH</div>
+<div class="news-card">
+    <h3>5. NASA's Perseverance Rover Finds Evidence of Ancient Hot Water in Mars' Jezero Crater</h3>
+    <p>NASA's Perseverance rover has uncovered new evidence that water interacted with rocks in Mars' Jezero Crater multiple times, including a period of hot groundwater activity. The findings suggest that the crater once held conditions that could have supported microbial life. Scientists analyzed rock samples and images sent back by the rover to identify minerals that typically form in warm, wet environments.</p>
+<p>Hot water is especially interesting to astrobiologists (scientists who study life in the universe) because it can provide energy and nutrients for simple organisms. The Perseverance team says the discovery adds to a growing picture of ancient Mars as a planet with diverse watery environments. Future missions may bring these samples to Earth for detailed laboratory study.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>NASA的毅力号火星车在火星杰泽罗陨石坑发现古代热水证据</p>
+<p>NASA的毅力号火星车发现了新证据，表明水曾多次与火星杰泽罗陨石坑的岩石相互作用，其中包括一段热地下水活动时期。这些发现表明，该陨石坑曾经具备可能支持微生物生命的条件。科学家分析了火星车传回的岩石样本和图像，以确定通常在温暖潮湿环境中形成的矿物质。</p>
+<p>热水对天体生物学家（研究宇宙中生命的科学家）来说尤其有趣，因为它可以为简单生物提供能量和营养。毅力号团队表示，这一发现进一步描绘了古代火星拥有多种水环境的图景。未来的任务可能会将这些样本带回地球进行详细的实验室研究。</p>
+</div>
+</details>
+    <p class="source">Source: Space.com — 2026-09-24</p>
+  </div>
+<div class="news-card">
+    <h3>6. JWST Finds Early Galaxies Were Already Seeding the Universe with Heavy Elements</h3>
+    <p>The James Webb Space Telescope (JWST) has found that some of the universe's earliest galaxies were already producing and spreading heavy elements when the cosmos was only about 500 million years old. That is just 3% of the universe's current age. Astronomers had predicted that early stars would create these elements, but the new observations show the process happened faster than many models suggested.</p>
+<p>Heavy elements like carbon, oxygen, and iron are essential for forming planets and, eventually, life. The JWST's sensitive infrared instruments (which detect heat radiation) allowed researchers to identify these elements in the light from distant galaxies. The findings will help scientists refine their understanding of how the first galaxies evolved and enriched the space around them.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>詹姆斯·韦伯太空望远镜发现早期星系已在向宇宙播撒重元素</p>
+<p>詹姆斯·韦伯太空望远镜（JWST）发现，当宇宙只有约5亿年历史时，一些最早的星系就已经在产生并散布重元素。这仅仅是宇宙当前年龄的3%。天文学家曾预测早期恒星会创造这些元素，但新的观测表明，这一过程的发生速度比许多模型所建议的要快。</p>
+<p>碳、氧和铁等重元素对于形成行星以及最终形成生命至关重要。JWST灵敏的红外仪器（用于探测热辐射）使研究人员能够从遥远星系的光中识别出这些元素。这些发现将帮助科学家完善对最早星系如何演化并丰富其周围空间的理解。</p>
+</div>
+</details>
+    <p class="source">Source: Phys.org — 2026-09-24</p>
+  </div>
+</div>
+<footer>
+  <p>&#128218; Auto-generated via NewsAPI + DeepSeek | Cloud pipeline &mdash; GitHub Actions | Saturday, September 26, 2026</p>
+</footer>
+</div>
+
+<div id="word-popover">
+  <button class="pop-close" id="pop-close-btn">&times;</button>
+  <div class="pop-word" id="pop-word"></div><div class="pop-pos" id="pop-pos"></div><div class="pop-meaning" id="pop-meaning"></div>
+</div>
+<div id="sel-toolbar">&#128269; Look up "<span id="sel-word"></span>"</div>
+<div id="history-panel">
+  <div id="history-list"><div id="history-clear">Clear all</div></div>
+  <button id="history-toggle" title="Lookup History">&#128214;<span id="history-badge">0</span></button>
+</div>
+
+<script>
+var DICT = {    "achieving":"v. 实现，达到",
+    "activity":"n. 活动",
+    "adapt":"v. 适应，改编",
+    "add":"v. 增加，添加",
+    "adds":"v. 增加（第三人称单数）",
+    "advanced":"adj. 先进的",
+    "advances":"n. 进步，进展",
+    "advantage":"n. 优势，有利条件",
+    "affordable":"adj. 负担得起的",
+    "africa":"n. 非洲",
+    "age":"n. 年龄；时代",
+    "agreement":"n. 协议，同意",
+    "ahead":"adv. 向前，提前",
+    "aid":"n./v. 援助，帮助",
+    "allowed":"v. 允许（过去式/过去分词）",
+    "alongside":"prep. 在……旁边，与……一起",
+    "already":"adv. 已经",
+    "also":"adv. 也，同样",
+    "analysts":"n. 分析师（复数）",
+    "analyzed":"v. 分析（过去式/过去分词）",
+    "ancient":"adj. 古代的",
+    "announced":"v. 宣布（过去式/过去分词）",
+    "armed":"adj. 武装的",
+    "army":"n. 军队",
+    "around":"prep./adv. 大约；周围",
+    "artificial":"adj. 人工的，人造的",
+    "astrobiologists":"n. 天体生物学家（复数）",
+    "astronomers":"n. 天文学家（复数）",
+    "attacks":"n./v. 攻击（复数/第三人称单数）",
+    "attract":"v. 吸引",
+    "auto":"n. 汽车",
+    "automaker":"n. 汽车制造商",
+    "automakers":"n. 汽车制造商（复数）",
+    "back":"adv./n. 回；后面",
+    "battery":"n. 电池",
+    "began":"v. 开始（过去式）",
+    "beijing":"n. 北京",
+    "brand":"n. 品牌",
+    "breakthrough":"n. 突破",
+    "bring":"v. 带来",
+    "byd":"n. 比亚迪（专名）",
+    "calmed":"v. 平静下来（过去式/过去分词）",
+    "cane":"n. 甘蔗；手杖",
+    "carbon":"n. 碳",
+    "cars":"n. 汽车（复数）",
+    "casualties":"n. 伤亡人员",
+    "catl":"n. 宁德时代（专名）",
+    "caused":"v. 引起（过去式/过去分词）",
+    "chain":"n. 连锁；链条",
+    "changes":"n./v. 变化（复数/第三人称单数）",
+    "chargers":"n. 充电器（复数）",
+    "charging":"n./v. 充电",
+    "chemistry":"n. 化学",
+    "chick-fil-a":"n. 福来鸡（快餐品牌）",
+    "chicken":"n. 鸡肉；鸡",
+    "china":"n. 中国",
+    "chinese":"adj. 中国的；n. 中国人",
+    "choose":"v. 选择",
+    "civil":"adj. 民事的；公民的",
+    "civilians":"n. 平民（复数）",
+    "claims":"n./v. 声称（复数/第三人称单数）",
+    "clashes":"n./v. 冲突（复数/第三人称单数）",
+    "come":"v. 来",
+    "comment":"n./v. 评论",
+    "companies":"n. 公司（复数）",
+    "company":"n. 公司",
+    "competitors":"n. 竞争对手（复数）",
+    "computer":"n. 电脑",
+    "conditions":"n. 条件，状况（复数）",
+    "confirmed":"v. 确认（过去式/过去分词）",
+    "conflict":"n./v. 冲突",
+    "convincing":"adj. 令人信服的",
+    "cosmos":"n. 宇宙",
+    "countries":"n. 国家（复数）",
+    "country":"n. 国家",
+    "crater":"n. 陨石坑，火山口",
+    "create":"v. 创造",
+    "crispy":"adj. 酥脆的",
+    "critical":"adj. 关键的；批评的",
+    "crown":"n. 王冠",
+    "current":"adj. 当前的；n. 电流",
+    "currently":"adv. 目前",
+    "customer":"n. 顾客",
+    "customers":"n. 顾客（复数）",
+    "day":"n. 天，日",
+    "decisions":"n. 决定（复数）",
+    "deep":"adj. 深的",
+    "delicate":"adj. 精致的；微妙的",
+    "deliver":"v. 交付，递送",
+    "detailed":"adj. 详细的",
+    "detect":"v. 探测，发现",
+    "dining":"n. 用餐",
+    "dinner":"n. 晚餐",
+    "diplomats":"n. 外交官（复数）",
+    "discovery":"n. 发现",
+    "discussed":"v. 讨论（过去式/过去分词）",
+    "distant":"adj. 遥远的",
+    "diverse":"adj. 多样的",
+    "divided":"adj. 分裂的；v. 分开（过去式/过去分词）",
+    "donald":"n. 唐纳德（人名）",
+    "drivers":"n. 司机（复数）",
+    "earlier":"adv./adj. 更早地；较早的",
+    "earliest":"adj. 最早的",
+    "early":"adj./adv. 早的；早地",
+    "earth":"n. 地球",
+    "electric":"adj. 电动的",
+    "elements":"n. 元素（复数）",
+    "energy":"n. 能源；精力",
+    "enriched":"adj. 浓缩的；富集的",
+    "environments":"n. 环境（复数）",
+    "especially":"adv. 尤其，特别",
+    "essential":"adj. 必不可少的",
+    "ethiopia":"n. 埃塞俄比亚",
+    "europe":"n. 欧洲",
+    "even":"adv. 甚至；adj. 平的",
+    "eventually":"adv. 最终",
+    "evidence":"n. 证据",
+    "evolved":"v. 进化（过去式/过去分词）",
+    "evs":"n. 电动汽车（复数）",
+    "executives":"n. 高管（复数）",
+    "export":"n./v. 出口",
+    "exports":"n./v. 出口（复数/第三人称单数）",
+    "extend":"v. 延长，扩展",
+    "fast-charging":"adj. 快速充电的",
+    "fast-growing":"adj. 快速增长的",
+    "faster":"adj./adv. 更快的；更快地",
+    "fastest":"adj./adv. 最快的；最快地",
+    "fears":"n./v. 恐惧（复数/第三人称单数）",
+    "fighting":"n./v. 战斗",
+    "findings":"n. 调查结果（复数）",
+    "finds":"v. 发现（第三人称单数）",
+    "first":"adj./adv. 第一的；首先",
+    "flat":"adj. 平的；n. 公寓",
+    "food":"n. 食物",
+    "form":"n./v. 形式；形成",
+    "former":"adj. 前者的，前任的",
+    "forming":"v. 形成（现在分词）",
+    "fought":"v. 战斗（过去式/过去分词）",
+    "found":"v. 发现（过去式/过去分词）；创建",
+    "fresh":"adj. 新鲜的",
+    "fried":"adj. 油炸的",
+    "front":"n./adj. 前面；前面的",
+    "full":"adj. 满的，完整的",
+    "future":"n./adj. 未来；未来的",
+    "galaxies":"n. 星系（复数）",
+    "gasoline":"n. 汽油",
+    "geely":"n. 吉利（专名）",
+    "give":"v. 给",
+    "global":"adj. 全球的",
+    "ground":"n. 地面",
+    "groundwater":"n. 地下水",
+    "group":"n. 集团，群体",
+    "groups":"n. 集团，群体（复数）",
+    "growing":"adj. 增长的；v. 生长（现在分词）",
+    "habits":"n. 习惯（复数）",
+    "happened":"v. 发生（过去式/过去分词）",
+    "harder":"adj./adv. 更难的；更努力地",
+    "heat":"n./v. 热量；加热",
+    "heavily":"adv. 严重地；大量地",
+    "heavy":"adj. 重的；大量的",
+    "held":"v. 举行（过去式/过去分词）",
+    "help":"v./n. 帮助",
+    "high-level":"adj. 高级别的",
+    "home":"n. 家",
+    "hopes":"n./v. 希望（复数/第三人称单数）",
+    "hosts":"n./v. 主持人；主办（复数/第三人称单数）",
+    "hot":"adj. 热的",
+    "house":"n. 房子",
+    "hundreds":"n. 数百",
+    "ideas":"n. 想法（复数）",
+    "identify":"v. 识别，确认",
+    "images":"n. 图像（复数）",
+    "import":"n./v. 进口",
+    "including":"prep. 包括",
+    "independent":"adj. 独立的",
+    "infrared":"adj. 红外的",
+    "infrastructure":"n. 基础设施",
+    "instruments":"n. 仪器（复数）",
+    "intelligence":"n. 情报；智力",
+    "interacted":"v. 互动（过去式/过去分词）",
+    "interesting":"adj. 有趣的",
+    "international":"adj. 国际的",
+    "investing":"v. 投资（现在分词）",
+    "iron":"n. 铁",
+    "island":"n. 岛屿",
+    "james":"n. 詹姆斯（人名）",
+    "jezero":"n. 耶泽罗（专名）",
+    "jinping":"n. 近平（人名）",
+    "just":"adv. 刚刚；只是",
+    "jwst":"n. 詹姆斯·韦伯太空望远镜（专名）",
+    "kfc":"n. 肯德基（专名）",
+    "killed":"v. 杀死（过去式/过去分词）",
+    "laboratory":"n. 实验室",
+    "leaders":"n. 领导者（复数）",
+    "leading":"adj. 领先的",
+    "learn":"v. 学习",
+    "liberation":"n. 解放",
+    "life":"n. 生命；生活",
+    "light":"n./adj. 光；轻的",
+    "like":"prep./v. 像；喜欢",
+    "local":"adj. 当地的，本地的",
+    "location":"n. 地点，位置",
+    "losing":"adj. 失败的；v. 失去（lose的现在分词）",
+    "major":"adj. 主要的；n. 专业",
+    "make":"v. 制造，使得",
+    "market":"n. 市场；v. 营销",
+    "markets":"n. 市场（复数）",
+    "mars":"n. 火星",
+    "mars'":"n. 火星的",
+    "meals":"n. 餐，饭（复数）",
+    "measure":"v. 测量；n. 措施",
+    "medicine":"n. 药，医学",
+    "meeting":"n. 会议",
+    "meetings":"n. 会议（复数）",
+    "menu":"n. 菜单",
+    "microbial":"adj. 微生物的",
+    "military":"adj. 军事的；n. 军队",
+    "million":"num. 百万",
+    "minerals":"n. 矿物（复数）",
+    "minute":"n. 分钟；adj. 微小的",
+    "minutes":"n. 分钟（复数）；会议记录",
+    "missions":"n. 任务，使命（复数）",
+    "models":"n. 模型（复数）",
+    "modern":"adj. 现代的",
+    "moment":"n. 时刻",
+    "months":"n. 月（复数）",
+    "multiple":"adj. 多个的",
+    "nasa":"n. 美国国家航空航天局",
+    "national":"adj. 国家的",
+    "navigate":"v. 导航，航行",
+    "need":"v. 需要；n. 需求",
+    "network":"n. 网络",
+    "new":"adj. 新的",
+    "northern":"adj. 北方的",
+    "november":"n. 十一月",
+    "numbers":"n. 数字（复数）",
+    "nutrients":"n. 营养物（复数）",
+    "observations":"n. 观察（复数）",
+    "observers":"n. 观察员（复数）",
+    "officials":"n. 官员（复数）",
+    "old":"adj. 旧的，老的",
+    "once":"adv. 一次，曾经",
+    "ones":"pron. 那些（one的复数）",
+    "only":"adv. 只，仅；adj. 唯一的",
+    "opened":"v. 打开（open的过去式）",
+    "opens":"v. 打开（第三人称单数）",
+    "operates":"v. 操作，运营（第三人称单数）",
+    "organisms":"n. 生物（复数）",
+    "own":"adj. 自己的；v. 拥有",
+    "oxygen":"n. 氧气",
+    "pause":"v. 暂停；n. 暂停",
+    "peace":"n. 和平",
+    "people":"n. 人们",
+    "period":"n. 时期，期间",
+    "perseverance":"n. 毅力，坚持",
+    "picture":"n. 图片；v. 想象",
+    "places":"n. 地方（复数）",
+    "planet":"n. 行星",
+    "planets":"n. 行星（复数）",
+    "plug":"n. 插头；v. 插入",
+    "political":"adj. 政治的",
+    "position":"n. 位置，职位",
+    "predicted":"v. 预测（predict的过去式）",
+    "president":"n. 总统，校长",
+    "pretoria":"n. 比勒陀利亚（南非首都）",
+    "process":"n. 过程；v. 处理",
+    "producing":"v. 生产（produce的现在分词）",
+    "prove":"v. 证明",
+    "provide":"v. 提供",
+    "public":"adj. 公共的；n. 公众",
+    "quick":"adj. 快的",
+    "race":"n. 比赛，种族",
+    "radiation":"n. 辐射",
+    "raised":"v. 提高，抚养（raise的过去式）",
+    "raising":"v. 提高，抚养（raise的现在分词）",
+    "range":"n. 范围；v. 变化",
+    "reactions":"n. 反应（复数）",
+    "recently":"adv. 最近",
+    "recharge":"v. 充电，再充",
+    "recipes":"n. 食谱（复数）",
+    "reclaiming":"v. 回收，开垦（reclaim的现在分词）",
+    "reduce":"v. 减少",
+    "refine":"v. 精炼，改进",
+    "regain":"v. 恢复，重新获得",
+    "region":"n. 地区",
+    "reliable":"adj. 可靠的",
+    "remain":"v. 保持，剩余",
+    "renewed":"adj. 更新的；v. 更新（renew的过去式）",
+    "repelled":"v. 击退，排斥（repel的过去式）",
+    "reports":"n. 报告（复数）；v. 报告",
+    "researchers":"n. 研究人员（复数）",
+    "restaurant":"n. 餐厅",
+    "restaurants":"n. 餐厅（复数）",
+    "result":"n. 结果；v. 导致",
+    "return":"v. 返回；n. 回报",
+    "rivalry":"n. 竞争，对抗",
+    "rivals":"n. 竞争对手（复数）",
+    "rock":"n. 岩石",
+    "rocks":"n. 岩石（复数）",
+    "rolling":"v. 滚动（roll的现在分词）",
+    "rover":"n. 漫游者；火星车",
+    "rules":"n. 规则（复数）",
+    "safe":"adj. 安全的",
+    "said":"v. 说（say的过去式）",
+    "sales":"n. 销售（复数）",
+    "samples":"n. 样品（复数）",
+    "say":"v. 说",
+    "says":"v. 说（第三人称单数）",
+    "scientists":"n. 科学家（复数）",
+    "sea":"n. 海",
+    "seeding":"v. 播种（seed的现在分词）",
+    "seen":"v. 看见（see的过去分词）",
+    "self-governing":"adj. 自治的",
+    "sensitive":"adj. 敏感的",
+    "sent":"v. 发送（send的过去式）",
+    "serve":"v. 服务",
+    "service":"n. 服务",
+    "show":"v. 展示；n. 演出",
+    "side":"n. 边，方面",
+    "sides":"n. 边（复数）",
+    "signed":"v. 签署（sign的过去式）",
+    "significant":"adj. 重要的，显著的",
+    "similar":"adj. 相似的",
+    "simple":"adj. 简单的",
+    "simpler":"adj. 更简单的",
+    "since":"prep. 自从；conj. 因为",
+    "slide":"v. 滑动；n. 幻灯片",
+    "small":"adj. 小的",
+    "soldiers":"n. 士兵（复数）",
+    "south":"n. 南方；adj. 南方的",
+    "space":"n. 空间，太空",
+    "spread":"v. 传播，散布",
+    "spreading":"v. 传播（spread的现在分词）",
+    "stars":"n. 星星（复数）",
+    "state":"n. 州，状态；v. 陈述",
+    "statement":"n. 声明",
+    "states":"n. 州（复数）；v. 陈述（第三人称单数）",
+    "stations":"n. 车站（复数）",
+    "still":"adv. 仍然；adj. 静止的",
+    "stores":"n. 商店（复数）",
+    "study":"n. 研究；v. 学习",
+    "successful":"adj. 成功的",
+    "suggest":"v. 建议，暗示",
+    "suggested":"v. 建议（suggest的过去式）",
+    "supported":"v. 支持（support的过去式）",
+    "surveillance":"n. 监视",
+    "switch":"v. 切换；n. 开关",
+    "systems":"n. 系统（复数）",
+    "taiwan":"n. 台湾",
+    "talks":"n. 会谈（复数）",
+    "tariff":"n. 关税",
+    "tastes":"n. 味道（复数）；v. 品尝（第三人称单数）",
+    "taxes":"n. 税收（复数）",
+    "team":"n. 团队",
+    "technologies":"n. 技术（复数）",
+    "technology":"n. 技术",
+    "telescope":"n. 望远镜",
+    "temporary":"adj. 临时的",
+    "tensions":"n. 紧张局势（复数）",
+    "territory":"n. 领土",
+    "test":"n. 测试；v. 测试",
+    "texas":"n. 德克萨斯州",
+    "than":"conj. 比",
+    "though":"conj. 虽然；adv. 不过",
+    "thousands":"n. 数千",
+    "thursday":"n. 星期四",
+    "tigray":"n. 提格雷（埃塞俄比亚地区）",
+    "times":"n. 时代，次数（复数）",
+    "tplf":"n. 提格雷人民解放阵线",
+    "trade":"n. 贸易；v. 交易",
+    "truce":"n. 停战",
+    "trump":"n. 特朗普（人名）",
+    "trying":"v. 尝试（try的现在分词）",
+    "two":"num. 二",
+    "typically":"adv. 通常",
+    "ultrafast":"adj. 超快的",
+    "uncovered":"v. 发现（uncover的过去式）",
+    "understanding":"n. 理解",
+    "united":"adj. 联合的",
+    "universe":"n. 宇宙",
+    "unveiled":"v. 揭幕（unveil的过去式）",
+    "urging":"v. 敦促（urge的现在分词）",
+    "using":"v. 使用（use的现在分词）",
+    "vehicle":"n. 车辆",
+    "violence":"n. 暴力",
+    "wait":"v. 等待",
+    "war":"n. 战争",
+    "warm":"adj. 温暖的",
+    "warn":"v. 警告",
+    "washington":"n. 华盛顿",
+    "water":"n. 水",
+    "watery":"adj. 含水的",
+    "weapons":"n. 武器（复数）",
+    "webb":"n. 韦伯（人名，如詹姆斯·韦伯望远镜）",
+    "week":"n. 周",
+    "welcomed":"v. 欢迎（welcome的过去式）",
+    "wet":"adj. 湿的",
+    "white":"adj. 白色的",
+    "worldwide":"adj. 全世界的",
+    "years":"n. 年（复数）",
+    "yet":"adv. 还；仍然；已经；conj. 然而",
+    "younger":"adj. 较年轻的"
+};
+var popover=document.getElementById('word-popover'),popWord=document.getElementById('pop-word'),popPos=document.getElementById('pop-pos'),popMeaning=document.getElementById('pop-meaning'),popClose=document.getElementById('pop-close-btn'),selToolbar=document.getElementById('sel-toolbar'),selWordSpan=document.getElementById('sel-word'),historyList=document.getElementById('history-list'),historyToggle=document.getElementById('history-toggle'),historyBadge=document.getElementById('history-badge'),popoverTimer=null,activeWordEl=null,lookupHistory=[];
+try{var saved=localStorage.getItem('wb_cloud_v2_history');if(saved)lookupHistory=JSON.parse(saved);updateBadge()}catch(e){}
+function norm(w){
+  w=w.trim().toLowerCase().replace(/[.,;:!?()"']+$/g,'').replace(/^[.,;:!?()"']+/g,'').replace(/'s$/g,'');
+  if(!w||w.length<3)return w;
+  var candidates=[w];
+  // try word-form reduction when exact form not in dict (checked by lookup)
+  if(w.length>4&&w.endsWith('ing'))candidates.push(w.slice(0,-3),w.slice(0,-3)+'e');
+  if(w.endsWith('ied'))candidates.push(w.slice(0,-3)+'y');
+  if(w.endsWith('ed'))candidates.push(w.slice(0,-2),w.slice(0,-1));
+  if(w.endsWith('es')&&!w.endsWith('ses'))candidates.push(w.slice(0,-2));
+  if(w.endsWith('s')&&!w.endsWith('ss'))candidates.push(w.slice(0,-1));
+  for(var i=0;i<candidates.length;i++){
+    if(DICT[candidates[i]])return candidates[i];
+  }
+  return w;
+}
+function lookup(raw){var w=norm(raw);if(!w||w.length<2)return null;if(DICT[w])return{word:raw.trim(),meaning:DICT[w]};var o=raw.trim().toLowerCase().replace(/[^\w\s-]/g,'');if(DICT[o])return{word:raw.trim(),meaning:DICT[o]};return null}
+function showPopover(x,y,word,meaning){if(popoverTimer){clearTimeout(popoverTimer);popoverTimer=null}var m=meaning.match(/^(\w+\.?)\s*(.*)/);popWord.textContent=word;popPos.textContent=m?m[1]:'';popMeaning.innerHTML='<span class="zh">'+(m?m[2]:meaning)+'</span>';var pw=popover.offsetWidth,ph=popover.offsetHeight,l=x+12,t=y-ph-8;if(t<10)t=y+20;if(l+pw>window.innerWidth-10)l=x-pw-12;if(l<10)l=10;popover.style.left=l+'px';popover.style.top=t+'px';popover.classList.add('visible')}
+function hidePopover(){popover.classList.remove('visible')}
+function addHistory(word,meaning){lookupHistory=lookupHistory.filter(function(h){return h.word!==word});lookupHistory.unshift({word:word,meaning:meaning});if(lookupHistory.length>30)lookupHistory.pop();try{localStorage.setItem('wb_cloud_v2_history',JSON.stringify(lookupHistory))}catch(e){};updateBadge();renderHistory()}
+function updateBadge(){var c=lookupHistory.length;historyBadge.textContent=c;if(c>0)historyBadge.classList.add('show');else historyBadge.classList.remove('show')}
+function renderHistory(){historyList.innerHTML='';var cd=document.createElement('div');cd.id='history-clear';cd.textContent='Clear all';cd.onclick=function(){lookupHistory=[];localStorage.removeItem('wb_cloud_v2_history');updateBadge();renderHistory()};historyList.appendChild(cd);lookupHistory.forEach(function(h){var d=document.createElement('div');d.className='h-item';var m=h.meaning.match(/^(\w+\.?)\s*(.*)/);d.innerHTML='<span class="h-word">'+h.word+'</span><span class="h-zh">'+(m?m[2]:h.meaning)+'</span>';historyList.appendChild(d)})}
+document.querySelectorAll('.news-card p:not(.wim):not(.source), .news-card h3').forEach(function(el){el.addEventListener('click',function(e){var sel=window.getSelection();if(sel.toString().trim())return;var range=document.caretRangeFromPoint(e.clientX,e.clientY);if(!range)return;var tn=range.startContainer;if(tn.nodeType!==Node.TEXT_NODE)return;var text=tn.textContent,off=range.startOffset,start=off;while(start>0&&/[\w'-]/.test(text[start-1]))start--;var end=off;while(end<text.length&&/[\w'-]/.test(text[end]))end++;var w=text.slice(start,end).trim();if(!w||w.length<2)return;var r=lookup(w);if(!r){hidePopover();return}if(activeWordEl)activeWordEl.classList.remove('active');var span=document.createElement('span');span.className='lookup-word active';span.textContent=w;var before=text.slice(0,start),after=text.slice(end);var p=tn.parentNode;p.insertBefore(document.createTextNode(before),tn);p.insertBefore(span,tn);p.insertBefore(document.createTextNode(after),tn);p.removeChild(tn);activeWordEl=span;setTimeout(function(){if(activeWordEl===span)span.classList.remove('active')},3000);var rect=span.getBoundingClientRect();showPopover(rect.left+rect.width/2,rect.top,r.word,r.meaning);addHistory(r.word,r.meaning)})});
+document.addEventListener('mouseup',function(e){setTimeout(function(){var sel=window.getSelection();var text=sel.toString().trim();if(!text||text.length<2||text.length>40){selToolbar.classList.remove('visible');return}var n=sel.anchorNode,ok=false;while(n){if(n.classList&&n.classList.contains('news-card')){ok=true;break}n=n.parentNode}if(!ok){selToolbar.classList.remove('visible');return}var rect=sel.getRangeAt(0).getBoundingClientRect();selWordSpan.textContent=text;var l=rect.left+rect.width/2-selToolbar.offsetWidth/2,t=rect.bottom+8;if(l<10)l=10;if(l+selToolbar.offsetWidth>window.innerWidth-10)l=window.innerWidth-selToolbar.offsetWidth-10;selToolbar.style.left=l+'px';selToolbar.style.top=t+'px';selToolbar.classList.add('visible');selToolbar._st=text},10)});
+selToolbar.addEventListener('click',function(){var text=selToolbar._st;if(!text)return;var pk=text.toLowerCase(),r=null;if(DICT[pk])r={word:text,meaning:DICT[pk]};else{var ws=text.split(/\s+/);for(var i=0;i<ws.length;i++){r=lookup(ws[i]);if(r)break}}if(r){var rect=selToolbar.getBoundingClientRect();showPopover(rect.left+rect.width/2,rect.top,r.word,r.meaning);addHistory(r.word,r.meaning)}selToolbar.classList.remove('visible');window.getSelection().removeAllRanges()});
+document.addEventListener('click',function(e){if(e.target.closest('.news-card'))return;if(popover.contains(e.target))return;if(e.target===selToolbar||selToolbar.contains(e.target))return;if(e.target.closest('#history-panel')||e.target.closest('#sidebar'))return;popoverTimer=setTimeout(hidePopover,200)});
+popover.addEventListener('mouseenter',function(){if(popoverTimer){clearTimeout(popoverTimer);popoverTimer=null}});
+popover.addEventListener('mouseleave',function(){popoverTimer=setTimeout(hidePopover,300)});
+popClose.addEventListener('click',function(e){e.stopPropagation();hidePopover()});
+window.addEventListener('scroll',function(){hidePopover();selToolbar.classList.remove('visible')},{passive:true});
+historyToggle.addEventListener('click',function(e){e.stopPropagation();renderHistory();historyList.classList.toggle('open')});
+document.addEventListener('click',function(e){if(!historyList.contains(e.target)&&e.target!==historyToggle&&!historyToggle.contains(e.target))historyList.classList.remove('open')});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){hidePopover();selToolbar.classList.remove('visible');historyList.classList.remove('open')}});
+// Sidebar toggle (mobile overlay)
+(function(){
+  var sb=document.getElementById('sidebar'),st=document.getElementById('sidebar-toggle'),bd=document.getElementById('sidebar-backdrop');
+  function openSb(){sb.classList.add('open');bd.classList.add('visible');document.body.style.overflow='hidden'}
+  function closeSb(){sb.classList.remove('open');bd.classList.remove('visible');document.body.style.overflow=''}
+  st.addEventListener('click',function(e){e.stopPropagation();sb.classList.contains('open')?closeSb():openSb()});
+  bd.addEventListener('click',closeSb);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&sb.classList.contains('open'))closeSb()});
+  // Close sidebar when a date link is clicked on mobile
+  sb.addEventListener('click',function(e){if(window.innerWidth<=760&&e.target.classList.contains('date-link'))closeSb()});
+  window.addEventListener('resize',function(){if(window.innerWidth>760)closeSb()});
+})();
+// Sidebar archive loader
+(function(){
+  var sd=document.getElementById('sidebar-dates');
+  fetch('/daily-en-news-cloud/archive/index.json',{cache:'no-cache'}).then(function(r){return r.json()}).then(function(dates){
+    if(!dates.length){sd.innerHTML='<p>No archived editions yet.</p>';return}
+    var today='2026-09-26';sd.innerHTML='';
+    dates.forEach(function(d){var a=document.createElement('a');a.className='date-link';a.href='/daily-en-news-cloud/archive/'+d+'.html';a.textContent=d;if(d===today)a.classList.add('active');sd.appendChild(a)})
+  }).catch(function(){sd.innerHTML='<p>Archive index loading...</p>'})
+})();
+updateBadge();
+</script>
+</body>
+</html>
