@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Today's US News — Thursday, October 22, 2026 | English Reading Practice</title>
+<style>
+  :root{
+    --bg:#faf9f7;--card-bg:#fff;--text:#2d2d2d;--text-light:#5a5a5a;--accent-p:#b22234;--accent-e:#1a5f8a;--accent-r:#2d7d46;
+    --gold:#b7933a;--border:#e8e4df;--tag-bg:#f0ede8;--shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+    --shadow-lg:0 12px 40px rgba(0,0,0,.12);--radius:10px;--sidebar-w:200px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:Georgia,'Times New Roman',serif;background:var(--bg);color:var(--text);line-height:1.8;min-height:100vh;padding-left:var(--sidebar-w)}
+  #sidebar{
+    position:fixed;left:0;top:0;width:var(--sidebar-w);height:100vh;background:#2c2c2c;color:#ccc;
+    overflow-y:auto;padding:20px 0;z-index:100;font-family:-apple-system,sans-serif;font-size:.82rem;
+    transition:transform .25s ease
+  }
+  #sidebar h3{color:#fff;font-size:.85rem;padding:8px 16px;border-bottom:1px solid #444;margin-bottom:8px;text-align:center}
+  #sidebar .date-link{display:block;padding:6px 16px;color:#aaa;text-decoration:none;transition:all .15s;border-left:3px solid transparent}
+  #sidebar .date-link:hover{color:#fff;background:#3a3a3a;border-left-color:var(--gold)}
+  #sidebar .date-link.active{color:#fff;background:#3a3a3a;border-left-color:var(--gold);font-weight:600}
+  #sidebar .no-archive{padding:16px;color:#666;font-size:.78rem;text-align:center}
+  #main{margin:0 auto;max-width:780px;padding:32px 28px 60px}
+  header{text-align:center;padding:36px 0 28px;border-bottom:2px solid var(--border);margin-bottom:32px}
+  header h1{font-size:1.75rem;font-weight:700;color:#1a1a1a}
+  header .date{font-size:.9rem;color:var(--text-light)}
+  .meta-bar{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-top:14px;font-size:.82rem;color:var(--text-light)}
+  .meta-bar span{background:var(--tag-bg);padding:4px 14px;border-radius:20px}
+  .section{margin-bottom:40px}
+  .section-title{font-size:1.25rem;font-weight:700;margin-bottom:16px;padding-bottom:6px;border-bottom:3px solid;display:flex;align-items:center;gap:8px}
+  .section-title.politics{color:var(--accent-p);border-color:var(--accent-p)}
+  .section-title.economy{color:var(--accent-e);border-color:var(--accent-e)}
+  .section-title.research{color:var(--accent-r);border-color:var(--accent-r)}
+  .news-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:22px 26px;margin-bottom:16px;box-shadow:var(--shadow);transition:box-shadow .3s,border-color .3s}
+  .news-card:hover{box-shadow:0 3px 12px rgba(0,0,0,.08);border-color:#d8d2c8}
+  .news-card h3{font-size:1.08rem;font-weight:700;margin-bottom:10px;line-height:1.45}
+  .news-card p{font-size:.95rem;color:var(--text-light);margin-bottom:12px;text-align:justify}
+  .news-card .source{font-size:.78rem;color:#999;font-style:italic}
+  .news-card .wim{color:#8a6d20;font-size:.88rem;padding:6px 0 0}
+  .trans-toggle{margin:8px 0 12px;border:1px solid #e0d8c0;border-radius:8px;overflow:hidden}
+  .trans-toggle summary{padding:8px 14px;background:#faf6ec;cursor:pointer;font-size:.85rem;color:#8a6d20;font-weight:600;user-select:none}
+  .trans-toggle .trans-content{padding:12px 16px;background:#fffbee;color:#5a4a2a;font-size:.88rem;line-height:1.8}
+  .trans-toggle .trans-content p{color:#5a4a2a!important;margin-bottom:8px!important}
+  .cloud-badge{display:inline-block;background:#e8f5e9;color:#2d7d46;font-size:.7rem;padding:2px 10px;border-radius:10px;margin-left:8px;vertical-align:middle}
+  .tips{background:#f4f9ff;border-radius:var(--radius);padding:16px 22px;margin-bottom:32px;font-size:.88rem;color:#3a5a7c;line-height:1.7;display:flex;align-items:flex-start;gap:12px}
+  .tips .icon{font-size:1.4rem;flex-shrink:0}
+  .lookup-word{cursor:pointer;border-bottom:1.5px dotted transparent;transition:border-color .2s,background .2s;border-radius:2px;padding:0 1px}
+  .lookup-word:hover{border-bottom-color:var(--gold);background:rgba(183,147,58,.08)}
+  .lookup-word.active{background:rgba(183,147,58,.18);border-bottom-color:var(--gold)}
+  #word-popover{position:fixed;z-index:9999;background:#fffef9;border:1px solid #d8d0b8;border-radius:12px;box-shadow:var(--shadow-lg);padding:18px 22px;min-width:200px;max-width:320px;opacity:0;transform:translateY(8px) scale(.96);transition:opacity .2s cubic-bezier(.16,1,.3,1),transform .25s cubic-bezier(.16,1,.3,1);pointer-events:none;font-family:-apple-system,sans-serif;word-break:break-word}
+  #word-popover.visible{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+  #word-popover .pop-word{font-size:1.25rem;font-weight:700;color:#1a1a1a;margin-bottom:4px;font-family:Georgia,serif}
+  #word-popover .pop-pos{font-size:.75rem;color:#999;text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px}
+  #word-popover .pop-meaning{font-size:.92rem;color:#444;line-height:1.5;padding:8px 12px;background:#faf6ec;border-radius:6px;border-left:3px solid var(--gold)}
+  #word-popover .pop-meaning .zh{color:#6b4c1e;font-weight:600}
+  #word-popover .pop-close{position:absolute;top:8px;right:10px;width:24px;height:24px;border:none;background:none;cursor:pointer;font-size:1rem;color:#bbb;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:color .2s,background .2s}
+  #word-popover .pop-close:hover{color:#666;background:#f0ede8}
+  #sel-toolbar{position:fixed;z-index:9998;background:#2d2d2d;color:#fff;border-radius:8px;padding:6px 14px;font-size:.82rem;font-family:-apple-system,sans-serif;cursor:pointer;opacity:0;transform:translateY(6px);transition:opacity .18s,transform .2s;pointer-events:none;box-shadow:0 6px 20px rgba(0,0,0,.25);white-space:nowrap}
+  #sel-toolbar.visible{opacity:1;transform:translateY(0);pointer-events:auto}
+  #sel-toolbar:hover{background:#3d3d3d}
+  #history-panel{position:fixed;right:24px;bottom:80px;z-index:9990;display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+  #history-toggle{width:44px;height:44px;border-radius:50%;background:#fff;border:1px solid var(--border);box-shadow:0 2px 12px rgba(0,0,0,.08);cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;transition:all .2s;position:relative}
+  #history-toggle:hover{border-color:var(--gold);box-shadow:0 4px 16px rgba(0,0,0,.12)}
+  #history-badge{position:absolute;top:-4px;right:-4px;background:var(--gold);color:#fff;font-size:.65rem;font-family:-apple-system,sans-serif;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 4px;opacity:0;transform:scale(0);transition:all .3s cubic-bezier(.16,1,.3,1)}
+  #history-badge.show{opacity:1;transform:scale(1)}
+  #history-list{background:#fffef9;border:1px solid #d8d0b8;border-radius:12px;box-shadow:var(--shadow-lg);padding:14px 16px;max-height:300px;overflow-y:auto;width:240px;font-family:-apple-system,sans-serif;font-size:.82rem;display:none;flex-direction:column;gap:8px}
+  #history-list.open{display:flex}
+  #history-list .h-item{display:flex;justify-content:space-between;align-items:center;padding:6px 8px;border-radius:6px;cursor:pointer;transition:background .15s;gap:8px}
+  #history-list .h-item:hover{background:#faf6ec}
+  #history-list .h-word{font-weight:600;color:#1a1a1a}
+  #history-list .h-zh{color:#888;font-size:.78rem}
+  #history-clear{text-align:center;font-size:.72rem;color:#bbb;cursor:pointer;padding:4px;border-radius:4px;transition:color .2s}
+  #history-clear:hover{color:#c0392b}
+  footer{text-align:center;padding:24px 0 0;border-top:1px solid var(--border);font-size:.78rem;color:#aaa;margin-top:8px}
+  .news-card p,.news-card h3{-webkit-tap-highlight-color:transparent}
+  #sidebar-toggle{display:none}
+  #sidebar-backdrop{display:none}
+  @media(max-width:760px){
+    body{padding-left:0}
+    #main{margin:0 auto;padding:20px 14px 40px}
+    .news-card{padding:16px 18px}
+    #history-panel{right:12px;bottom:60px}
+    #word-popover{max-width:260px}
+    #sidebar{
+      display:block;position:fixed;left:0;top:0;width:260px;height:100vh;height:100dvh;
+      z-index:300;transform:translateX(-100%);transition:transform .3s cubic-bezier(.4,0,.2,1);
+      box-shadow:4px 0 24px rgba(0,0,0,.3);overflow-y:auto;-webkit-overflow-scrolling:touch
+    }
+    #sidebar.open{transform:translateX(0)}
+    #sidebar-backdrop{
+      display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:299;
+      opacity:0;transition:opacity .3s ease
+    }
+    #sidebar-backdrop.visible{display:block;opacity:1}
+    #sidebar-toggle{
+      display:flex;position:fixed;top:12px;left:12px;z-index:298;
+      width:40px;height:40px;border-radius:50%;background:#2c2c2c;color:#fff;
+      border:none;font-size:1.3rem;cursor:pointer;align-items:center;justify-content:center;
+      box-shadow:0 2px 8px rgba(0,0,0,.25);transition:background .2s;-webkit-tap-highlight-color:transparent;
+      -webkit-user-select:none;user-select:none
+    }
+    #sidebar-toggle:hover{background:#3a3a3a}
+    #sidebar-toggle:active{background:#4a4a4a}
+  }
+  @media(pointer:coarse){.news-card p,.news-card h3{cursor:default}}
+</style>
+</head>
+<body>
+<button id="sidebar-toggle" aria-label="Toggle date archive">&#9776;</button>
+<div id="sidebar-backdrop"></div>
+<div id="sidebar">
+  <h3>&#128197; Past Editions</h3>
+  <div id="sidebar-dates" class="no-archive">Loading...</div>
+</div>
+<div id="main">
+<header>
+  <h1>Today's US News Brief <span class="cloud-badge">&#9729; CLOUD</span></h1>
+  <div class="date">Thursday, October 22, 2026</div>
+  <div class="meta-bar">
+    <span>&#128214; ~30 min read</span><span>&#128272; TOEIC 600+</span><span>&#128451; Politics &middot; Economy &middot; Research</span>
+  </div>
+</header>
+<div class="tips">
+  <span class="icon">&#128161;</span>
+  <div>
+    <strong>Click any word</strong> to look up its Chinese meaning.
+    <strong>Click &ldquo;Chinese Translation&rdquo;</strong> under each article for full Chinese text.
+    Use the <strong>left sidebar</strong> to browse past editions.
+  </div>
+</div>
+<div class="section"><div class="section-title politics">&#127987; POLITICS</div>
+<div class="news-card">
+    <h3>1. Elon Musk's SpaceX Stock Gift Could Come With New Rules</h3>
+    <p>Elon Musk has said he plans to give some of his SpaceX stock to the public through a new government savings program called Trump Accounts. However, the U.S. Treasury has now written rules that limit when those shares can be sold. The rules are meant to stop people from using the program to avoid taxes.</p>
+<p>Trump Accounts are special savings accounts for children that the government created earlier this year. If Musk puts SpaceX shares into these accounts, families may have to wait years before they can sell them. Supporters say the rules protect small investors, but critics argue they make the gift less useful for ordinary people.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>马斯克捐赠SpaceX股票可能面临新规限制</p>
+<p>埃隆·马斯克表示，他计划通过一个名为“特朗普账户”的新政府储蓄项目，将他持有的部分SpaceX股票赠予公众。然而，美国财政部现已制定规则，限制这些股票的出售时间。这些规则旨在防止人们利用该计划逃税。</p>
+<p>“特朗普账户”是政府今年早些时候为儿童设立的特殊储蓄账户。如果马斯克将SpaceX股票存入这些账户，家庭可能需要等待数年才能出售。支持者表示，这些规则保护了小投资者，但批评者认为，它们使这份礼物对普通人来说用处不大。</p>
+</div>
+</details>
+    <p class="source">Source: CNBC — 2026-10-20</p>
+  </div>
+<div class="news-card">
+    <h3>2. UK Police Re-arrest Two Men Over RAF Fairford Incident</h3>
+    <p>British counterterrorism police said on Tuesday that they have re-arrested two men as part of an investigation into an incident last month at RAF Fairford. The airbase in England was hosting U.S. B-1 bombers at the time. Police did not give details about what happened, but local media reported that several people entered the base without permission.</p>
+<p>The two men had been arrested earlier and released while police continued their inquiries. Their re-arrest suggests that investigators have found new evidence. The case has raised questions about security at military bases in the UK, especially those used by allied forces such as the United States.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>英国警方因RAF费尔福德事件重新逮捕两名男子</p>
+<p>英国反恐警察周二表示，作为对上个月RAF费尔福德事件调查的一部分，他们已重新逮捕两名男子。当时，这座位于英格兰的空军基地驻扎着美国B-1轰炸机。警方没有提供事件细节，但当地媒体报道称，有数人未经许可进入基地。</p>
+<p>这两名男子此前曾被逮捕，并在警方继续调查期间获释。他们的再次被捕表明，调查人员发现了新证据。此案引发了人们对英国军事基地安全的质疑，尤其是那些供美国等盟国部队使用的基地。</p>
+</div>
+</details>
+    <p class="source">Source: CNN — 2026-10-20</p>
+  </div>
+<div class="section-title economy">&#128176; ECONOMY</div>
+<div class="news-card">
+    <h3>3. Dow Jumps 500 Points as Earnings and Oil Prices Lift Markets</h3>
+    <p>The Dow Jones Industrial Average rose more than 500 points on Tuesday, helped by a wave of strong company earnings reports. A sharp drop in crude oil (unrefined petroleum) prices also eased worries about inflation and energy costs. The gains came even as some artificial intelligence stocks continued to struggle after recent heavy selling.</p>
+<p>Investors welcomed the rebound after several days of market pressure. Falling oil prices can lower costs for businesses and consumers, which supports economic growth. However, analysts warned that the market may stay volatile (likely to change suddenly) as companies report their quarterly results over the next few weeks.</p>
+<p class="wim">&#128161; <strong>What this means for you:</strong> A 500-point jump in the Dow shows that investors are feeling more confident after strong earnings and cheaper oil. When oil prices fall, it can help reduce inflation and lower costs for businesses. But the market can still be unstable, so investors should watch upcoming earnings reports carefully.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>道指飙升500点，企业财报与油价提振市场</p>
+<p>道琼斯工业平均指数周二上涨超过500点，得益于一系列强劲的企业财报。原油（未精炼的石油）价格大幅下跌也缓解了人们对通胀和能源成本的担忧。尽管一些人工智能股票在近期大量抛售后继续表现疲软，股市仍录得上涨。</p>
+<p>在经历了数日的市场压力后，投资者对反弹表示欢迎。油价下跌可以降低企业和消费者的成本，从而支持经济增长。然而，分析师警告称，随着企业在未来几周公布季度业绩，市场可能仍将波动（可能突然变化）。</p>
+<p class="trans-wim">&#128161; <strong>这意味着：</strong>道指上涨500点表明，在强劲财报和油价下跌后，投资者信心增强。油价下跌有助于降低通胀和企业成本。但市场仍可能不稳定，因此投资者应密切关注即将发布的财报。</p>
+</div>
+</details>
+    <p class="source">Source: CNBC — 2026-10-20</p>
+  </div>
+<div class="news-card">
+    <h3>4. Homebuilder Sentiment Falls to 14-Year Low</h3>
+    <p>A monthly survey from the National Association of Home Builders shows that builder confidence has dropped to its lowest level in 14 years. High mortgage rates (interest rates on home loans), rising construction costs and slow sales are making it harder for builders to plan new projects. Many builders are offering discounts and smaller homes to attract buyers.</p>
+<p>The weak sentiment is a sign that housing affordability (whether people can afford to buy a home) is getting worse. Young families and first-time buyers are especially affected, as monthly payments on new homes remain very high. Economists say the market is unlikely to recover until interest rates fall or incomes rise.</p>
+<p class="wim">&#128161; <strong>What this means for you:</strong> When homebuilder confidence falls, it usually means fewer new homes will be built. This can make the housing shortage worse and keep prices high. For buyers, it means it may be harder to find an affordable home until mortgage rates come down.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>房屋建筑商信心降至14年低点</p>
+<p>美国全国住宅建筑商协会的一项月度调查显示，建筑商信心已降至14年来的最低水平。高抵押贷款利率（住房贷款的利率）、建筑成本上升和销售缓慢，使建筑商更难规划新项目。许多建筑商正在提供折扣和更小的房屋来吸引买家。</p>
+<p>这种疲软的信心表明，住房可负担性（人们是否买得起房）正在恶化。年轻家庭和首次购房者尤其受到影响，因为新房的月供仍然非常高。经济学家表示，除非利率下降或收入增加，否则市场不太可能复苏。</p>
+<p class="trans-wim">&#128161; <strong>这意味着：</strong>当房屋建筑商信心下降时，通常意味着新建房屋将减少。这可能加剧住房短缺，并使房价居高不下。对于买家来说，这意味着在抵押贷款利率下降之前，可能更难找到负担得起的住房。</p>
+</div>
+</details>
+    <p class="source">Source: Axios — 2026-10-20</p>
+  </div>
+<div class="section-title research">&#128300; RESEARCH</div>
+<div class="news-card">
+    <h3>5. Mars' Giant Canyon Is Still Tectonically Active, Study Finds</h3>
+    <p>Scientists at Columbia University and Imperial College London have discovered that the largest canyon system in the solar system, Valles Marineris on Mars, is still active today. Using computer models and surface images, they found evidence of movement along faults (cracks in the planet's surface) that is shaping the landscape. The activity is happening billions of years after the canyon first formed.</p>
+<p>The team compared the canyon's features with similar structures on Earth and found that Mars is not completely geologically dead. This changes how scientists think about the planet's interior and its long-term evolution. The findings could also help researchers understand whether Mars ever had conditions suitable for life.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>研究发现火星巨大峡谷仍存在构造活动</p>
+<p>哥伦比亚大学和帝国理工学院的科学家发现，太阳系最大的峡谷系统——火星上的水手号峡谷——目前仍存在活动。他们利用计算机模型和表面图像，发现了沿断层（行星表面的裂缝）运动的证据，这些运动正在塑造地貌。这种活动发生在峡谷首次形成数十亿年之后。</p>
+<p>研究团队将峡谷的特征与地球上的类似结构进行了比较，发现火星在地质上并非完全死亡。这改变了科学家对火星内部及其长期演化的看法。这些发现还可能帮助研究人员了解火星是否曾经存在适合生命存在的条件。</p>
+</div>
+</details>
+    <p class="source">Source: Phys.org — 2026-10-20</p>
+  </div>
+<div class="news-card">
+    <h3>6. Webb Telescope Finds Metal-Rich Gas Around Milky Way's Black Hole</h3>
+    <p>Researchers at McGill University's Trottier Space Institute have found that gas orbiting Sagittarius A*, the supermassive black hole at the center of our galaxy, is rich in metals. Using the James Webb Space Telescope, they studied the light from the gas and identified elements heavier than hydrogen and helium. The metal enrichment likely came from stars that exploded long ago.</p>
+<p>This discovery helps scientists understand how material moves and mixes near a supermassive black hole. It also provides clues about the history of star formation in the Milky Way's crowded center. The team plans to continue observing the region to learn more about the black hole's environment.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>韦伯望远镜发现银河系黑洞周围富含金属的气体</p>
+<p>麦吉尔大学特罗蒂尔太空研究所的研究人员发现，环绕银河系中心超大质量黑洞人马座A*的气体富含金属。他们利用詹姆斯·韦伯太空望远镜研究了气体发出的光，并识别出比氢和氦更重的元素。这种金属富集可能来自很久以前爆炸的恒星。</p>
+<p>这一发现有助于科学家了解物质在超大质量黑洞附近如何移动和混合。它还为银河系拥挤中心的恒星形成历史提供了线索。该团队计划继续观测该区域，以进一步了解黑洞的环境。</p>
+</div>
+</details>
+    <p class="source">Source: Phys.org — 2026-10-19</p>
+  </div>
+</div>
+<footer>
+  <p>&#128218; Auto-generated via NewsAPI + DeepSeek | Cloud pipeline &mdash; GitHub Actions | Thursday, October 22, 2026</p>
+</footer>
+</div>
+
+<div id="word-popover">
+  <button class="pop-close" id="pop-close-btn">&times;</button>
+  <div class="pop-word" id="pop-word"></div><div class="pop-pos" id="pop-pos"></div><div class="pop-meaning" id="pop-meaning"></div>
+</div>
+<div id="sel-toolbar">&#128269; Look up "<span id="sel-word"></span>"</div>
+<div id="history-panel">
+  <div id="history-list"><div id="history-clear">Clear all</div></div>
+  <button id="history-toggle" title="Lookup History">&#128214;<span id="history-badge">0</span></button>
+</div>
+
+<script>
+var DICT = {    "accounts":"n. 账户；账目",
+    "active":"adj. 活跃的；积极的",
+    "activity":"n. 活动",
+    "affected":"adj. 受影响的",
+    "afford":"v. 负担得起",
+    "affordability":"n. 可负担性；承受能力",
+    "ago":"adv. 以前",
+    "airbase":"n. 空军基地",
+    "allied":"adj. 同盟的；联合的",
+    "also":"adv. 也；而且",
+    "analysts":"n. 分析师",
+    "argue":"v. 主张；争论",
+    "around":"adv./prep. 大约；围绕",
+    "arrested":"v. 逮捕（arrest的过去式）",
+    "artificial":"adj. 人造的；人工的",
+    "association":"n. 协会；联系",
+    "attract":"v. 吸引",
+    "average":"adj./n. 平均的；平均数",
+    "avoid":"v. 避免",
+    "base":"n./v. 基地；基础；以…为基础",
+    "bases":"n. 基地（复数）；基础",
+    "billions":"n. 数十亿",
+    "black":"adj. 黑色的",
+    "bombers":"n. 轰炸机",
+    "british":"adj. 英国的",
+    "builder":"n. 建筑商；建造者",
+    "builders":"n. 建筑商（复数）",
+    "businesses":"n. 企业；商业（复数）",
+    "buy":"v. 购买",
+    "buyers":"n. 买家",
+    "called":"v. 称为；打电话（call的过去式）",
+    "came":"v. 来（come的过去式）",
+    "canyon":"n. 峡谷",
+    "case":"n. 案例；情况",
+    "center":"n. 中心",
+    "change":"n./v. 变化；改变",
+    "changes":"n. 变化（复数）",
+    "children":"n. 儿童（复数）",
+    "clues":"n. 线索（复数）",
+    "college":"n. 学院；大学",
+    "columbia":"n. 哥伦比亚（专名）",
+    "come":"v. 来",
+    "companies":"n. 公司（复数）",
+    "company":"n. 公司",
+    "compared":"v. 比较（compare的过去式）",
+    "completely":"adv. 完全地",
+    "computer":"n. 计算机",
+    "conditions":"n. 条件；状况（复数）",
+    "confidence":"n. 信心",
+    "construction":"n. 建筑；建设",
+    "consumers":"n. 消费者（复数）",
+    "continue":"v. 继续",
+    "continued":"adj. 持续的；v. 继续（continue的过去式）",
+    "costs":"n. 成本；费用（复数）",
+    "counterterrorism":"n. 反恐",
+    "cracks":"n. 裂缝（复数）",
+    "created":"v. 创造（create的过去式）",
+    "critics":"n. 批评者（复数）",
+    "crowded":"adj. 拥挤的",
+    "crude":"adj. 原油的；粗糙的",
+    "days":"n. 天（复数）",
+    "dead":"adj. 死亡的",
+    "details":"n. 细节（复数）",
+    "discounts":"n. 折扣（复数）",
+    "discovered":"v. 发现（discover的过去式）",
+    "discovery":"n. 发现",
+    "dow":"n. 道琼斯（指数）",
+    "drop":"n./v. 下降；下跌",
+    "dropped":"v. 下降（drop的过去式）",
+    "earlier":"adv./adj. 更早；较早的",
+    "earnings":"n. 收益；盈利",
+    "earth":"n. 地球",
+    "eased":"v. 缓解（ease的过去式）",
+    "economic":"adj. 经济的",
+    "economists":"n. 经济学家（复数）",
+    "elements":"n. 元素（复数）",
+    "elon":"n. 埃隆（人名）",
+    "energy":"n. 能源；能量",
+    "england":"n. 英格兰（专名）",
+    "enrichment":"n. 浓缩；富集",
+    "entered":"v. 进入（enter的过去式）",
+    "environment":"n. 环境",
+    "especially":"adv. 尤其",
+    "even":"adv. 甚至",
+    "ever":"adv. 曾经",
+    "evidence":"n. 证据",
+    "evolution":"n. 进化；演变",
+    "exploded":"v. 爆炸（explode的过去式）",
+    "fairford":"n. 费尔福德（地名）",
+    "fall":"n./v. 下降；下跌",
+    "falling":"adj. 下降的；v. 下落",
+    "falls":"n. 瀑布；v. 下降（第三人称单数）",
+    "families":"n. 家庭（复数）",
+    "faults":"n. 断层；过错（复数）",
+    "features":"n. 特征（复数）",
+    "findings":"n. 调查结果；发现（复数）",
+    "finds":"v. 发现（第三人称单数）",
+    "first":"adj./adv. 第一；首先",
+    "first-time":"adj. 首次的",
+    "forces":"n. 力量；部队（复数）",
+    "formation":"n. 形成；构造",
+    "formed":"v. 形成（form的过去式）",
+    "found":"v. 发现（find的过去式）",
+    "gains":"n. 收益；增长（复数）",
+    "galaxy":"n. 星系",
+    "gas":"n. 气体；天然气",
+    "geologically":"adv. 地质上地",
+    "getting":"v. 得到（get的现在分词）",
+    "giant":"adj./n. 巨大的；巨头",
+    "gift":"n. 礼物",
+    "give":"v. 给",
+    "government":"n. 政府",
+    "growth":"n. 增长",
+    "happened":"v. 发生（happen的过去式）",
+    "happening":"v. 发生（happen的现在分词）",
+    "harder":"adv. 更难地",
+    "heavier":"adj. 更重的",
+    "heavy":"adj. 重的",
+    "helium":"n. 氦",
+    "help":"n./v. 帮助",
+    "helped":"v. 帮助（help的过去式）",
+    "helps":"v. 帮助（第三人称单数）",
+    "high":"adj. 高的",
+    "history":"n. 历史",
+    "hole":"n. 洞；孔",
+    "home":"n. 家；住宅",
+    "homebuilder":"n. 房屋建筑商",
+    "homes":"n. 住宅（复数）",
+    "hosting":"v. 主办；托管（host的现在分词）",
+    "housing":"n. 住房",
+    "however":"adv. 然而",
+    "hydrogen":"n. 氢",
+    "identified":"v. 识别（identify的过去式）",
+    "images":"n. 图像（复数）",
+    "imperial":"adj. 帝国的",
+    "incident":"n. 事件；事故",
+    "incomes":"n. 收入（复数）",
+    "industrial":"adj. 工业的",
+    "inflation":"n. 通货膨胀",
+    "inquiries":"n. 询问；调查（复数）",
+    "institute":"n. 研究所；学院",
+    "intelligence":"n. 情报；智力",
+    "interest":"n. 利息；兴趣",
+    "interior":"n./adj. 内部；内部的",
+    "investigation":"n. 调查",
+    "investigators":"n. 调查人员（复数）",
+    "investors":"n. 投资者（复数）",
+    "james":"n. 詹姆斯（人名）",
+    "jones":"n. 琼斯（人名）",
+    "jumps":"n./v. 激增；跳跃（复数/第三人称单数）",
+    "landscape":"n. 景观；地貌",
+    "largest":"adj. 最大的",
+    "last":"adj./v. 最后的；持续",
+    "learn":"v. 学习；得知",
+    "less":"adj./adv. 更少的",
+    "level":"n. 水平；级别",
+    "life":"n. 生命；生活",
+    "lift":"v. 提升；举起",
+    "light":"n./adj. 光；轻的",
+    "likely":"adj./adv. 可能的；很可能",
+    "limit":"n./v. 限制",
+    "loans":"n. 贷款（复数）",
+    "local":"adj. 当地的",
+    "london":"n. 伦敦（专名）",
+    "long":"adj. 长的",
+    "long-term":"adj. 长期的",
+    "low":"adj. 低的",
+    "lower":"v./adj. 降低；较低的",
+    "lowest":"adj. 最低的",
+    "make":"v. 制作；使得",
+    "making":"v. 制作（make的现在分词）",
+    "marineris":"n. 水手号峡谷（专名）",
+    "market":"n. 市场",
+    "markets":"n. 市场（复数）",
+    "mars":"n. 火星（专名）",
+    "mars'":"n. 火星的（专名所有格）",
+    "material":"n. 材料",
+    "mcgill":"n. 麦吉尔（专名）",
+    "meant":"v. 意味着（mean的过去式）",
+    "media":"n. 媒体",
+    "men":"n. 男人（复数）",
+    "metal":"n. 金属",
+    "metal-rich":"adj. 富含金属的",
+    "metals":"n. 金属（复数）",
+    "military":"n./adj. 军队；军事的",
+    "milky":"adj. 银河的；乳状的",
+    "mixes":"n./v. 混合（复数/第三人称单数）",
+    "models":"n. 模型（复数）",
+    "month":"n. 月",
+    "monthly":"adj./adv. 每月的",
+    "mortgage":"n. 抵押贷款",
+    "movement":"n. 运动；移动",
+    "moves":"n./v. 举措；移动（复数/第三人称单数）",
+    "musk":"n. 马斯克（人名）",
+    "national":"adj. 国家的",
+    "new":"adj. 新的",
+    "next":"adj./adv. 下一个；接下来",
+    "now":"adv. 现在",
+    "observing":"v. 观测（observe的现在分词）",
+    "offering":"n./v. 提供；报价",
+    "oil":"n. 石油",
+    "orbiting":"v. 环绕轨道运行",
+    "ordinary":"adj. 普通的",
+    "part":"n. 部分",
+    "payments":"n. 付款",
+    "people":"n. 人们",
+    "permission":"n. 许可",
+    "petroleum":"n. 石油",
+    "plan":"n. 计划",
+    "planet":"n. 行星",
+    "plans":"n. 计划",
+    "points":"n. 要点",
+    "police":"n. 警察",
+    "pressure":"n. 压力",
+    "prices":"n. 价格",
+    "program":"n. 项目",
+    "projects":"n. 项目",
+    "protect":"v. 保护",
+    "provides":"v. 提供",
+    "public":"adj. 公共的",
+    "puts":"v. 放置",
+    "quarterly":"adj. 季度的",
+    "questions":"n. 问题",
+    "raf":"n. 皇家空军",
+    "raised":"v. 提高",
+    "rates":"n. 利率",
+    "re-arrest":"v. 重新逮捕",
+    "re-arrested":"v. 重新逮捕",
+    "rebound":"v. 反弹",
+    "recent":"adj. 最近的",
+    "recover":"v. 恢复",
+    "region":"n. 地区",
+    "released":"v. 发布",
+    "remain":"v. 保持",
+    "report":"n. 报告",
+    "reported":"v. 报告",
+    "reports":"n. 报告",
+    "researchers":"n. 研究人员",
+    "results":"n. 结果",
+    "rich":"adj. 富有的",
+    "rise":"v. 上升",
+    "rising":"adj. 上升的",
+    "rose":"v. 上升",
+    "rules":"n. 规则",
+    "sagittarius":"n. 人马座",
+    "said":"v. 说",
+    "sales":"n. 销售",
+    "savings":"n. 储蓄",
+    "say":"v. 说",
+    "scientists":"n. 科学家",
+    "security":"n. 安全",
+    "sell":"v. 出售",
+    "selling":"v. 出售",
+    "sentiment":"n. 情绪",
+    "shaping":"v. 塑造",
+    "shares":"n. 股票",
+    "sharp":"adj. 急剧的",
+    "shows":"v. 显示",
+    "sign":"n. 迹象",
+    "similar":"adj. 相似的",
+    "slow":"adj. 缓慢的",
+    "small":"adj. 小的",
+    "smaller":"adj. 较小的",
+    "solar":"adj. 太阳的",
+    "sold":"v. 出售",
+    "space":"n. 空间",
+    "spacex":"n. 太空探索技术公司",
+    "special":"adj. 特别的",
+    "star":"n. 恒星",
+    "stars":"n. 恒星",
+    "states":"n. 州",
+    "stay":"v. 保持",
+    "still":"adv. 仍然",
+    "stock":"n. 股票",
+    "stocks":"n. 股票",
+    "stop":"v. 停止",
+    "strong":"adj. 强劲的",
+    "structures":"n. 结构",
+    "struggle":"v. 挣扎",
+    "studied":"v. 研究",
+    "study":"n. 研究",
+    "suddenly":"adv. 突然",
+    "suggests":"v. 表明",
+    "suitable":"adj. 合适的",
+    "supermassive":"adj. 超大质量的",
+    "supporters":"n. 支持者",
+    "supports":"v. 支持",
+    "surface":"n. 表面",
+    "survey":"n. 调查",
+    "system":"n. 系统",
+    "taxes":"n. 税收",
+    "team":"n. 团队",
+    "tectonically":"adv. 构造上",
+    "telescope":"n. 望远镜",
+    "than":"conj. 比",
+    "think":"v. 认为",
+    "time":"n. 时间",
+    "today":"adv. 今天",
+    "treasury":"n. 财政部",
+    "trottier":"n. 特罗蒂埃（人名）",
+    "trump":"n. 特朗普（人名）",
+    "tuesday":"n. 星期二",
+    "two":"num. 二",
+    "understand":"v. 理解",
+    "united":"adj. 联合的",
+    "university":"n. 大学",
+    "unlikely":"adj. 不太可能的",
+    "unrefined":"adj. 未精炼的",
+    "until":"prep. 直到",
+    "used":"v. 使用",
+    "useful":"adj. 有用的",
+    "using":"v. 使用",
+    "valles":"n. 瓦莱斯（地名）",
+    "very":"adv. 非常",
+    "volatile":"adj. 波动的",
+    "wait":"v. 等待",
+    "warned":"v. 警告",
+    "wave":"n. 波",
+    "way":"n. 方式",
+    "weak":"adj. 疲软的",
+    "webb":"n. 韦伯（人名）",
+    "weeks":"n. 周",
+    "welcomed":"v. 欢迎",
+    "whether":"conj. 是否",
+    "worries":"n. 担忧",
+    "worse":"adj. 更糟的",
+    "written":"v. 写",
+    "year":"n. 年",
+    "years":"n. 年",
+    "young":"adj. 年轻的"
+};
+var popover=document.getElementById('word-popover'),popWord=document.getElementById('pop-word'),popPos=document.getElementById('pop-pos'),popMeaning=document.getElementById('pop-meaning'),popClose=document.getElementById('pop-close-btn'),selToolbar=document.getElementById('sel-toolbar'),selWordSpan=document.getElementById('sel-word'),historyList=document.getElementById('history-list'),historyToggle=document.getElementById('history-toggle'),historyBadge=document.getElementById('history-badge'),popoverTimer=null,activeWordEl=null,lookupHistory=[];
+try{var saved=localStorage.getItem('wb_cloud_v2_history');if(saved)lookupHistory=JSON.parse(saved);updateBadge()}catch(e){}
+function norm(w){
+  w=w.trim().toLowerCase().replace(/[.,;:!?()"']+$/g,'').replace(/^[.,;:!?()"']+/g,'').replace(/'s$/g,'');
+  if(!w||w.length<3)return w;
+  var candidates=[w];
+  // try word-form reduction when exact form not in dict (checked by lookup)
+  if(w.length>4&&w.endsWith('ing'))candidates.push(w.slice(0,-3),w.slice(0,-3)+'e');
+  if(w.endsWith('ied'))candidates.push(w.slice(0,-3)+'y');
+  if(w.endsWith('ed'))candidates.push(w.slice(0,-2),w.slice(0,-1));
+  if(w.endsWith('es')&&!w.endsWith('ses'))candidates.push(w.slice(0,-2));
+  if(w.endsWith('s')&&!w.endsWith('ss'))candidates.push(w.slice(0,-1));
+  for(var i=0;i<candidates.length;i++){
+    if(DICT[candidates[i]])return candidates[i];
+  }
+  return w;
+}
+function lookup(raw){var w=norm(raw);if(!w||w.length<2)return null;if(DICT[w])return{word:raw.trim(),meaning:DICT[w]};var o=raw.trim().toLowerCase().replace(/[^\w\s-]/g,'');if(DICT[o])return{word:raw.trim(),meaning:DICT[o]};return null}
+function showPopover(x,y,word,meaning){if(popoverTimer){clearTimeout(popoverTimer);popoverTimer=null}var m=meaning.match(/^(\w+\.?)\s*(.*)/);popWord.textContent=word;popPos.textContent=m?m[1]:'';popMeaning.innerHTML='<span class="zh">'+(m?m[2]:meaning)+'</span>';var pw=popover.offsetWidth,ph=popover.offsetHeight,l=x+12,t=y-ph-8;if(t<10)t=y+20;if(l+pw>window.innerWidth-10)l=x-pw-12;if(l<10)l=10;popover.style.left=l+'px';popover.style.top=t+'px';popover.classList.add('visible')}
+function hidePopover(){popover.classList.remove('visible')}
+function addHistory(word,meaning){lookupHistory=lookupHistory.filter(function(h){return h.word!==word});lookupHistory.unshift({word:word,meaning:meaning});if(lookupHistory.length>30)lookupHistory.pop();try{localStorage.setItem('wb_cloud_v2_history',JSON.stringify(lookupHistory))}catch(e){};updateBadge();renderHistory()}
+function updateBadge(){var c=lookupHistory.length;historyBadge.textContent=c;if(c>0)historyBadge.classList.add('show');else historyBadge.classList.remove('show')}
+function renderHistory(){historyList.innerHTML='';var cd=document.createElement('div');cd.id='history-clear';cd.textContent='Clear all';cd.onclick=function(){lookupHistory=[];localStorage.removeItem('wb_cloud_v2_history');updateBadge();renderHistory()};historyList.appendChild(cd);lookupHistory.forEach(function(h){var d=document.createElement('div');d.className='h-item';var m=h.meaning.match(/^(\w+\.?)\s*(.*)/);d.innerHTML='<span class="h-word">'+h.word+'</span><span class="h-zh">'+(m?m[2]:h.meaning)+'</span>';historyList.appendChild(d)})}
+document.querySelectorAll('.news-card p:not(.wim):not(.source), .news-card h3').forEach(function(el){el.addEventListener('click',function(e){var sel=window.getSelection();if(sel.toString().trim())return;var range=document.caretRangeFromPoint(e.clientX,e.clientY);if(!range)return;var tn=range.startContainer;if(tn.nodeType!==Node.TEXT_NODE)return;var text=tn.textContent,off=range.startOffset,start=off;while(start>0&&/[\w'-]/.test(text[start-1]))start--;var end=off;while(end<text.length&&/[\w'-]/.test(text[end]))end++;var w=text.slice(start,end).trim();if(!w||w.length<2)return;var r=lookup(w);if(!r){hidePopover();return}if(activeWordEl)activeWordEl.classList.remove('active');var span=document.createElement('span');span.className='lookup-word active';span.textContent=w;var before=text.slice(0,start),after=text.slice(end);var p=tn.parentNode;p.insertBefore(document.createTextNode(before),tn);p.insertBefore(span,tn);p.insertBefore(document.createTextNode(after),tn);p.removeChild(tn);activeWordEl=span;setTimeout(function(){if(activeWordEl===span)span.classList.remove('active')},3000);var rect=span.getBoundingClientRect();showPopover(rect.left+rect.width/2,rect.top,r.word,r.meaning);addHistory(r.word,r.meaning)})});
+document.addEventListener('mouseup',function(e){setTimeout(function(){var sel=window.getSelection();var text=sel.toString().trim();if(!text||text.length<2||text.length>40){selToolbar.classList.remove('visible');return}var n=sel.anchorNode,ok=false;while(n){if(n.classList&&n.classList.contains('news-card')){ok=true;break}n=n.parentNode}if(!ok){selToolbar.classList.remove('visible');return}var rect=sel.getRangeAt(0).getBoundingClientRect();selWordSpan.textContent=text;var l=rect.left+rect.width/2-selToolbar.offsetWidth/2,t=rect.bottom+8;if(l<10)l=10;if(l+selToolbar.offsetWidth>window.innerWidth-10)l=window.innerWidth-selToolbar.offsetWidth-10;selToolbar.style.left=l+'px';selToolbar.style.top=t+'px';selToolbar.classList.add('visible');selToolbar._st=text},10)});
+selToolbar.addEventListener('click',function(){var text=selToolbar._st;if(!text)return;var pk=text.toLowerCase(),r=null;if(DICT[pk])r={word:text,meaning:DICT[pk]};else{var ws=text.split(/\s+/);for(var i=0;i<ws.length;i++){r=lookup(ws[i]);if(r)break}}if(r){var rect=selToolbar.getBoundingClientRect();showPopover(rect.left+rect.width/2,rect.top,r.word,r.meaning);addHistory(r.word,r.meaning)}selToolbar.classList.remove('visible');window.getSelection().removeAllRanges()});
+document.addEventListener('click',function(e){if(e.target.closest('.news-card'))return;if(popover.contains(e.target))return;if(e.target===selToolbar||selToolbar.contains(e.target))return;if(e.target.closest('#history-panel')||e.target.closest('#sidebar'))return;popoverTimer=setTimeout(hidePopover,200)});
+popover.addEventListener('mouseenter',function(){if(popoverTimer){clearTimeout(popoverTimer);popoverTimer=null}});
+popover.addEventListener('mouseleave',function(){popoverTimer=setTimeout(hidePopover,300)});
+popClose.addEventListener('click',function(e){e.stopPropagation();hidePopover()});
+window.addEventListener('scroll',function(){hidePopover();selToolbar.classList.remove('visible')},{passive:true});
+historyToggle.addEventListener('click',function(e){e.stopPropagation();renderHistory();historyList.classList.toggle('open')});
+document.addEventListener('click',function(e){if(!historyList.contains(e.target)&&e.target!==historyToggle&&!historyToggle.contains(e.target))historyList.classList.remove('open')});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){hidePopover();selToolbar.classList.remove('visible');historyList.classList.remove('open')}});
+// Sidebar toggle (mobile overlay)
+(function(){
+  var sb=document.getElementById('sidebar'),st=document.getElementById('sidebar-toggle'),bd=document.getElementById('sidebar-backdrop');
+  function openSb(){sb.classList.add('open');bd.classList.add('visible');document.body.style.overflow='hidden'}
+  function closeSb(){sb.classList.remove('open');bd.classList.remove('visible');document.body.style.overflow=''}
+  st.addEventListener('click',function(e){e.stopPropagation();sb.classList.contains('open')?closeSb():openSb()});
+  bd.addEventListener('click',closeSb);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&sb.classList.contains('open'))closeSb()});
+  // Close sidebar when a date link is clicked on mobile
+  sb.addEventListener('click',function(e){if(window.innerWidth<=760&&e.target.classList.contains('date-link'))closeSb()});
+  window.addEventListener('resize',function(){if(window.innerWidth>760)closeSb()});
+})();
+// Sidebar archive loader
+(function(){
+  var sd=document.getElementById('sidebar-dates');
+  fetch('/daily-en-news-cloud/archive/index.json',{cache:'no-cache'}).then(function(r){return r.json()}).then(function(dates){
+    if(!dates.length){sd.innerHTML='<p>No archived editions yet.</p>';return}
+    var today='2026-10-22';sd.innerHTML='';
+    dates.forEach(function(d){var a=document.createElement('a');a.className='date-link';a.href='/daily-en-news-cloud/archive/'+d+'.html';a.textContent=d;if(d===today)a.classList.add('active');sd.appendChild(a)})
+  }).catch(function(){sd.innerHTML='<p>Archive index loading...</p>'})
+})();
+updateBadge();
+</script>
+</body>
+</html>
