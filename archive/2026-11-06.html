@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Today's US News — Friday, November 06, 2026 | English Reading Practice</title>
+<style>
+  :root{
+    --bg:#faf9f7;--card-bg:#fff;--text:#2d2d2d;--text-light:#5a5a5a;--accent-p:#b22234;--accent-e:#1a5f8a;--accent-r:#2d7d46;
+    --gold:#b7933a;--border:#e8e4df;--tag-bg:#f0ede8;--shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+    --shadow-lg:0 12px 40px rgba(0,0,0,.12);--radius:10px;--sidebar-w:200px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:Georgia,'Times New Roman',serif;background:var(--bg);color:var(--text);line-height:1.8;min-height:100vh;padding-left:var(--sidebar-w)}
+  #sidebar{
+    position:fixed;left:0;top:0;width:var(--sidebar-w);height:100vh;background:#2c2c2c;color:#ccc;
+    overflow-y:auto;padding:20px 0;z-index:100;font-family:-apple-system,sans-serif;font-size:.82rem;
+    transition:transform .25s ease
+  }
+  #sidebar h3{color:#fff;font-size:.85rem;padding:8px 16px;border-bottom:1px solid #444;margin-bottom:8px;text-align:center}
+  #sidebar .date-link{display:block;padding:6px 16px;color:#aaa;text-decoration:none;transition:all .15s;border-left:3px solid transparent}
+  #sidebar .date-link:hover{color:#fff;background:#3a3a3a;border-left-color:var(--gold)}
+  #sidebar .date-link.active{color:#fff;background:#3a3a3a;border-left-color:var(--gold);font-weight:600}
+  #sidebar .no-archive{padding:16px;color:#666;font-size:.78rem;text-align:center}
+  #main{margin:0 auto;max-width:780px;padding:32px 28px 60px}
+  header{text-align:center;padding:36px 0 28px;border-bottom:2px solid var(--border);margin-bottom:32px}
+  header h1{font-size:1.75rem;font-weight:700;color:#1a1a1a}
+  header .date{font-size:.9rem;color:var(--text-light)}
+  .meta-bar{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-top:14px;font-size:.82rem;color:var(--text-light)}
+  .meta-bar span{background:var(--tag-bg);padding:4px 14px;border-radius:20px}
+  .section{margin-bottom:40px}
+  .section-title{font-size:1.25rem;font-weight:700;margin-bottom:16px;padding-bottom:6px;border-bottom:3px solid;display:flex;align-items:center;gap:8px}
+  .section-title.politics{color:var(--accent-p);border-color:var(--accent-p)}
+  .section-title.economy{color:var(--accent-e);border-color:var(--accent-e)}
+  .section-title.research{color:var(--accent-r);border-color:var(--accent-r)}
+  .news-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:22px 26px;margin-bottom:16px;box-shadow:var(--shadow);transition:box-shadow .3s,border-color .3s}
+  .news-card:hover{box-shadow:0 3px 12px rgba(0,0,0,.08);border-color:#d8d2c8}
+  .news-card h3{font-size:1.08rem;font-weight:700;margin-bottom:10px;line-height:1.45}
+  .news-card p{font-size:.95rem;color:var(--text-light);margin-bottom:12px;text-align:justify}
+  .news-card .source{font-size:.78rem;color:#999;font-style:italic}
+  .news-card .wim{color:#8a6d20;font-size:.88rem;padding:6px 0 0}
+  .trans-toggle{margin:8px 0 12px;border:1px solid #e0d8c0;border-radius:8px;overflow:hidden}
+  .trans-toggle summary{padding:8px 14px;background:#faf6ec;cursor:pointer;font-size:.85rem;color:#8a6d20;font-weight:600;user-select:none}
+  .trans-toggle .trans-content{padding:12px 16px;background:#fffbee;color:#5a4a2a;font-size:.88rem;line-height:1.8}
+  .trans-toggle .trans-content p{color:#5a4a2a!important;margin-bottom:8px!important}
+  .cloud-badge{display:inline-block;background:#e8f5e9;color:#2d7d46;font-size:.7rem;padding:2px 10px;border-radius:10px;margin-left:8px;vertical-align:middle}
+  .tips{background:#f4f9ff;border-radius:var(--radius);padding:16px 22px;margin-bottom:32px;font-size:.88rem;color:#3a5a7c;line-height:1.7;display:flex;align-items:flex-start;gap:12px}
+  .tips .icon{font-size:1.4rem;flex-shrink:0}
+  .lookup-word{cursor:pointer;border-bottom:1.5px dotted transparent;transition:border-color .2s,background .2s;border-radius:2px;padding:0 1px}
+  .lookup-word:hover{border-bottom-color:var(--gold);background:rgba(183,147,58,.08)}
+  .lookup-word.active{background:rgba(183,147,58,.18);border-bottom-color:var(--gold)}
+  #word-popover{position:fixed;z-index:9999;background:#fffef9;border:1px solid #d8d0b8;border-radius:12px;box-shadow:var(--shadow-lg);padding:18px 22px;min-width:200px;max-width:320px;opacity:0;transform:translateY(8px) scale(.96);transition:opacity .2s cubic-bezier(.16,1,.3,1),transform .25s cubic-bezier(.16,1,.3,1);pointer-events:none;font-family:-apple-system,sans-serif;word-break:break-word}
+  #word-popover.visible{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+  #word-popover .pop-word{font-size:1.25rem;font-weight:700;color:#1a1a1a;margin-bottom:4px;font-family:Georgia,serif}
+  #word-popover .pop-pos{font-size:.75rem;color:#999;text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px}
+  #word-popover .pop-meaning{font-size:.92rem;color:#444;line-height:1.5;padding:8px 12px;background:#faf6ec;border-radius:6px;border-left:3px solid var(--gold)}
+  #word-popover .pop-meaning .zh{color:#6b4c1e;font-weight:600}
+  #word-popover .pop-close{position:absolute;top:8px;right:10px;width:24px;height:24px;border:none;background:none;cursor:pointer;font-size:1rem;color:#bbb;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:color .2s,background .2s}
+  #word-popover .pop-close:hover{color:#666;background:#f0ede8}
+  #sel-toolbar{position:fixed;z-index:9998;background:#2d2d2d;color:#fff;border-radius:8px;padding:6px 14px;font-size:.82rem;font-family:-apple-system,sans-serif;cursor:pointer;opacity:0;transform:translateY(6px);transition:opacity .18s,transform .2s;pointer-events:none;box-shadow:0 6px 20px rgba(0,0,0,.25);white-space:nowrap}
+  #sel-toolbar.visible{opacity:1;transform:translateY(0);pointer-events:auto}
+  #sel-toolbar:hover{background:#3d3d3d}
+  #history-panel{position:fixed;right:24px;bottom:80px;z-index:9990;display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+  #history-toggle{width:44px;height:44px;border-radius:50%;background:#fff;border:1px solid var(--border);box-shadow:0 2px 12px rgba(0,0,0,.08);cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;transition:all .2s;position:relative}
+  #history-toggle:hover{border-color:var(--gold);box-shadow:0 4px 16px rgba(0,0,0,.12)}
+  #history-badge{position:absolute;top:-4px;right:-4px;background:var(--gold);color:#fff;font-size:.65rem;font-family:-apple-system,sans-serif;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 4px;opacity:0;transform:scale(0);transition:all .3s cubic-bezier(.16,1,.3,1)}
+  #history-badge.show{opacity:1;transform:scale(1)}
+  #history-list{background:#fffef9;border:1px solid #d8d0b8;border-radius:12px;box-shadow:var(--shadow-lg);padding:14px 16px;max-height:300px;overflow-y:auto;width:240px;font-family:-apple-system,sans-serif;font-size:.82rem;display:none;flex-direction:column;gap:8px}
+  #history-list.open{display:flex}
+  #history-list .h-item{display:flex;justify-content:space-between;align-items:center;padding:6px 8px;border-radius:6px;cursor:pointer;transition:background .15s;gap:8px}
+  #history-list .h-item:hover{background:#faf6ec}
+  #history-list .h-word{font-weight:600;color:#1a1a1a}
+  #history-list .h-zh{color:#888;font-size:.78rem}
+  #history-clear{text-align:center;font-size:.72rem;color:#bbb;cursor:pointer;padding:4px;border-radius:4px;transition:color .2s}
+  #history-clear:hover{color:#c0392b}
+  footer{text-align:center;padding:24px 0 0;border-top:1px solid var(--border);font-size:.78rem;color:#aaa;margin-top:8px}
+  .news-card p,.news-card h3{-webkit-tap-highlight-color:transparent}
+  #sidebar-toggle{display:none}
+  #sidebar-backdrop{display:none}
+  @media(max-width:760px){
+    body{padding-left:0}
+    #main{margin:0 auto;padding:20px 14px 40px}
+    .news-card{padding:16px 18px}
+    #history-panel{right:12px;bottom:60px}
+    #word-popover{max-width:260px}
+    #sidebar{
+      display:block;position:fixed;left:0;top:0;width:260px;height:100vh;height:100dvh;
+      z-index:300;transform:translateX(-100%);transition:transform .3s cubic-bezier(.4,0,.2,1);
+      box-shadow:4px 0 24px rgba(0,0,0,.3);overflow-y:auto;-webkit-overflow-scrolling:touch
+    }
+    #sidebar.open{transform:translateX(0)}
+    #sidebar-backdrop{
+      display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:299;
+      opacity:0;transition:opacity .3s ease
+    }
+    #sidebar-backdrop.visible{display:block;opacity:1}
+    #sidebar-toggle{
+      display:flex;position:fixed;top:12px;left:12px;z-index:298;
+      width:40px;height:40px;border-radius:50%;background:#2c2c2c;color:#fff;
+      border:none;font-size:1.3rem;cursor:pointer;align-items:center;justify-content:center;
+      box-shadow:0 2px 8px rgba(0,0,0,.25);transition:background .2s;-webkit-tap-highlight-color:transparent;
+      -webkit-user-select:none;user-select:none
+    }
+    #sidebar-toggle:hover{background:#3a3a3a}
+    #sidebar-toggle:active{background:#4a4a4a}
+  }
+  @media(pointer:coarse){.news-card p,.news-card h3{cursor:default}}
+</style>
+</head>
+<body>
+<button id="sidebar-toggle" aria-label="Toggle date archive">&#9776;</button>
+<div id="sidebar-backdrop"></div>
+<div id="sidebar">
+  <h3>&#128197; Past Editions</h3>
+  <div id="sidebar-dates" class="no-archive">Loading...</div>
+</div>
+<div id="main">
+<header>
+  <h1>Today's US News Brief <span class="cloud-badge">&#9729; CLOUD</span></h1>
+  <div class="date">Friday, November 06, 2026</div>
+  <div class="meta-bar">
+    <span>&#128214; ~30 min read</span><span>&#128272; TOEIC 600+</span><span>&#128451; Politics &middot; Economy &middot; Research</span>
+  </div>
+</header>
+<div class="tips">
+  <span class="icon">&#128161;</span>
+  <div>
+    <strong>Click any word</strong> to look up its Chinese meaning.
+    <strong>Click &ldquo;Chinese Translation&rdquo;</strong> under each article for full Chinese text.
+    Use the <strong>left sidebar</strong> to browse past editions.
+  </div>
+</div>
+<div class="section"><div class="section-title politics">&#127987; POLITICS</div>
+<div class="news-card">
+    <h3>1. Democratic sweep of Congress ushers in a new era as Trump acknowledges impact of the Iran war</h3>
+    <p>In a stunning midterm election result, Democrats have won control of both the House and the Senate, ending Republican dominance and signaling a major shift in Washington. President Donald Trump acknowledged that the war with Iran played a significant role in the elections, but he insisted he is not considering replacing Defense Secretary Pete Hegseth. The sweeping victory gives Democrats the power to block Trump's legislative agenda and to launch investigations into his administration.</p>
+<p>The election outcome reflects widespread voter dissatisfaction with the ongoing conflict, which has cost billions of dollars and resulted in casualties. Democratic leaders have promised to push for a new direction in foreign policy and to focus on domestic issues like healthcare and the economy. With control of Congress, Democrats are expected to challenge many of Trump's key policies and to provide a check on presidential power.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>民主党横扫国会，开启新时代，特朗普承认伊朗战争的影响</p>
+<p>在一场令人震惊的中期选举结果中，民主党赢得了众议院和参议院的控制权，结束了共和党的主导地位，标志着华盛顿的重大转变。唐纳德·特朗普总统承认与伊朗的战争在选举中发挥了重要作用，但他坚称不考虑更换国防部长皮特·赫格塞斯。这场压倒性胜利使民主党有能力阻止特朗普的立法议程，并对其政府展开调查。</p>
+<p>选举结果反映了选民对持续冲突的广泛不满，这场冲突已耗费数十亿美元并造成人员伤亡。民主党领导人承诺推动外交政策的新方向，并聚焦医疗和经济等国内问题。随着控制国会，民主党预计将挑战特朗普的许多关键政策，并对总统权力形成制约。</p>
+</div>
+</details>
+    <p class="source">Source: AP News — 2026-11-04</p>
+  </div>
+<div class="news-card">
+    <h3>2. House Speaker Mike Johnson will not stay on as Republican leader after GOP losses</h3>
+    <p>A day after Democrats won the House majority, Speaker Mike Johnson told his staff in a phone call that he will not stay on as Republican leader in the new Congress. According to four sources on the call, Johnson made the decision after Republicans suffered significant losses in the midterm elections, losing both the House and the Senate. His departure marks the end of a turbulent period in Republican leadership.</p>
+<p>Johnson's announcement comes as the party grapples with the fallout from the elections, which many blame on the Iran war and other controversial policies. The Republican caucus will need to elect a new leader to guide them in the minority, a role that will involve challenging Democratic initiatives and rebuilding the party's image. The leadership change signals a period of introspection and realignment for Republicans as they prepare for future battles.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>众议院议长迈克·约翰逊在共和党失利后将不再担任共和党领袖</p>
+<p>在民主党赢得众议院多数席位的一天后，议长迈克·约翰逊在电话中告诉他的工作人员，他将不再担任新一届国会中的共和党领袖。据四位通话消息人士称，约翰逊是在共和党在中期选举中遭遇重大损失、失去参众两院后做出这一决定的。他的离职标志着共和党领导层一个动荡时期的结束。</p>
+<p>约翰逊的宣布正值共和党应对选举后果之际，许多人将失利归咎于伊朗战争和其他有争议的政策。共和党党团将需要选举一位新领导人来引导他们处于少数党地位，这一角色将涉及挑战民主党的倡议并重建党的形象。领导层变动表明共和党在准备未来战斗时进入了一个反思和调整的时期。</p>
+</div>
+</details>
+    <p class="source">Source: NBC News — 2026-11-04</p>
+  </div>
+<div class="section-title economy">&#128176; ECONOMY</div>
+<div class="news-card">
+    <h3>3. Oil tumbles below $100 on post-election peace hopes</h3>
+    <p>Oil prices fell sharply on Wednesday, with crude dropping below $90 a barrel, after Vice President JD Vance blamed the Republicans' midterm election losses on the Iran war. The Democratic sweep of Congress has raised hopes for a change in foreign policy that could lead to peace and reduce tensions in the Middle East. Traders are betting that a new approach could stabilize oil supplies and lower prices.</p>
+<p>The decline in oil prices is a relief for consumers and businesses, as high energy costs have contributed to inflation and slowed economic growth. However, analysts warn that prices could remain volatile until there is a clear resolution to the conflict. The market reaction underscores how closely politics and energy markets are intertwined, with election outcomes directly impacting global commodity prices.</p>
+<p class="wim">&#128161; <strong>What this means for you:</strong> This means that the election results could lead to lower oil prices, which would help reduce inflation and ease pressure on household budgets. However, the situation remains uncertain, and prices may stay volatile until there is a lasting peace agreement.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>选举后和平希望推动油价跌破100美元</p>
+<p>周三油价大幅下跌，原油跌破每桶90美元，此前副总统JD·万斯将共和党中期选举失利归咎于伊朗战争。民主党横扫国会提高了外交政策变革的希望，这可能带来和平并缓解中东紧张局势。交易员押注新方法可能稳定石油供应并降低价格。</p>
+<p>油价下跌对消费者和企业是一种缓解，因为高能源成本加剧了通胀并减缓了经济增长。然而，分析人士警告，在冲突明确解决之前，价格可能保持波动。市场反应凸显了政治与能源市场紧密交织，选举结果直接影响全球大宗商品价格。</p>
+<p class="trans-wim">&#128161; <strong>这意味着：</strong>这意味着选举结果可能导致油价下跌，从而有助于降低通胀并减轻家庭预算压力。然而，局势仍不确定，在达成持久和平协议之前，价格可能保持波动。</p>
+</div>
+</details>
+    <p class="source">Source: Financial Times — 2026-11-04</p>
+  </div>
+<div class="news-card">
+    <h3>4. McDonald’s plans new value bundles next year after US traffic falls in third quarter</h3>
+    <p>McDonald’s announced plans to introduce new value-oriented meal bundles early next year after a disappointing third quarter that saw lower customer traffic at U.S. restaurants. Chairman and CEO Chris Kempczinski said the company recently began an eight-week test of the new bundles in some markets. The move is aimed at attracting budget-conscious consumers who have been cutting back on eating out due to inflation.</p>
+<p>The fast-food giant has been facing increasing competition from rivals offering cheaper options and from grocery stores as more people cook at home. McDonald’s hopes the new value deals will bring back customers and boost sales. The company is also investing in marketing and digital improvements to enhance the customer experience and drive growth in a challenging economic environment.</p>
+<p class="wim">&#128161; <strong>What this means for you:</strong> This means McDonald’s is trying to win back customers by offering better deals, as high prices have made people eat out less. If successful, the strategy could help the company regain its footing and signal that consumers are still cautious about spending.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>麦当劳计划明年推出新的超值套餐，此前美国第三季度客流量下降</p>
+<p>麦当劳宣布计划明年年初推出新的超值餐包，此前第三季度令人失望，美国餐厅客流量下降。董事长兼首席执行官克里斯·肯普钦斯基表示，公司最近在一些市场开始了为期八周的测试。此举旨在吸引因通胀而减少外出就餐的预算敏感消费者。</p>
+<p>这家快餐巨头一直面临来自提供更便宜选择的竞争对手以及杂货店的日益激烈的竞争，因为更多人选择在家做饭。麦当劳希望新的超值优惠能吸引顾客回流并提升销售额。公司还在投资营销和数字改进，以提升客户体验并在充满挑战的经济环境中推动增长。</p>
+<p class="trans-wim">&#128161; <strong>这意味着：</strong>这意味着麦当劳正试图通过提供更优惠的交易来赢回顾客，因为高价格使人们减少外出就餐。如果成功，该策略可能帮助公司重新站稳脚跟，并表明消费者对支出仍持谨慎态度。</p>
+</div>
+</details>
+    <p class="source">Source: AP News — 2026-11-04</p>
+  </div>
+<div class="section-title research">&#128300; RESEARCH</div>
+<div class="news-card">
+    <h3>5. AI helps Stanford scientists discover a “natural Ozempic” with a surprising advantage</h3>
+    <p>Researchers at Stanford University have used artificial intelligence to identify a natural molecule that dramatically suppresses appetite and promotes fat loss in animals. The molecule, found through AI analysis of biological data, could potentially offer a weight-loss treatment similar to Ozempic but without common digestive side effects. This discovery represents a major step forward in the search for safer and more effective obesity treatments.</p>
+<p>Unlike Ozempic, which is injected and can cause nausea and other gastrointestinal issues, the new molecule might be taken orally and have fewer side effects. The AI system analyzed vast amounts of data to predict which compounds could interact with appetite-regulating pathways in the body. The team is now conducting further tests to determine if the molecule is safe and effective for humans.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>人工智能帮助斯坦福科学家发现一种具有惊人优势的“天然Ozempic”</p>
+<p>斯坦福大学的研究人员利用人工智能识别出一种天然分子，该分子在动物中能显著抑制食欲并促进脂肪减少。这种通过AI分析生物数据发现的分子，可能提供一种类似Ozempic但无常见消化副作用的减肥治疗方法。这一发现代表了在寻找更安全、更有效的肥胖治疗方法方面迈出的重要一步。</p>
+<p>与需要注射且可能引起恶心和其他胃肠道问题的Ozempic不同，这种新分子可能可以口服且副作用较少。AI系统分析了大量数据，以预测哪些化合物可以与体内的食欲调节通路相互作用。该团队现在正在进行进一步测试，以确定该分子对人类是否安全有效。</p>
+</div>
+</details>
+    <p class="source">Source: Science Daily — 2026-11-04</p>
+  </div>
+<div class="news-card">
+    <h3>6. Light-matter hybrids form supersolid quantum state at room temperature</h3>
+    <p>An international team of researchers from the University of Warsaw, the Military University of Technology, IBM Research Zurich, and CNRS has observed a new quantum state of matter called a supersolid at room temperature. Supersolids have the properties of both a solid and a superfluid, meaning they can flow without friction while maintaining a rigid structure. This is the first time such a state has been achieved at room temperature, which is a significant breakthrough.</p>
+<p>The team used hybrid particles made of light and matter, known as polaritons, to create the supersolid state. This achievement could lead to new technologies in quantum computing and sensing, as room-temperature operation is essential for practical applications. The researchers believe their work opens up new possibilities for studying quantum phenomena and developing advanced materials.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>光与物质的混合体在室温下形成超固态量子态</p>
+<p>来自华沙大学、军事技术大学、IBM苏黎世研究实验室和法国国家科学研究中心的一个国际研究团队在室温下观察到一种称为超固体的新量子物质态。超固体同时具有固体和超流体的特性，意味着它们可以在保持刚性结构的同时无摩擦地流动。这是首次在室温下实现这种状态，是一个重大突破。</p>
+<p>该团队使用由光和物质组成的混合粒子（称为极化激元）来创建超固态。这一成就可能带来量子计算和传感的新技术，因为室温操作对于实际应用至关重要。研究人员相信他们的工作为研究量子现象和开发先进材料开辟了新的可能性。</p>
+</div>
+</details>
+    <p class="source">Source: Phys.org — 2026-11-03</p>
+  </div>
+</div>
+<footer>
+  <p>&#128218; Auto-generated via NewsAPI + DeepSeek | Cloud pipeline &mdash; GitHub Actions | Friday, November 06, 2026</p>
+</footer>
+</div>
+
+<div id="word-popover">
+  <button class="pop-close" id="pop-close-btn">&times;</button>
+  <div class="pop-word" id="pop-word"></div><div class="pop-pos" id="pop-pos"></div><div class="pop-meaning" id="pop-meaning"></div>
+</div>
+<div id="sel-toolbar">&#128269; Look up "<span id="sel-word"></span>"</div>
+<div id="history-panel">
+  <div id="history-list"><div id="history-clear">Clear all</div></div>
+  <button id="history-toggle" title="Lookup History">&#128214;<span id="history-badge">0</span></button>
+</div>
+
+<script>
+var DICT = {    "according":"prep. 根据，按照",
+    "achieved":"v. 达到，实现（achieve的过去式）",
+    "achievement":"n. 成就，成绩",
+    "acknowledged":"v. 承认，确认（acknowledge的过去式）",
+    "acknowledges":"v. 承认，确认（acknowledge的第三人称单数）",
+    "administration":"n. 管理，行政；政府",
+    "advanced":"adj. 先进的，高级的",
+    "advantage":"n. 优势，利益",
+    "agenda":"n. 议程，日程",
+    "aimed":"v. 旨在，瞄准（aim的过去式）",
+    "also":"adv. 也，同样",
+    "amounts":"n. 数量，金额（amount的复数）",
+    "analysis":"n. 分析",
+    "analysts":"n. 分析师（analyst的复数）",
+    "analyzed":"v. 分析（analyze的过去式）",
+    "animals":"n. 动物（animal的复数）",
+    "announced":"v. 宣布，公布（announce的过去式）",
+    "announcement":"n. 公告，宣布",
+    "appetite":"n. 食欲，胃口",
+    "appetite-regulating":"adj. 调节食欲的",
+    "applications":"n. 申请，应用（application的复数）",
+    "approach":"n. 方法，途径；v. 接近",
+    "artificial":"adj. 人工的，人造的",
+    "attracting":"v. 吸引（attract的现在分词）",
+    "back":"adv. 回，向后；n. 背部",
+    "barrel":"n. 桶，一桶之量",
+    "battles":"n. 战斗，斗争（battle的复数）",
+    "began":"v. 开始（begin的过去式）",
+    "believe":"v. 相信，认为",
+    "below":"prep. 在……下面；adv. 在下面",
+    "betting":"n. 打赌；v. 打赌（bet的现在分词）",
+    "billions":"n. 数十亿（billion的复数）",
+    "biological":"adj. 生物的，生物学的",
+    "blame":"v. 责备，归咎于；n. 责任",
+    "blamed":"v. 归咎于（blame的过去式）",
+    "block":"v. 阻止，阻塞；n. 街区",
+    "body":"n. 身体，机构",
+    "boost":"v. 促进，提高；n. 增长",
+    "breakthrough":"n. 突破",
+    "bring":"v. 带来，引起",
+    "budget-conscious":"adj. 有预算意识的，注重预算的",
+    "bundles":"n. 捆绑，套餐（bundle的复数）",
+    "businesses":"n. 企业，商业（business的复数）",
+    "call":"v. 呼叫，称为；n. 电话",
+    "called":"v. 称为，呼叫（call的过去式）",
+    "casualties":"n. 伤亡人员（casualty的复数）",
+    "caucus":"n. 党团会议，核心会议",
+    "cause":"v. 导致；n. 原因，事业",
+    "ceo":"n. 首席执行官",
+    "chairman":"n. 主席，董事长",
+    "challenge":"n. 挑战；v. 挑战",
+    "challenging":"adj. 具有挑战性的",
+    "change":"n. 变化；v. 改变",
+    "cheaper":"adj. 更便宜的（cheap的比较级）",
+    "check":"v. 检查；n. 支票",
+    "chris":"n. 克里斯（人名）",
+    "clear":"adj. 清楚的；v. 清除",
+    "closely":"adv. 密切地，紧密地",
+    "cnrs":"n. 法国国家科学研究中心（专名）",
+    "comes":"v. 来（come的第三人称单数）",
+    "commodity":"n. 商品，大宗商品",
+    "common":"adj. 常见的，共同的",
+    "company":"n. 公司",
+    "competition":"n. 竞争，比赛",
+    "compounds":"n. 化合物（compound的复数）",
+    "computing":"n. 计算，计算机技术",
+    "conducting":"v. 进行，实施（conduct的现在分词）",
+    "conflict":"n. 冲突，矛盾",
+    "congress":"n. 国会，代表大会",
+    "considering":"prep. 考虑到；v. 考虑（consider的现在分词）",
+    "consumers":"n. 消费者（consumer的复数）",
+    "contributed":"v. 贡献，促成（contribute的过去式）",
+    "control":"n. 控制；v. 控制",
+    "controversial":"adj. 有争议的",
+    "cook":"v. 烹饪；n. 厨师",
+    "cost":"n. 成本，费用；v. 花费",
+    "costs":"n. 成本，费用（cost的复数）",
+    "create":"v. 创造，创建",
+    "crude":"adj. 原油的，未加工的",
+    "customer":"n. 顾客，客户",
+    "customers":"n. 顾客（customer的复数）",
+    "cutting":"v. 削减（cut的现在分词）；adj. 尖刻的",
+    "data":"n. 数据",
+    "day":"n. 天，日子",
+    "deals":"n. 交易（deal的复数）；v. 处理",
+    "decision":"n. 决定，决策",
+    "decline":"v. 下降，拒绝；n. 下降",
+    "defense":"n. 防御，国防",
+    "democratic":"adj. 民主的",
+    "democrats":"n. 民主党人（democrat的复数）",
+    "departure":"n. 离开，出发",
+    "determine":"v. 决定，确定",
+    "developing":"adj. 发展中的；v. 发展（develop的现在分词）",
+    "digestive":"adj. 消化的",
+    "digital":"adj. 数字的",
+    "direction":"n. 方向，指导",
+    "directly":"adv. 直接地",
+    "disappointing":"adj. 令人失望的",
+    "discover":"v. 发现",
+    "discovery":"n. 发现",
+    "dissatisfaction":"n. 不满",
+    "dollars":"n. 美元（dollar的复数）",
+    "domestic":"adj. 国内的，家庭的",
+    "dominance":"n. 主导地位，优势",
+    "donald":"n. 唐纳德（人名）",
+    "dramatically":"adv. 显著地，剧烈地",
+    "drive":"v. 推动，驾驶；n. 驱动力",
+    "dropping":"v. 下降，掉落（drop的现在分词）",
+    "due":"adj. 到期的，应支付的；prep. 由于",
+    "early":"adj. 早期的；adv. 早",
+    "east":"n. 东方；adj. 东部的",
+    "eating":"n. 吃，饮食；v. 吃（eat的现在分词）",
+    "economic":"adj. 经济的",
+    "economy":"n. 经济",
+    "effective":"adj. 有效的",
+    "effects":"n. 影响，效果（effect的复数）",
+    "eight-week":"adj. 八周的",
+    "elect":"v. 选举，选择",
+    "election":"n. 选举",
+    "elections":"n. 选举（election的复数）",
+    "end":"n. 结束，末端；v. 结束",
+    "ending":"n. 结尾，结束",
+    "energy":"n. 能源，精力",
+    "enhance":"v. 提高，增强",
+    "environment":"n. 环境",
+    "era":"n. 时代，年代",
+    "essential":"adj. 必要的，基本的",
+    "expected":"v. 预期（expect的过去式）；adj. 预期的",
+    "experience":"n. 经验，经历；v. 经历",
+    "facing":"v. 面对（face的现在分词）",
+    "fallout":"n. 影响，后果；放射性沉降物",
+    "falls":"v. 下降（fall的第三人称单数）；n. 瀑布",
+    "fast-food":"n. 快餐；adj. 快餐的",
+    "fat":"n. 脂肪；adj. 肥胖的",
+    "fell":"v. 下降（fall的过去式）",
+    "fewer":"adj. 更少的（few的比较级）",
+    "first":"adj. 第一的；adv. 首先",
+    "flow":"n. 流动，流量；v. 流动",
+    "focus":"n. 焦点；v. 集中",
+    "foreign":"adj. 外国的",
+    "form":"n. 形式，表格；v. 形成",
+    "forward":"adv. 向前；adj. 向前的",
+    "found":"v. 发现（find的过去式）；建立",
+    "four":"num. 四",
+    "friction":"n. 摩擦，冲突",
+    "further":"adv. 进一步；adj. 进一步的",
+    "future":"n. 未来；adj. 未来的",
+    "gastrointestinal":"adj. 胃肠的",
+    "giant":"n. 巨头，巨人；adj. 巨大的",
+    "gives":"v. 给予（give的第三人称单数）",
+    "global":"adj. 全球的",
+    "gop":"n. 美国共和党（专名）",
+    "grapples":"v. 努力应对（grapple的第三人称单数）",
+    "grocery":"n. 食品杂货店，杂货",
+    "growth":"n. 增长，成长",
+    "guide":"n. 指南；v. 指导",
+    "healthcare":"n. 医疗保健",
+    "hegseth":"n. 赫格塞斯（人名）",
+    "helps":"v. 帮助（help的第三人称单数）",
+    "high":"adj. 高的；adv. 高地",
+    "home":"n. 家，住宅",
+    "hopes":"n. 希望（hope的复数）；v. 希望",
+    "house":"n. 房屋，议院",
+    "however":"adv. 然而",
+    "humans":"n. 人类（human的复数）",
+    "hybrid":"n. 混合体；adj. 混合的",
+    "hybrids":"n. 混合体（hybrid的复数）",
+    "ibm":"n. 国际商业机器公司（专名）",
+    "identify":"v. 识别，确认",
+    "image":"n. 形象，图像",
+    "impact":"n. 影响，冲击",
+    "impacting":"v. 影响（impact的现在分词）",
+    "improvements":"n. 改进（improvement的复数）",
+    "increasing":"adj. 增加的；v. 增加（increase的现在分词）",
+    "inflation":"n. 通货膨胀",
+    "initiatives":"n. 举措，倡议（initiative的复数）",
+    "injected":"v. 注入（inject的过去式）",
+    "insisted":"v. 坚持（insist的过去式）",
+    "intelligence":"n. 情报，智力",
+    "interact":"v. 互动，相互作用",
+    "international":"adj. 国际的",
+    "intertwined":"adj. 交织的；v. 交织（intertwine的过去式）",
+    "introduce":"v. 介绍，引入",
+    "introspection":"n. 内省，自我反省",
+    "investigations":"n. 调查（investigation的复数）",
+    "investing":"v. 投资（invest的现在分词）",
+    "involve":"v. 涉及，包含",
+    "iran":"n. 伊朗（专名）",
+    "issues":"n. 问题，议题（issue的复数）",
+    "johnson":"n. 约翰逊（人名）",
+    "kempczinski":"n. 肯普钦斯基（人名）",
+    "key":"adj. 关键的；n. 钥匙",
+    "known":"adj. 已知的；v. 知道（know的过去分词）",
+    "launch":"v. 推出，发射；n. 发布",
+    "lead":"v. 领导，导致；n. 领先",
+    "leader":"n. 领导者",
+    "leaders":"n. 领导者（leader的复数）",
+    "leadership":"n. 领导力，领导层",
+    "legislative":"adj. 立法的",
+    "light":"n. 光，灯；adj. 轻的",
+    "light-matter":"n. 光与物质",
+    "like":"prep. 像；v. 喜欢",
+    "losing":"adj. 失败的；v. 失去",
+    "loss":"n. 损失",
+    "losses":"n. 损失（复数）",
+    "lower":"v. 降低；adj. 较低的",
+    "made":"v. 制造（make的过去式）",
+    "maintaining":"v. 维持",
+    "major":"adj. 主要的",
+    "majority":"n. 多数",
+    "market":"n. 市场",
+    "marketing":"n. 营销",
+    "markets":"n. 市场（复数）",
+    "marks":"n. 标记；v. 标记",
+    "materials":"n. 材料",
+    "matter":"n. 物质；事情",
+    "mcdonald":"n. 麦当劳（专名）",
+    "meal":"n. 一餐",
+    "meaning":"n. 意义",
+    "middle":"n. 中间；adj. 中间的",
+    "midterm":"n. 期中；adj. 期中的",
+    "mike":"n. 迈克（人名）",
+    "military":"adj. 军事的；n. 军队",
+    "minority":"n. 少数",
+    "molecule":"n. 分子",
+    "move":"v. 移动；n. 举措",
+    "natural":"adj. 自然的",
+    "nausea":"n. 恶心",
+    "need":"v. 需要；n. 需求",
+    "new":"adj. 新的",
+    "next":"adj. 下一个的",
+    "now":"adv. 现在",
+    "obesity":"n. 肥胖",
+    "observed":"v. 观察（observe的过去式）",
+    "offer":"v. 提供；n. 提议",
+    "offering":"n. 提供物；v. 提供",
+    "oil":"n. 石油",
+    "ongoing":"adj. 持续的",
+    "opens":"v. 打开（open的第三人称单数）",
+    "operation":"n. 操作；运营",
+    "options":"n. 选项",
+    "orally":"adv. 口头地；口服地",
+    "outcome":"n. 结果",
+    "outcomes":"n. 结果（复数）",
+    "ozempic":"n. 奥泽匹克（药名）",
+    "particles":"n. 粒子",
+    "party":"n. 政党；聚会",
+    "pathways":"n. 途径",
+    "peace":"n. 和平",
+    "people":"n. 人们",
+    "period":"n. 时期",
+    "pete":"n. 皮特（人名）",
+    "phenomena":"n. 现象",
+    "phone":"n. 电话",
+    "plans":"n. 计划",
+    "played":"v. 玩；扮演（play的过去式）",
+    "polaritons":"n. 极化激元",
+    "policies":"n. 政策（复数）",
+    "policy":"n. 政策",
+    "politics":"n. 政治",
+    "possibilities":"n. 可能性",
+    "post-election":"adj. 选举后的",
+    "potentially":"adv. 潜在地",
+    "power":"n. 权力；电力",
+    "practical":"adj. 实际的",
+    "predict":"v. 预测",
+    "prepare":"v. 准备",
+    "president":"n. 总统；总裁",
+    "presidential":"adj. 总统的",
+    "prices":"n. 价格",
+    "promised":"v. 承诺（promise的过去式）",
+    "promotes":"v. 促进（promote的第三人称单数）",
+    "properties":"n. 性质；财产",
+    "provide":"v. 提供",
+    "push":"v. 推动；n. 推",
+    "quantum":"n. 量子；adj. 量子的",
+    "quarter":"n. 季度；四分之一",
+    "raised":"v. 提高；筹集（raise的过去式）",
+    "reaction":"n. 反应",
+    "realignment":"n. 重新调整",
+    "rebuilding":"n. 重建",
+    "recently":"adv. 最近",
+    "reduce":"v. 减少",
+    "reflects":"v. 反映（reflect的第三人称单数）",
+    "relief":"n. 缓解；救济",
+    "remain":"v. 保持；剩余",
+    "replacing":"v. 替换",
+    "represents":"v. 代表（represent的第三人称单数）",
+    "republican":"adj. 共和党的；n. 共和党人",
+    "republicans":"n. 共和党人（复数）",
+    "republicans'":"n. 共和党人的（所有格）",
+    "research":"n. 研究；v. 研究",
+    "researchers":"n. 研究人员",
+    "resolution":"n. 决议；解决",
+    "restaurants":"n. 餐馆",
+    "result":"n. 结果；v. 导致",
+    "resulted":"v. 导致（result的过去式）",
+    "rigid":"adj. 严格的；僵硬的",
+    "rivals":"n. 竞争对手",
+    "role":"n. 角色；作用",
+    "room":"n. 房间；空间",
+    "room-temperature":"adj. 室温的",
+    "safe":"adj. 安全的",
+    "safer":"adj. 更安全的",
+    "said":"v. 说（say的过去式）",
+    "sales":"n. 销售额",
+    "saw":"v. 看见（see的过去式）",
+    "scientists":"n. 科学家",
+    "search":"n. 搜索；v. 搜索",
+    "secretary":"n. 秘书；部长",
+    "senate":"n. 参议院",
+    "sensing":"n. 传感；v. 感知",
+    "sharply":"adv. 急剧地",
+    "shift":"n. 转变；v. 转移",
+    "side":"n. 方面；一边",
+    "signaling":"n. 信号；v. 发信号",
+    "signals":"n. 信号",
+    "significant":"adj. 显著的",
+    "similar":"adj. 相似的",
+    "slowed":"v. 减慢（slow的过去式）",
+    "solid":"adj. 固体的；n. 固体",
+    "sources":"n. 来源",
+    "speaker":"n. 演讲者；议长",
+    "stabilize":"v. 稳定",
+    "staff":"n. 员工",
+    "stanford":"n. 斯坦福（专名）",
+    "state":"n. 州；状态",
+    "stay":"v. 停留",
+    "step":"n. 步骤",
+    "stores":"n. 商店",
+    "structure":"n. 结构",
+    "studying":"v. 研究（study的现在分词）",
+    "stunning":"adj. 惊人的",
+    "suffered":"v. 遭受（suffer的过去式）",
+    "superfluid":"n. 超流体",
+    "supersolid":"n. 超固体",
+    "supersolids":"n. 超固体（复数）",
+    "supplies":"n. 供应品",
+    "suppresses":"v. 抑制（suppress的第三人称单数）",
+    "surprising":"adj. 令人惊讶的",
+    "sweep":"n. 席卷；v. 扫",
+    "sweeping":"adj. 广泛的",
+    "system":"n. 系统",
+    "taken":"v. 采取（take的过去分词）",
+    "team":"n. 团队",
+    "technologies":"n. 技术（复数）",
+    "technology":"n. 技术",
+    "temperature":"n. 温度",
+    "tensions":"n. 紧张局势",
+    "test":"n. 测试；v. 测试",
+    "tests":"n. 测试（复数）",
+    "third":"adj. 第三的",
+    "time":"n. 时间",
+    "told":"v. 告诉（tell的过去式）",
+    "traders":"n. 交易员",
+    "traffic":"n. 交通",
+    "treatment":"n. 治疗",
+    "treatments":"n. 治疗（复数）",
+    "trump":"n. 特朗普（人名）",
+    "tumbles":"v. 暴跌（tumble的第三人称单数）",
+    "turbulent":"adj. 动荡的",
+    "underscores":"v. 强调（underscore的第三人称单数）",
+    "university":"n. 大学",
+    "unlike":"prep. 不像",
+    "until":"prep. 直到",
+    "used":"v. 使用（use的过去式）",
+    "ushers":"v. 引领（usher的第三人称单数）",
+    "value":"n. 价值",
+    "value-oriented":"adj. 价值导向的",
+    "vance":"n. 万斯（人名）",
+    "vast":"adj. 巨大的",
+    "vice":"adj. 副的",
+    "victory":"n. 胜利",
+    "volatile":"adj. 波动的",
+    "voter":"n. 选民",
+    "war":"n. 战争",
+    "warn":"v. 警告",
+    "warsaw":"n. 华沙（专名）",
+    "washington":"n. 华盛顿（专名）",
+    "wednesday":"n. 星期三",
+    "weight-loss":"n. 减肥",
+    "widespread":"adj. 广泛的",
+    "won":"v. 赢得（win的过去式）",
+    "work":"n. 工作；v. 工作",
+    "year":"n. 年",
+    "zurich":"n. 苏黎世（专名）"
+};
+var popover=document.getElementById('word-popover'),popWord=document.getElementById('pop-word'),popPos=document.getElementById('pop-pos'),popMeaning=document.getElementById('pop-meaning'),popClose=document.getElementById('pop-close-btn'),selToolbar=document.getElementById('sel-toolbar'),selWordSpan=document.getElementById('sel-word'),historyList=document.getElementById('history-list'),historyToggle=document.getElementById('history-toggle'),historyBadge=document.getElementById('history-badge'),popoverTimer=null,activeWordEl=null,lookupHistory=[];
+try{var saved=localStorage.getItem('wb_cloud_v2_history');if(saved)lookupHistory=JSON.parse(saved);updateBadge()}catch(e){}
+function norm(w){
+  w=w.trim().toLowerCase().replace(/[.,;:!?()"']+$/g,'').replace(/^[.,;:!?()"']+/g,'').replace(/'s$/g,'');
+  if(!w||w.length<3)return w;
+  var candidates=[w];
+  // try word-form reduction when exact form not in dict (checked by lookup)
+  if(w.length>4&&w.endsWith('ing'))candidates.push(w.slice(0,-3),w.slice(0,-3)+'e');
+  if(w.endsWith('ied'))candidates.push(w.slice(0,-3)+'y');
+  if(w.endsWith('ed'))candidates.push(w.slice(0,-2),w.slice(0,-1));
+  if(w.endsWith('es')&&!w.endsWith('ses'))candidates.push(w.slice(0,-2));
+  if(w.endsWith('s')&&!w.endsWith('ss'))candidates.push(w.slice(0,-1));
+  for(var i=0;i<candidates.length;i++){
+    if(DICT[candidates[i]])return candidates[i];
+  }
+  return w;
+}
+function lookup(raw){var w=norm(raw);if(!w||w.length<2)return null;if(DICT[w])return{word:raw.trim(),meaning:DICT[w]};var o=raw.trim().toLowerCase().replace(/[^\w\s-]/g,'');if(DICT[o])return{word:raw.trim(),meaning:DICT[o]};return null}
+function showPopover(x,y,word,meaning){if(popoverTimer){clearTimeout(popoverTimer);popoverTimer=null}var m=meaning.match(/^(\w+\.?)\s*(.*)/);popWord.textContent=word;popPos.textContent=m?m[1]:'';popMeaning.innerHTML='<span class="zh">'+(m?m[2]:meaning)+'</span>';var pw=popover.offsetWidth,ph=popover.offsetHeight,l=x+12,t=y-ph-8;if(t<10)t=y+20;if(l+pw>window.innerWidth-10)l=x-pw-12;if(l<10)l=10;popover.style.left=l+'px';popover.style.top=t+'px';popover.classList.add('visible')}
+function hidePopover(){popover.classList.remove('visible')}
+function addHistory(word,meaning){lookupHistory=lookupHistory.filter(function(h){return h.word!==word});lookupHistory.unshift({word:word,meaning:meaning});if(lookupHistory.length>30)lookupHistory.pop();try{localStorage.setItem('wb_cloud_v2_history',JSON.stringify(lookupHistory))}catch(e){};updateBadge();renderHistory()}
+function updateBadge(){var c=lookupHistory.length;historyBadge.textContent=c;if(c>0)historyBadge.classList.add('show');else historyBadge.classList.remove('show')}
+function renderHistory(){historyList.innerHTML='';var cd=document.createElement('div');cd.id='history-clear';cd.textContent='Clear all';cd.onclick=function(){lookupHistory=[];localStorage.removeItem('wb_cloud_v2_history');updateBadge();renderHistory()};historyList.appendChild(cd);lookupHistory.forEach(function(h){var d=document.createElement('div');d.className='h-item';var m=h.meaning.match(/^(\w+\.?)\s*(.*)/);d.innerHTML='<span class="h-word">'+h.word+'</span><span class="h-zh">'+(m?m[2]:h.meaning)+'</span>';historyList.appendChild(d)})}
+document.querySelectorAll('.news-card p:not(.wim):not(.source), .news-card h3').forEach(function(el){el.addEventListener('click',function(e){var sel=window.getSelection();if(sel.toString().trim())return;var range=document.caretRangeFromPoint(e.clientX,e.clientY);if(!range)return;var tn=range.startContainer;if(tn.nodeType!==Node.TEXT_NODE)return;var text=tn.textContent,off=range.startOffset,start=off;while(start>0&&/[\w'-]/.test(text[start-1]))start--;var end=off;while(end<text.length&&/[\w'-]/.test(text[end]))end++;var w=text.slice(start,end).trim();if(!w||w.length<2)return;var r=lookup(w);if(!r){hidePopover();return}if(activeWordEl)activeWordEl.classList.remove('active');var span=document.createElement('span');span.className='lookup-word active';span.textContent=w;var before=text.slice(0,start),after=text.slice(end);var p=tn.parentNode;p.insertBefore(document.createTextNode(before),tn);p.insertBefore(span,tn);p.insertBefore(document.createTextNode(after),tn);p.removeChild(tn);activeWordEl=span;setTimeout(function(){if(activeWordEl===span)span.classList.remove('active')},3000);var rect=span.getBoundingClientRect();showPopover(rect.left+rect.width/2,rect.top,r.word,r.meaning);addHistory(r.word,r.meaning)})});
+document.addEventListener('mouseup',function(e){setTimeout(function(){var sel=window.getSelection();var text=sel.toString().trim();if(!text||text.length<2||text.length>40){selToolbar.classList.remove('visible');return}var n=sel.anchorNode,ok=false;while(n){if(n.classList&&n.classList.contains('news-card')){ok=true;break}n=n.parentNode}if(!ok){selToolbar.classList.remove('visible');return}var rect=sel.getRangeAt(0).getBoundingClientRect();selWordSpan.textContent=text;var l=rect.left+rect.width/2-selToolbar.offsetWidth/2,t=rect.bottom+8;if(l<10)l=10;if(l+selToolbar.offsetWidth>window.innerWidth-10)l=window.innerWidth-selToolbar.offsetWidth-10;selToolbar.style.left=l+'px';selToolbar.style.top=t+'px';selToolbar.classList.add('visible');selToolbar._st=text},10)});
+selToolbar.addEventListener('click',function(){var text=selToolbar._st;if(!text)return;var pk=text.toLowerCase(),r=null;if(DICT[pk])r={word:text,meaning:DICT[pk]};else{var ws=text.split(/\s+/);for(var i=0;i<ws.length;i++){r=lookup(ws[i]);if(r)break}}if(r){var rect=selToolbar.getBoundingClientRect();showPopover(rect.left+rect.width/2,rect.top,r.word,r.meaning);addHistory(r.word,r.meaning)}selToolbar.classList.remove('visible');window.getSelection().removeAllRanges()});
+document.addEventListener('click',function(e){if(e.target.closest('.news-card'))return;if(popover.contains(e.target))return;if(e.target===selToolbar||selToolbar.contains(e.target))return;if(e.target.closest('#history-panel')||e.target.closest('#sidebar'))return;popoverTimer=setTimeout(hidePopover,200)});
+popover.addEventListener('mouseenter',function(){if(popoverTimer){clearTimeout(popoverTimer);popoverTimer=null}});
+popover.addEventListener('mouseleave',function(){popoverTimer=setTimeout(hidePopover,300)});
+popClose.addEventListener('click',function(e){e.stopPropagation();hidePopover()});
+window.addEventListener('scroll',function(){hidePopover();selToolbar.classList.remove('visible')},{passive:true});
+historyToggle.addEventListener('click',function(e){e.stopPropagation();renderHistory();historyList.classList.toggle('open')});
+document.addEventListener('click',function(e){if(!historyList.contains(e.target)&&e.target!==historyToggle&&!historyToggle.contains(e.target))historyList.classList.remove('open')});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){hidePopover();selToolbar.classList.remove('visible');historyList.classList.remove('open')}});
+// Sidebar toggle (mobile overlay)
+(function(){
+  var sb=document.getElementById('sidebar'),st=document.getElementById('sidebar-toggle'),bd=document.getElementById('sidebar-backdrop');
+  function openSb(){sb.classList.add('open');bd.classList.add('visible');document.body.style.overflow='hidden'}
+  function closeSb(){sb.classList.remove('open');bd.classList.remove('visible');document.body.style.overflow=''}
+  st.addEventListener('click',function(e){e.stopPropagation();sb.classList.contains('open')?closeSb():openSb()});
+  bd.addEventListener('click',closeSb);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&sb.classList.contains('open'))closeSb()});
+  // Close sidebar when a date link is clicked on mobile
+  sb.addEventListener('click',function(e){if(window.innerWidth<=760&&e.target.classList.contains('date-link'))closeSb()});
+  window.addEventListener('resize',function(){if(window.innerWidth>760)closeSb()});
+})();
+// Sidebar archive loader
+(function(){
+  var sd=document.getElementById('sidebar-dates');
+  fetch('/daily-en-news-cloud/archive/index.json',{cache:'no-cache'}).then(function(r){return r.json()}).then(function(dates){
+    if(!dates.length){sd.innerHTML='<p>No archived editions yet.</p>';return}
+    var today='2026-11-06';sd.innerHTML='';
+    dates.forEach(function(d){var a=document.createElement('a');a.className='date-link';a.href='/daily-en-news-cloud/archive/'+d+'.html';a.textContent=d;if(d===today)a.classList.add('active');sd.appendChild(a)})
+  }).catch(function(){sd.innerHTML='<p>Archive index loading...</p>'})
+})();
+updateBadge();
+</script>
+</body>
+</html>
