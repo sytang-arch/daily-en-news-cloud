@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Today's US News — Monday, November 16, 2026 | English Reading Practice</title>
+<style>
+  :root{
+    --bg:#faf9f7;--card-bg:#fff;--text:#2d2d2d;--text-light:#5a5a5a;--accent-p:#b22234;--accent-e:#1a5f8a;--accent-r:#2d7d46;
+    --gold:#b7933a;--border:#e8e4df;--tag-bg:#f0ede8;--shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+    --shadow-lg:0 12px 40px rgba(0,0,0,.12);--radius:10px;--sidebar-w:200px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:Georgia,'Times New Roman',serif;background:var(--bg);color:var(--text);line-height:1.8;min-height:100vh;padding-left:var(--sidebar-w)}
+  #sidebar{
+    position:fixed;left:0;top:0;width:var(--sidebar-w);height:100vh;background:#2c2c2c;color:#ccc;
+    overflow-y:auto;padding:20px 0;z-index:100;font-family:-apple-system,sans-serif;font-size:.82rem;
+    transition:transform .25s ease
+  }
+  #sidebar h3{color:#fff;font-size:.85rem;padding:8px 16px;border-bottom:1px solid #444;margin-bottom:8px;text-align:center}
+  #sidebar .date-link{display:block;padding:6px 16px;color:#aaa;text-decoration:none;transition:all .15s;border-left:3px solid transparent}
+  #sidebar .date-link:hover{color:#fff;background:#3a3a3a;border-left-color:var(--gold)}
+  #sidebar .date-link.active{color:#fff;background:#3a3a3a;border-left-color:var(--gold);font-weight:600}
+  #sidebar .no-archive{padding:16px;color:#666;font-size:.78rem;text-align:center}
+  #main{margin:0 auto;max-width:780px;padding:32px 28px 60px}
+  header{text-align:center;padding:36px 0 28px;border-bottom:2px solid var(--border);margin-bottom:32px}
+  header h1{font-size:1.75rem;font-weight:700;color:#1a1a1a}
+  header .date{font-size:.9rem;color:var(--text-light)}
+  .meta-bar{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-top:14px;font-size:.82rem;color:var(--text-light)}
+  .meta-bar span{background:var(--tag-bg);padding:4px 14px;border-radius:20px}
+  .section{margin-bottom:40px}
+  .section-title{font-size:1.25rem;font-weight:700;margin-bottom:16px;padding-bottom:6px;border-bottom:3px solid;display:flex;align-items:center;gap:8px}
+  .section-title.politics{color:var(--accent-p);border-color:var(--accent-p)}
+  .section-title.economy{color:var(--accent-e);border-color:var(--accent-e)}
+  .section-title.research{color:var(--accent-r);border-color:var(--accent-r)}
+  .news-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:22px 26px;margin-bottom:16px;box-shadow:var(--shadow);transition:box-shadow .3s,border-color .3s}
+  .news-card:hover{box-shadow:0 3px 12px rgba(0,0,0,.08);border-color:#d8d2c8}
+  .news-card h3{font-size:1.08rem;font-weight:700;margin-bottom:10px;line-height:1.45}
+  .news-card p{font-size:.95rem;color:var(--text-light);margin-bottom:12px;text-align:justify}
+  .news-card .source{font-size:.78rem;color:#999;font-style:italic}
+  .news-card .wim{color:#8a6d20;font-size:.88rem;padding:6px 0 0}
+  .trans-toggle{margin:8px 0 12px;border:1px solid #e0d8c0;border-radius:8px;overflow:hidden}
+  .trans-toggle summary{padding:8px 14px;background:#faf6ec;cursor:pointer;font-size:.85rem;color:#8a6d20;font-weight:600;user-select:none}
+  .trans-toggle .trans-content{padding:12px 16px;background:#fffbee;color:#5a4a2a;font-size:.88rem;line-height:1.8}
+  .trans-toggle .trans-content p{color:#5a4a2a!important;margin-bottom:8px!important}
+  .cloud-badge{display:inline-block;background:#e8f5e9;color:#2d7d46;font-size:.7rem;padding:2px 10px;border-radius:10px;margin-left:8px;vertical-align:middle}
+  .tips{background:#f4f9ff;border-radius:var(--radius);padding:16px 22px;margin-bottom:32px;font-size:.88rem;color:#3a5a7c;line-height:1.7;display:flex;align-items:flex-start;gap:12px}
+  .tips .icon{font-size:1.4rem;flex-shrink:0}
+  .lookup-word{cursor:pointer;border-bottom:1.5px dotted transparent;transition:border-color .2s,background .2s;border-radius:2px;padding:0 1px}
+  .lookup-word:hover{border-bottom-color:var(--gold);background:rgba(183,147,58,.08)}
+  .lookup-word.active{background:rgba(183,147,58,.18);border-bottom-color:var(--gold)}
+  #word-popover{position:fixed;z-index:9999;background:#fffef9;border:1px solid #d8d0b8;border-radius:12px;box-shadow:var(--shadow-lg);padding:18px 22px;min-width:200px;max-width:320px;opacity:0;transform:translateY(8px) scale(.96);transition:opacity .2s cubic-bezier(.16,1,.3,1),transform .25s cubic-bezier(.16,1,.3,1);pointer-events:none;font-family:-apple-system,sans-serif;word-break:break-word}
+  #word-popover.visible{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+  #word-popover .pop-word{font-size:1.25rem;font-weight:700;color:#1a1a1a;margin-bottom:4px;font-family:Georgia,serif}
+  #word-popover .pop-pos{font-size:.75rem;color:#999;text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px}
+  #word-popover .pop-meaning{font-size:.92rem;color:#444;line-height:1.5;padding:8px 12px;background:#faf6ec;border-radius:6px;border-left:3px solid var(--gold)}
+  #word-popover .pop-meaning .zh{color:#6b4c1e;font-weight:600}
+  #word-popover .pop-close{position:absolute;top:8px;right:10px;width:24px;height:24px;border:none;background:none;cursor:pointer;font-size:1rem;color:#bbb;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:color .2s,background .2s}
+  #word-popover .pop-close:hover{color:#666;background:#f0ede8}
+  #sel-toolbar{position:fixed;z-index:9998;background:#2d2d2d;color:#fff;border-radius:8px;padding:6px 14px;font-size:.82rem;font-family:-apple-system,sans-serif;cursor:pointer;opacity:0;transform:translateY(6px);transition:opacity .18s,transform .2s;pointer-events:none;box-shadow:0 6px 20px rgba(0,0,0,.25);white-space:nowrap}
+  #sel-toolbar.visible{opacity:1;transform:translateY(0);pointer-events:auto}
+  #sel-toolbar:hover{background:#3d3d3d}
+  #history-panel{position:fixed;right:24px;bottom:80px;z-index:9990;display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+  #history-toggle{width:44px;height:44px;border-radius:50%;background:#fff;border:1px solid var(--border);box-shadow:0 2px 12px rgba(0,0,0,.08);cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;transition:all .2s;position:relative}
+  #history-toggle:hover{border-color:var(--gold);box-shadow:0 4px 16px rgba(0,0,0,.12)}
+  #history-badge{position:absolute;top:-4px;right:-4px;background:var(--gold);color:#fff;font-size:.65rem;font-family:-apple-system,sans-serif;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 4px;opacity:0;transform:scale(0);transition:all .3s cubic-bezier(.16,1,.3,1)}
+  #history-badge.show{opacity:1;transform:scale(1)}
+  #history-list{background:#fffef9;border:1px solid #d8d0b8;border-radius:12px;box-shadow:var(--shadow-lg);padding:14px 16px;max-height:300px;overflow-y:auto;width:240px;font-family:-apple-system,sans-serif;font-size:.82rem;display:none;flex-direction:column;gap:8px}
+  #history-list.open{display:flex}
+  #history-list .h-item{display:flex;justify-content:space-between;align-items:center;padding:6px 8px;border-radius:6px;cursor:pointer;transition:background .15s;gap:8px}
+  #history-list .h-item:hover{background:#faf6ec}
+  #history-list .h-word{font-weight:600;color:#1a1a1a}
+  #history-list .h-zh{color:#888;font-size:.78rem}
+  #history-clear{text-align:center;font-size:.72rem;color:#bbb;cursor:pointer;padding:4px;border-radius:4px;transition:color .2s}
+  #history-clear:hover{color:#c0392b}
+  footer{text-align:center;padding:24px 0 0;border-top:1px solid var(--border);font-size:.78rem;color:#aaa;margin-top:8px}
+  .news-card p,.news-card h3{-webkit-tap-highlight-color:transparent}
+  #sidebar-toggle{display:none}
+  #sidebar-backdrop{display:none}
+  @media(max-width:760px){
+    body{padding-left:0}
+    #main{margin:0 auto;padding:20px 14px 40px}
+    .news-card{padding:16px 18px}
+    #history-panel{right:12px;bottom:60px}
+    #word-popover{max-width:260px}
+    #sidebar{
+      display:block;position:fixed;left:0;top:0;width:260px;height:100vh;height:100dvh;
+      z-index:300;transform:translateX(-100%);transition:transform .3s cubic-bezier(.4,0,.2,1);
+      box-shadow:4px 0 24px rgba(0,0,0,.3);overflow-y:auto;-webkit-overflow-scrolling:touch
+    }
+    #sidebar.open{transform:translateX(0)}
+    #sidebar-backdrop{
+      display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:299;
+      opacity:0;transition:opacity .3s ease
+    }
+    #sidebar-backdrop.visible{display:block;opacity:1}
+    #sidebar-toggle{
+      display:flex;position:fixed;top:12px;left:12px;z-index:298;
+      width:40px;height:40px;border-radius:50%;background:#2c2c2c;color:#fff;
+      border:none;font-size:1.3rem;cursor:pointer;align-items:center;justify-content:center;
+      box-shadow:0 2px 8px rgba(0,0,0,.25);transition:background .2s;-webkit-tap-highlight-color:transparent;
+      -webkit-user-select:none;user-select:none
+    }
+    #sidebar-toggle:hover{background:#3a3a3a}
+    #sidebar-toggle:active{background:#4a4a4a}
+  }
+  @media(pointer:coarse){.news-card p,.news-card h3{cursor:default}}
+</style>
+</head>
+<body>
+<button id="sidebar-toggle" aria-label="Toggle date archive">&#9776;</button>
+<div id="sidebar-backdrop"></div>
+<div id="sidebar">
+  <h3>&#128197; Past Editions</h3>
+  <div id="sidebar-dates" class="no-archive">Loading...</div>
+</div>
+<div id="main">
+<header>
+  <h1>Today's US News Brief <span class="cloud-badge">&#9729; CLOUD</span></h1>
+  <div class="date">Monday, November 16, 2026</div>
+  <div class="meta-bar">
+    <span>&#128214; ~30 min read</span><span>&#128272; TOEIC 600+</span><span>&#128451; Politics &middot; Economy &middot; Research</span>
+  </div>
+</header>
+<div class="tips">
+  <span class="icon">&#128161;</span>
+  <div>
+    <strong>Click any word</strong> to look up its Chinese meaning.
+    <strong>Click &ldquo;Chinese Translation&rdquo;</strong> under each article for full Chinese text.
+    Use the <strong>left sidebar</strong> to browse past editions.
+  </div>
+</div>
+<div class="section"><div class="section-title politics">&#127987; POLITICS</div>
+<div class="news-card">
+    <h3>1. Surging Measles Cases Force Doctors to Treat Conditions They’ve Never Seen</h3>
+    <p>Measles cases are rising quickly in many communities, and doctors say they are now treating serious health problems that most physicians have only read about in old textbooks. The disease can cause brain swelling, severe pneumonia and long-term damage to the immune system, especially in babies and young children. Because measles was rare for decades, many younger doctors have no experience recognizing these dangerous complications.</p>
+<p>Public health experts say low vaccination rates are the main reason for the sudden rise, as some parents delay or refuse the measles vaccine for their children. Officials are urging families to check their vaccination records and to speak with a doctor about catching up on missed shots. They also warn that measles spreads easily through the air, so one infected person can quickly pass it to many others in a school or clinic.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>麻疹病例激增，医生被迫治疗从未见过的病症</p>
+<p>许多社区的麻疹病例正在迅速增加，医生表示他们现在正在治疗大多数医生只在旧教科书中读到过的严重健康问题。这种疾病可导致脑肿胀、严重肺炎和免疫系统的长期损害，尤其是婴儿和幼儿。由于麻疹几十年来很罕见，许多年轻医生没有识别这些危险并发症的经验。</p>
+<p>公共卫生专家表示，疫苗接种率低是病例突然增加的主要原因，因为一些家长推迟或拒绝为孩子接种麻疹疫苗。官员敦促家庭检查疫苗接种记录，并与医生讨论补种错过的疫苗。他们还警告说，麻疹很容易通过空气传播，因此一个感染者可以迅速在学校或诊所传染给许多人。</p>
+</div>
+</details>
+    <p class="source">Source: The Washington Post — 2026-11-14</p>
+  </div>
+<div class="news-card">
+    <h3>2. Thousands of Flights Canceled as Airlines Recover from Nationwide Ground Stop</h3>
+    <p>Airlines across the United States are working to recover after the longest nationwide ground stop in 25 years, which lasted more than four hours and left passengers stranded at airports. More than 2,000 flights were canceled on Saturday alone, and many travelers faced long lines, missed connections and unexpected hotel stays. Professional and college sports teams were also affected, forcing some games to be delayed or moved to different cities.</p>
+<p>The Federal Aviation Administration ordered the ground stop after a serious computer problem at a major air traffic control center, though officials say safety was never at risk. Airlines are now adding extra flights and moving planes to busy airports to clear the backlog, but they warn that delays could continue for several days. Travelers are advised to check their flight status before going to the airport and to contact their airline about rebooking options.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>全国停飞后航空公司恢复运营，数千航班被取消</p>
+<p>美国各地的航空公司正在努力恢复运营，此前发生了25年来最长的全国停飞，持续四个多小时，导致乘客滞留在机场。仅周六就有超过2000个航班被取消，许多旅客面临长队、错过转机和意外的酒店住宿。职业和大学运动队也受到影响，迫使一些比赛推迟或转移到不同城市。</p>
+<p>美国联邦航空管理局在一个主要空中交通管制中心发生严重计算机问题后下令停飞，但官员表示安全从未受到威胁。航空公司现在正在增加额外航班并将飞机调往繁忙机场以清理积压，但他们警告延误可能持续数天。建议旅客在前往机场前检查航班状态，并就改签选项联系航空公司。</p>
+</div>
+</details>
+    <p class="source">Source: AP News — 2026-11-14</p>
+  </div>
+<div class="section-title economy">&#128176; ECONOMY</div>
+<div class="news-card">
+    <h3>3. Eric Trump-Backed Robot Soldier Startup Can’t Pay Staff After Founder Borrowed $4.6 Million for Home</h3>
+    <p>Foundation Future Industries, a startup backed by Eric Trump that builds robot soldiers, has run low on cash and missed payroll, leaving employees without paychecks. The company’s CEO, Sankaet Pathak, borrowed $4.6 million from the company to buy a home, which has raised questions about how the startup managed its money. Investors and staff are now asking whether the loan was properly approved and whether it contributed to the cash shortage.</p>
+<p>The case highlights the risks of young defense technology startups that promise advanced robots but may lack strong financial controls. Foundation Future Industries had raised money from investors excited about military robots, but it now faces scrutiny from both business partners and the public. The company says it is working to fix the situation, but former employees say they are still waiting for unpaid wages.</p>
+<p class="wim">&#128161; <strong>What this means for you:</strong> This story shows why financial rules matter even at exciting startups. When a CEO borrows company money for personal use, it can drain cash needed for salaries and operations, and investors may lose trust. For students, it is a reminder that a famous backer does not guarantee good management.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>埃里克·特朗普支持的机器人士兵初创公司在创始人借款460万美元买房后无法支付员工工资</p>
+<p>由埃里克·特朗普支持、制造机器人士兵的初创公司Foundation Future Industries现金短缺并错过了发薪日，导致员工没有拿到工资。该公司首席执行官桑卡埃特·帕塔克从公司借款460万美元购买房屋，这引发了人们对这家初创公司如何管理资金的质疑。投资者和员工现在正在询问这笔贷款是否得到适当批准，以及它是否导致了现金短缺。</p>
+<p>此案凸显了年轻的国防科技初创公司的风险，这些公司承诺先进的机器人，但可能缺乏强有力的财务控制。Foundation Future Industries曾从对军用机器人感到兴奋的投资者那里筹集资金，但现在面临商业伙伴和公众的审视。该公司表示正在努力解决问题，但前员工表示他们仍在等待未付的工资。</p>
+<p class="trans-wim">&#128161; <strong>这意味着：</strong>这个故事说明了为什么即使在令人兴奋的初创公司，财务规则也很重要。当首席执行官将公司资金用于个人用途时，可能会耗尽支付工资和运营所需的现金，投资者也可能失去信任。对学生来说，这提醒我们，有名的支持者并不能保证良好的管理。</p>
+</div>
+</details>
+    <p class="source">Source: CNBC — 2026-11-14</p>
+  </div>
+<div class="news-card">
+    <h3>4. Software Company with Thousands of Fortune 500 Clients Joins Microsoft in Major Outage</h3>
+    <p>Workday, a software company that provides payroll and human resources tools to 11,500 organizations, suffered a major outage that left companies unable to access important employee systems. The outage affected large clients such as Walmart, Target, Netflix and several government agencies, and it came shortly after Microsoft also experienced service problems. Many workers could not check their pay, request time off or complete other daily tasks during the disruption.</p>
+<p>The incident raises concerns about how much the modern economy depends on a small number of cloud software providers. When one major platform fails, thousands of companies can be affected at the same time, even if they are competitors in different industries. Workday said it had restored service and was investigating the cause, while business leaders called for stronger backup plans to keep essential systems running.</p>
+<p class="wim">&#128161; <strong>What this means for you:</strong> This outage shows that many companies rely on the same software, so one failure can spread quickly across the economy. Businesses need backup systems and clear communication plans to protect workers and customers. For job seekers, it is also a reminder that digital skills and understanding cloud tools are increasingly important.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>拥有数千家财富500强客户的软件公司与微软一同遭遇重大故障</p>
+<p>Workday是一家为11500个组织提供工资和人力资源工具的软件公司，它遭遇了重大故障，导致公司无法访问重要的员工系统。此次故障影响了沃尔玛、塔吉特、奈飞和几个政府机构等大客户，而且发生在微软也经历服务问题之后不久。许多员工在中断期间无法查看工资、申请休假或完成其他日常工作。</p>
+<p>这一事件引发了人们对现代经济在多大程度上依赖少数云软件提供商的担忧。当一个主要平台出现故障时，数千家公司可能同时受到影响，即使它们是不同行业的竞争对手。Workday表示已恢复服务并正在调查原因，而商业领袖呼吁制定更强的备份计划以保持关键系统运行。</p>
+<p class="trans-wim">&#128161; <strong>这意味着：</strong>这次故障表明，许多公司依赖相同的软件，因此一个故障可能迅速蔓延到整个经济。企业需要备份系统和清晰的沟通计划来保护员工和客户。对于求职者来说，这也提醒我们，数字技能和对云工具的理解正变得越来越重要。</p>
+</div>
+</details>
+    <p class="source">Source: Fox Business — 2026-11-14</p>
+  </div>
+<div class="section-title research">&#128300; RESEARCH</div>
+<div class="news-card">
+    <h3>5. NASA’s Voyager 1 Closes In on a Light-Day in Interstellar Space for a New Distance Record</h3>
+    <p>NASA’s Voyager 1 spacecraft is about to become the first human-made object to reach one light-day from Earth, a distance of more than 16 billion miles (about 26 billion kilometers). A light-day is the distance light travels in one day, and reaching it means radio signals from the spacecraft will take a full day to arrive on Earth. The milestone is expected on Wednesday, and scientists say it marks a new chapter in humanity’s exploration of interstellar space.</p>
+<p>Voyager 1 was launched in 1977 and has been traveling through space for nearly 50 years, sending back valuable data about the far edges of the solar system. Its power supply is slowly running out, and engineers have been turning off some instruments to keep the spacecraft working as long as possible. Even after it stops sending signals, Voyager 1 will continue its journey, carrying a golden record with sounds and images from Earth.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>NASA的旅行者1号在星际空间接近一光日，创下新距离纪录</p>
+<p>NASA的旅行者1号航天器即将成为第一个距离地球一光日的人造物体，距离超过160亿英里（约260亿公里）。一光日是光在一天内传播的距离，达到这一距离意味着来自航天器的无线电信号需要一整天才能到达地球。这一里程碑预计在周三实现，科学家表示它标志着人类探索星际空间的新篇章。</p>
+<p>旅行者1号于1977年发射，已在太空中飞行近50年，发回了关于太阳系遥远边缘的宝贵数据。它的电源正在慢慢耗尽，工程师们一直在关闭一些仪器，以尽可能延长航天器的工作时间。即使它停止发送信号，旅行者1号仍将继续其旅程，携带一张包含地球声音和图像的金唱片。</p>
+</div>
+</details>
+    <p class="source">Source: AP News — 2026-11-14</p>
+  </div>
+<div class="news-card">
+    <h3>6. A Newly Discovered South African Dinosaur Was a Heavyweight Even as a Youngster</h3>
+    <p>Scientists have identified a new dinosaur species, Nyana rooiwalensis, that lived more than 200 million years ago in what is now South Africa. The dinosaur probably walked on two legs and weighed about 400 kilograms (880 pounds), even though it was still a youngster when it died. Its bones were found in the Eastern Cape region, and researchers say the discovery helps explain how early dinosaurs grew and spread across the ancient supercontinent.</p>
+<p>The name “Nyana rooiwalensis” comes from local languages and the Rooiwal area where the fossils were found, honoring the people and place connected to the discovery. The team studied the bones carefully and compared them with other early dinosaurs to confirm it was a new species. Such finds are important because they show that dinosaurs were already diverse and successful long before they became the giants we know from later periods.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>新发现的南非恐龙即使幼年也是重量级</p>
+<p>科学家们鉴定出一种新的恐龙物种Nyana rooiwalensis，它生活在2亿多年前的今南非地区。这只恐龙可能用两条腿行走，体重约400公斤（880磅），尽管它死亡时还年幼。它的骨骼在东开普地区被发现，研究人员表示这一发现有助于解释早期恐龙如何生长并遍布古代超级大陆。</p>
+<p>“Nyana rooiwalensis”这个名字来自当地语言和发现化石的Rooiwal地区，以纪念与发现相关的人民和地点。研究团队仔细研究了骨骼，并将它们与其他早期恐龙进行比较，以确认这是一个新物种。此类发现很重要，因为它们表明恐龙在成为我们从后期了解的巨兽之前，早已多样且成功。</p>
+</div>
+</details>
+    <p class="source">Source: Phys.org — 2026-11-13</p>
+  </div>
+</div>
+<footer>
+  <p>&#128218; Auto-generated via NewsAPI + DeepSeek | Cloud pipeline &mdash; GitHub Actions | Monday, November 16, 2026</p>
+</footer>
+</div>
+
+<div id="word-popover">
+  <button class="pop-close" id="pop-close-btn">&times;</button>
+  <div class="pop-word" id="pop-word"></div><div class="pop-pos" id="pop-pos"></div><div class="pop-meaning" id="pop-meaning"></div>
+</div>
+<div id="sel-toolbar">&#128269; Look up "<span id="sel-word"></span>"</div>
+<div id="history-panel">
+  <div id="history-list"><div id="history-clear">Clear all</div></div>
+  <button id="history-toggle" title="Lookup History">&#128214;<span id="history-badge">0</span></button>
+</div>
+
+<script>
+var DICT = {    "access":"n. 使用权；通道",
+    "adding":"v. 增加；添加",
+    "administration":"n. 行政；管理",
+    "advanced":"adj. 先进的；高级的",
+    "advised":"v. 建议；劝告",
+    "affected":"adj. 受影响的",
+    "africa":"n. 非洲",
+    "african":"adj. 非洲的；n. 非洲人",
+    "agencies":"n. 机构；代理处（agency的复数）",
+    "ago":"adv. 以前",
+    "air":"n. 空气；空中",
+    "airline":"n. 航空公司",
+    "airlines":"n. 航空公司（airline的复数）",
+    "airport":"n. 机场",
+    "airports":"n. 机场（airport的复数）",
+    "alone":"adj./adv. 独自的；单独地",
+    "already":"adv. 已经",
+    "also":"adv. 也；还",
+    "ancient":"adj. 古代的；古老的",
+    "approved":"adj. 经批准的",
+    "area":"n. 地区；领域",
+    "arrive":"v. 到达",
+    "asking":"v. 询问；要求",
+    "aviation":"n. 航空；航空业",
+    "babies":"n. 婴儿（baby的复数）",
+    "back":"n. 背部；adv. 向后；v. 支持",
+    "backed":"adj. 有支持的",
+    "backlog":"n. 积压；积压的工作",
+    "backup":"n. 备份；后备",
+    "became":"v. 成为（become的过去式）",
+    "become":"v. 成为",
+    "billion":"num. 十亿",
+    "bones":"n. 骨头（bone的复数）",
+    "borrowed":"v. 借入",
+    "brain":"n. 大脑",
+    "builds":"v. 建造（build的第三人称单数）",
+    "business":"n. 商业；生意",
+    "busy":"adj. 忙碌的",
+    "buy":"v. 购买",
+    "called":"v. 称为；打电话",
+    "came":"v. 来（come的过去式）",
+    "canceled":"v. 取消",
+    "cape":"n. 海角；披肩",
+    "carefully":"adv. 小心地；仔细地",
+    "carrying":"v. 携带；运送",
+    "case":"n. 案例；情况；案件",
+    "cases":"n. 案例；情况（case的复数）",
+    "cash":"n. 现金",
+    "catching":"v. 抓住；赶上",
+    "cause":"v. 导致；n. 原因",
+    "center":"n. 中心",
+    "ceo":"n. 首席执行官",
+    "chapter":"n. 章节",
+    "check":"v. 检查；n. 支票",
+    "children":"n. 儿童（child的复数）",
+    "cities":"n. 城市（city的复数）",
+    "clear":"adj. 清楚的；v. 清除",
+    "clients":"n. 客户（client的复数）",
+    "clinic":"n. 诊所",
+    "closes":"v. 关闭（close的第三人称单数）",
+    "cloud":"n. 云",
+    "college":"n. 大学；学院",
+    "comes":"v. 来（come的第三人称单数）",
+    "communities":"n. 社区（community的复数）",
+    "companies":"n. 公司（company的复数）",
+    "company":"n. 公司",
+    "compared":"v. 比较",
+    "competitors":"n. 竞争对手（competitor的复数）",
+    "complete":"adj. 完整的；v. 完成",
+    "complications":"n. 并发症；复杂情况",
+    "computer":"n. 计算机",
+    "concerns":"n. 关切；担忧（concern的复数）",
+    "conditions":"n. 条件；状况（condition的复数）",
+    "confirm":"v. 确认",
+    "connected":"adj. 连接的；有联系的",
+    "connections":"n. 联系；连接（connection的复数）",
+    "contact":"v. 联系；n. 联系人",
+    "continue":"v. 继续",
+    "contributed":"v. 贡献；捐助",
+    "control":"v. 控制；n. 控制权",
+    "controls":"n. 控制措施（control的复数）",
+    "daily":"adj. 每日的；adv. 每天",
+    "damage":"n. 损害；v. 损坏",
+    "dangerous":"adj. 危险的",
+    "data":"n. 数据",
+    "day":"n. 天；日",
+    "days":"n. 天（day的复数）",
+    "decades":"n. 几十年（decade的复数）",
+    "defense":"n. 防御；国防",
+    "delay":"n./v. 延误；延迟",
+    "delayed":"adj. 延误的",
+    "delays":"n. 延误（delay的复数）",
+    "depends":"v. 取决于（depend的第三人称单数）",
+    "died":"v. 死亡（die的过去式）",
+    "different":"adj. 不同的",
+    "dinosaur":"n. 恐龙",
+    "dinosaurs":"n. 恐龙（dinosaur的复数）",
+    "discovered":"v. 发现",
+    "discovery":"n. 发现",
+    "disease":"n. 疾病",
+    "disruption":"n. 中断；扰乱",
+    "distance":"n. 距离",
+    "diverse":"adj. 多样的",
+    "doctor":"n. 医生",
+    "doctors":"n. 医生（doctor的复数）",
+    "early":"adj./adv. 早的；早期地",
+    "earth":"n. 地球",
+    "easily":"adv. 容易地",
+    "eastern":"adj. 东部的",
+    "economy":"n. 经济",
+    "edges":"n. 边缘（edge的复数）",
+    "employee":"n. 员工",
+    "employees":"n. 员工（employee的复数）",
+    "engineers":"n. 工程师（engineer的复数）",
+    "eric":"n. 埃里克（人名）",
+    "especially":"adv. 尤其；特别",
+    "essential":"adj. 必要的；本质的",
+    "even":"adv. 甚至；adj. 平坦的",
+    "excited":"adj. 兴奋的",
+    "expected":"adj. 预期的",
+    "experience":"n. 经验；经历",
+    "experienced":"adj. 有经验的",
+    "experts":"n. 专家（expert的复数）",
+    "explain":"v. 解释",
+    "exploration":"n. 探索；勘探",
+    "extra":"adj. 额外的",
+    "faced":"v. 面对（face的过去式）",
+    "faces":"v. 面对（face的第三人称单数）",
+    "fails":"v. 失败（fail的第三人称单数）",
+    "families":"n. 家庭（family的复数）",
+    "far":"adv. 远地；adj. 远的",
+    "federal":"adj. 联邦的",
+    "financial":"adj. 财务的；金融的",
+    "finds":"v. 发现（find的第三人称单数）",
+    "first":"adj./adv. 第一；首先",
+    "fix":"v. 修理；解决",
+    "flight":"n. 航班；飞行",
+    "flights":"n. 航班（flight的复数）",
+    "force":"n. 力量；v. 迫使",
+    "forcing":"v. 迫使（force的现在分词）",
+    "former":"adj. 前任的；以前的",
+    "fortune":"n. 财富；运气",
+    "fossils":"n. 化石（fossil的复数）",
+    "found":"v. 发现（find的过去式）；建立",
+    "foundation":"n. 基金会；基础",
+    "founder":"n. 创始人",
+    "four":"num. 四",
+    "full":"adj. 满的；完整的",
+    "future":"n. 未来",
+    "games":"n. 游戏；比赛（game的复数）",
+    "giants":"n. 巨头；巨人（giant的复数）",
+    "going":"v. 去（go的现在分词）",
+    "golden":"adj. 金色的；黄金的",
+    "government":"n. 政府",
+    "grew":"v. 增长（grow的过去式）",
+    "ground":"n. 地面",
+    "health":"n. 健康",
+    "heavyweight":"n. 重量级人物；adj. 重量级的",
+    "helps":"v. 帮助（help的第三人称单数）",
+    "highlights":"v. 强调；n. 亮点（highlight的复数）",
+    "home":"n. 家",
+    "honoring":"v. 纪念；尊敬（honor的现在分词）",
+    "hotel":"n. 酒店",
+    "hours":"n. 小时（hour的复数）",
+    "human":"n. 人类；adj. 人类的",
+    "human-made":"adj. 人造的",
+    "humanity":"n. 人类；人道",
+    "identified":"v. 识别；确认",
+    "images":"n. 图像（image的复数）",
+    "immune":"adj. 免疫的",
+    "important":"adj. 重要的",
+    "incident":"n. 事件；事故",
+    "industries":"n. 行业（industry的复数）",
+    "infected":"adj. 感染的",
+    "instruments":"n. 仪器；工具（instrument的复数）",
+    "interstellar":"adj. 星际的",
+    "investigating":"v. 调查（investigate的现在分词）",
+    "investors":"n. 投资者（investor的复数）",
+    "joins":"v. 加入（join的第三人称单数）",
+    "journey":"n. 旅程",
+    "keep":"v. 保持；保留",
+    "kilograms":"n. 千克（kilogram的复数）",
+    "kilometers":"n. 千米（kilometer的复数）",
+    "know":"v. 知道；了解",
+    "lack":"n./v. 缺乏",
+    "languages":"n. 语言（language的复数）",
+    "large":"adj. 大的",
+    "lasted":"v. 持续（last的过去式）",
+    "later":"adv. 后来；稍后",
+    "launched":"v. 发射；推出（launch的过去式）",
+    "leaders":"n. 领导者（leader的复数）",
+    "leaving":"v. 离开（leave的现在分词）",
+    "left":"v. 离开（leave的过去式）；adj. 左边的",
+    "legs":"n. 腿（leg的复数）",
+    "light":"n. 光；adj. 轻的",
+    "light-day":"n. 光日（天文距离单位）",
+    "lines":"n. 线路；行（line的复数）",
+    "lived":"v. 居住；生活（live的过去式）",
+    "loan":"n. 贷款",
+    "local":"adj. 当地的；本地的",
+    "long":"adj. 长的；长期的",
+    "long-term":"adj. 长期的",
+    "longest":"adj. 最长的",
+    "low":"adj. 低的；低的",
+    "main":"adj. 主要的",
+    "major":"adj. 主要的；重大的",
+    "managed":"v. 管理；设法做到",
+    "marks":"n. 标记；分数 v. 标记",
+    "means":"n. 手段；方法 v. 意味着",
+    "measles":"n. 麻疹",
+    "microsoft":"n. 微软（公司名）",
+    "miles":"n. 英里（复数）",
+    "milestone":"n. 里程碑",
+    "military":"adj. 军事的 n. 军队",
+    "million":"num. 百万",
+    "missed":"v. 错过；未击中",
+    "modern":"adj. 现代的",
+    "money":"n. 钱；货币",
+    "moved":"v. 移动；感动",
+    "moving":"adj. 移动的；感人的",
+    "name":"n. 名字 v. 命名",
+    "nasa":"n. 美国国家航空航天局（专名）",
+    "nationwide":"adj. 全国性的",
+    "nearly":"adv. 几乎；将近",
+    "netflix":"n. 奈飞（公司名）",
+    "never":"adv. 从不",
+    "new":"adj. 新的",
+    "newly":"adv. 新近地",
+    "now":"adv. 现在",
+    "number":"n. 数字；号码",
+    "nyana":"n. 人名/专名",
+    "object":"n. 物体；目标 v. 反对",
+    "officials":"n. 官员（复数）",
+    "old":"adj. 老的；旧的",
+    "one":"num. 一",
+    "only":"adv. 仅仅 adj. 唯一的",
+    "options":"n. 选项（复数）",
+    "ordered":"v. 命令；订购",
+    "organizations":"n. 组织（复数）",
+    "others":"pron. 其他人；其他事物",
+    "outage":"n. 停电；中断",
+    "parents":"n. 父母（复数）",
+    "partners":"n. 伙伴；合伙人（复数）",
+    "pass":"v. 通过；传递",
+    "passengers":"n. 乘客（复数）",
+    "pathak":"n. 人名/专名",
+    "pay":"v. 支付 n. 工资",
+    "paychecks":"n. 工资支票（复数）",
+    "payroll":"n. 工资单",
+    "people":"n. 人们",
+    "periods":"n. 时期；周期（复数）",
+    "person":"n. 人",
+    "physicians":"n. 内科医生（复数）",
+    "place":"n. 地方 v. 放置",
+    "planes":"n. 飞机（复数）",
+    "plans":"n. 计划（复数） v. 计划",
+    "platform":"n. 平台",
+    "pneumonia":"n. 肺炎",
+    "possible":"adj. 可能的",
+    "pounds":"n. 磅；英镑（复数）",
+    "power":"n. 力量；电力",
+    "probably":"adv. 可能地；大概",
+    "problem":"n. 问题",
+    "problems":"n. 问题（复数）",
+    "professional":"adj. 专业的 n. 专业人士",
+    "promise":"v. 承诺 n. 诺言",
+    "properly":"adv. 适当地；正确地",
+    "providers":"n. 提供者（复数）",
+    "provides":"v. 提供",
+    "public":"adj. 公共的 n. 公众",
+    "questions":"n. 问题（复数）",
+    "quickly":"adv. 快速地",
+    "radio":"n. 收音机；无线电",
+    "raised":"v. 举起；提高；筹集",
+    "raises":"v. 举起；提高 n. 加薪",
+    "rare":"adj. 稀有的",
+    "rates":"n. 比率；价格（复数）",
+    "reach":"v. 到达；达到",
+    "reaching":"v. 到达；伸手",
+    "read":"v. 阅读",
+    "reason":"n. 原因；理由",
+    "rebooking":"n. 重新预订",
+    "recognizing":"v. 认出；承认",
+    "record":"n. 记录 v. 记录",
+    "records":"n. 记录（复数）",
+    "recover":"v. 恢复；康复",
+    "refuse":"v. 拒绝",
+    "region":"n. 地区",
+    "request":"n. 请求 v. 请求",
+    "researchers":"n. 研究人员（复数）",
+    "resources":"n. 资源（复数）",
+    "restored":"v. 恢复；修复",
+    "rise":"v. 上升 n. 增长",
+    "rising":"adj. 上升的",
+    "risk":"n. 风险",
+    "risks":"n. 风险（复数）",
+    "robot":"n. 机器人",
+    "robots":"n. 机器人（复数）",
+    "rooiwal":"n. 人名/专名",
+    "rooiwalensis":"n. 学名/专名",
+    "run":"v. 跑；经营",
+    "running":"v. 跑；经营 adj. 连续的",
+    "safety":"n. 安全",
+    "said":"v. 说（过去式）",
+    "same":"adj. 相同的",
+    "sankaet":"n. 人名/专名",
+    "saturday":"n. 星期六",
+    "say":"v. 说",
+    "says":"v. 说（第三人称单数）",
+    "school":"n. 学校",
+    "scientists":"n. 科学家（复数）",
+    "scrutiny":"n. 审查；仔细检查",
+    "seen":"v. 看见（过去分词）",
+    "sending":"v. 发送",
+    "serious":"adj. 严重的；认真的",
+    "service":"n. 服务",
+    "severe":"adj. 严重的",
+    "shortage":"n. 短缺",
+    "shortly":"adv. 不久；简短地",
+    "shots":"n. 射击；注射（复数）",
+    "show":"v. 展示 n. 节目",
+    "signals":"n. 信号（复数）",
+    "situation":"n. 情况",
+    "slowly":"adv. 缓慢地",
+    "small":"adj. 小的",
+    "software":"n. 软件",
+    "solar":"adj. 太阳的；太阳能的",
+    "soldier":"n. 士兵",
+    "soldiers":"n. 士兵（复数）",
+    "sounds":"n. 声音（复数） v. 听起来",
+    "south":"n. 南方 adj. 南方的",
+    "space":"n. 空间；太空",
+    "spacecraft":"n. 宇宙飞船",
+    "speak":"v. 说话",
+    "species":"n. 物种",
+    "sports":"n. 运动（复数）",
+    "spread":"v. 传播；蔓延",
+    "spreads":"v. 传播（第三人称单数）",
+    "staff":"n. 员工；全体职员",
+    "startup":"n. 初创公司",
+    "startups":"n. 初创公司（复数）",
+    "states":"n. 州；国家（复数） v. 陈述",
+    "status":"n. 状态；地位",
+    "stays":"v. 停留（第三人称单数）",
+    "still":"adv. 仍然",
+    "stop":"v. 停止",
+    "stops":"v. 停止（第三人称单数） n. 站点",
+    "stranded":"adj. 滞留的；搁浅的",
+    "strong":"adj. 强壮的；强烈的",
+    "stronger":"adj. 更强的",
+    "studied":"v. 研究；学习",
+    "successful":"adj. 成功的",
+    "sudden":"adj. 突然的",
+    "suffered":"v. 遭受",
+    "supercontinent":"n. 超大陆",
+    "supply":"n. 供应 v. 供应",
+    "surging":"adj. 激增的",
+    "swelling":"n. 肿胀 adj. 膨胀的",
+    "system":"n. 系统",
+    "systems":"n. 系统（复数）",
+    "take":"v. 拿；取；花费",
+    "target":"n. 目标",
+    "tasks":"n. 任务（复数）",
+    "team":"n. 团队",
+    "teams":"n. 团队（复数）",
+    "technology":"n. 技术",
+    "textbooks":"n. 教科书（复数）",
+    "than":"conj. 比",
+    "though":"conj. 虽然 adv. 不过",
+    "thousands":"n. 数千",
+    "time":"n. 时间",
+    "tools":"n. 工具（复数）",
+    "traffic":"n. 交通",
+    "travelers":"n. 旅行者（复数）",
+    "traveling":"v. 旅行",
+    "travels":"v. 旅行（第三人称单数）",
+    "treat":"v. 对待；治疗",
+    "treating":"v. 对待；治疗",
+    "trump":"n. 特朗普（人名）",
+    "trump-backed":"adj. 特朗普支持的",
+    "turning":"v. 转动；变成",
+    "two":"num. 二",
+    "unable":"adj. 不能的",
+    "unexpected":"adj. 意外的",
+    "united":"adj. 联合的",
+    "unpaid":"adj. 未付的；无薪的",
+    "urging":"v. 敦促",
+    "vaccination":"n. 接种疫苗",
+    "vaccine":"n. 疫苗",
+    "valuable":"adj. 有价值的",
+    "voyager":"n. 旅行者；航行者（专名）",
+    "wages":"n. 工资（复数）",
+    "waiting":"v. 等待",
+    "walked":"v. 走（过去式）",
+    "walmart":"n. 沃尔玛（公司名）",
+    "warn":"v. 警告",
+    "wednesday":"n. 星期三",
+    "weighed":"v. 称重；权衡",
+    "whether":"conj. 是否",
+    "workday":"n. 工作日",
+    "workers":"n. 工人；员工",
+    "working":"adj. 工作的；n. 工作",
+    "years":"n. 年；岁月",
+    "young":"adj. 年轻的",
+    "younger":"adj. 更年轻的",
+    "youngster":"n. 年轻人；青少年"
+};
+var popover=document.getElementById('word-popover'),popWord=document.getElementById('pop-word'),popPos=document.getElementById('pop-pos'),popMeaning=document.getElementById('pop-meaning'),popClose=document.getElementById('pop-close-btn'),selToolbar=document.getElementById('sel-toolbar'),selWordSpan=document.getElementById('sel-word'),historyList=document.getElementById('history-list'),historyToggle=document.getElementById('history-toggle'),historyBadge=document.getElementById('history-badge'),popoverTimer=null,activeWordEl=null,lookupHistory=[];
+try{var saved=localStorage.getItem('wb_cloud_v2_history');if(saved)lookupHistory=JSON.parse(saved);updateBadge()}catch(e){}
+function norm(w){
+  w=w.trim().toLowerCase().replace(/[.,;:!?()"']+$/g,'').replace(/^[.,;:!?()"']+/g,'').replace(/'s$/g,'');
+  if(!w||w.length<3)return w;
+  var candidates=[w];
+  // try word-form reduction when exact form not in dict (checked by lookup)
+  if(w.length>4&&w.endsWith('ing'))candidates.push(w.slice(0,-3),w.slice(0,-3)+'e');
+  if(w.endsWith('ied'))candidates.push(w.slice(0,-3)+'y');
+  if(w.endsWith('ed'))candidates.push(w.slice(0,-2),w.slice(0,-1));
+  if(w.endsWith('es')&&!w.endsWith('ses'))candidates.push(w.slice(0,-2));
+  if(w.endsWith('s')&&!w.endsWith('ss'))candidates.push(w.slice(0,-1));
+  for(var i=0;i<candidates.length;i++){
+    if(DICT[candidates[i]])return candidates[i];
+  }
+  return w;
+}
+function lookup(raw){var w=norm(raw);if(!w||w.length<2)return null;if(DICT[w])return{word:raw.trim(),meaning:DICT[w]};var o=raw.trim().toLowerCase().replace(/[^\w\s-]/g,'');if(DICT[o])return{word:raw.trim(),meaning:DICT[o]};return null}
+function showPopover(x,y,word,meaning){if(popoverTimer){clearTimeout(popoverTimer);popoverTimer=null}var m=meaning.match(/^(\w+\.?)\s*(.*)/);popWord.textContent=word;popPos.textContent=m?m[1]:'';popMeaning.innerHTML='<span class="zh">'+(m?m[2]:meaning)+'</span>';var pw=popover.offsetWidth,ph=popover.offsetHeight,l=x+12,t=y-ph-8;if(t<10)t=y+20;if(l+pw>window.innerWidth-10)l=x-pw-12;if(l<10)l=10;popover.style.left=l+'px';popover.style.top=t+'px';popover.classList.add('visible')}
+function hidePopover(){popover.classList.remove('visible')}
+function addHistory(word,meaning){lookupHistory=lookupHistory.filter(function(h){return h.word!==word});lookupHistory.unshift({word:word,meaning:meaning});if(lookupHistory.length>30)lookupHistory.pop();try{localStorage.setItem('wb_cloud_v2_history',JSON.stringify(lookupHistory))}catch(e){};updateBadge();renderHistory()}
+function updateBadge(){var c=lookupHistory.length;historyBadge.textContent=c;if(c>0)historyBadge.classList.add('show');else historyBadge.classList.remove('show')}
+function renderHistory(){historyList.innerHTML='';var cd=document.createElement('div');cd.id='history-clear';cd.textContent='Clear all';cd.onclick=function(){lookupHistory=[];localStorage.removeItem('wb_cloud_v2_history');updateBadge();renderHistory()};historyList.appendChild(cd);lookupHistory.forEach(function(h){var d=document.createElement('div');d.className='h-item';var m=h.meaning.match(/^(\w+\.?)\s*(.*)/);d.innerHTML='<span class="h-word">'+h.word+'</span><span class="h-zh">'+(m?m[2]:h.meaning)+'</span>';historyList.appendChild(d)})}
+document.querySelectorAll('.news-card p:not(.wim):not(.source), .news-card h3').forEach(function(el){el.addEventListener('click',function(e){var sel=window.getSelection();if(sel.toString().trim())return;var range=document.caretRangeFromPoint(e.clientX,e.clientY);if(!range)return;var tn=range.startContainer;if(tn.nodeType!==Node.TEXT_NODE)return;var text=tn.textContent,off=range.startOffset,start=off;while(start>0&&/[\w'-]/.test(text[start-1]))start--;var end=off;while(end<text.length&&/[\w'-]/.test(text[end]))end++;var w=text.slice(start,end).trim();if(!w||w.length<2)return;var r=lookup(w);if(!r){hidePopover();return}if(activeWordEl)activeWordEl.classList.remove('active');var span=document.createElement('span');span.className='lookup-word active';span.textContent=w;var before=text.slice(0,start),after=text.slice(end);var p=tn.parentNode;p.insertBefore(document.createTextNode(before),tn);p.insertBefore(span,tn);p.insertBefore(document.createTextNode(after),tn);p.removeChild(tn);activeWordEl=span;setTimeout(function(){if(activeWordEl===span)span.classList.remove('active')},3000);var rect=span.getBoundingClientRect();showPopover(rect.left+rect.width/2,rect.top,r.word,r.meaning);addHistory(r.word,r.meaning)})});
+document.addEventListener('mouseup',function(e){setTimeout(function(){var sel=window.getSelection();var text=sel.toString().trim();if(!text||text.length<2||text.length>40){selToolbar.classList.remove('visible');return}var n=sel.anchorNode,ok=false;while(n){if(n.classList&&n.classList.contains('news-card')){ok=true;break}n=n.parentNode}if(!ok){selToolbar.classList.remove('visible');return}var rect=sel.getRangeAt(0).getBoundingClientRect();selWordSpan.textContent=text;var l=rect.left+rect.width/2-selToolbar.offsetWidth/2,t=rect.bottom+8;if(l<10)l=10;if(l+selToolbar.offsetWidth>window.innerWidth-10)l=window.innerWidth-selToolbar.offsetWidth-10;selToolbar.style.left=l+'px';selToolbar.style.top=t+'px';selToolbar.classList.add('visible');selToolbar._st=text},10)});
+selToolbar.addEventListener('click',function(){var text=selToolbar._st;if(!text)return;var pk=text.toLowerCase(),r=null;if(DICT[pk])r={word:text,meaning:DICT[pk]};else{var ws=text.split(/\s+/);for(var i=0;i<ws.length;i++){r=lookup(ws[i]);if(r)break}}if(r){var rect=selToolbar.getBoundingClientRect();showPopover(rect.left+rect.width/2,rect.top,r.word,r.meaning);addHistory(r.word,r.meaning)}selToolbar.classList.remove('visible');window.getSelection().removeAllRanges()});
+document.addEventListener('click',function(e){if(e.target.closest('.news-card'))return;if(popover.contains(e.target))return;if(e.target===selToolbar||selToolbar.contains(e.target))return;if(e.target.closest('#history-panel')||e.target.closest('#sidebar'))return;popoverTimer=setTimeout(hidePopover,200)});
+popover.addEventListener('mouseenter',function(){if(popoverTimer){clearTimeout(popoverTimer);popoverTimer=null}});
+popover.addEventListener('mouseleave',function(){popoverTimer=setTimeout(hidePopover,300)});
+popClose.addEventListener('click',function(e){e.stopPropagation();hidePopover()});
+window.addEventListener('scroll',function(){hidePopover();selToolbar.classList.remove('visible')},{passive:true});
+historyToggle.addEventListener('click',function(e){e.stopPropagation();renderHistory();historyList.classList.toggle('open')});
+document.addEventListener('click',function(e){if(!historyList.contains(e.target)&&e.target!==historyToggle&&!historyToggle.contains(e.target))historyList.classList.remove('open')});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){hidePopover();selToolbar.classList.remove('visible');historyList.classList.remove('open')}});
+// Sidebar toggle (mobile overlay)
+(function(){
+  var sb=document.getElementById('sidebar'),st=document.getElementById('sidebar-toggle'),bd=document.getElementById('sidebar-backdrop');
+  function openSb(){sb.classList.add('open');bd.classList.add('visible');document.body.style.overflow='hidden'}
+  function closeSb(){sb.classList.remove('open');bd.classList.remove('visible');document.body.style.overflow=''}
+  st.addEventListener('click',function(e){e.stopPropagation();sb.classList.contains('open')?closeSb():openSb()});
+  bd.addEventListener('click',closeSb);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&sb.classList.contains('open'))closeSb()});
+  // Close sidebar when a date link is clicked on mobile
+  sb.addEventListener('click',function(e){if(window.innerWidth<=760&&e.target.classList.contains('date-link'))closeSb()});
+  window.addEventListener('resize',function(){if(window.innerWidth>760)closeSb()});
+})();
+// Sidebar archive loader
+(function(){
+  var sd=document.getElementById('sidebar-dates');
+  fetch('/daily-en-news-cloud/archive/index.json',{cache:'no-cache'}).then(function(r){return r.json()}).then(function(dates){
+    if(!dates.length){sd.innerHTML='<p>No archived editions yet.</p>';return}
+    var today='2026-11-16';sd.innerHTML='';
+    dates.forEach(function(d){var a=document.createElement('a');a.className='date-link';a.href='/daily-en-news-cloud/archive/'+d+'.html';a.textContent=d;if(d===today)a.classList.add('active');sd.appendChild(a)})
+  }).catch(function(){sd.innerHTML='<p>Archive index loading...</p>'})
+})();
+updateBadge();
+</script>
+</body>
+</html>
