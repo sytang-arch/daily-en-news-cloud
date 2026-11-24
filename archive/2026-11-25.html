@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Today's US News — Thursday, July 30, 2026 | English Reading Practice</title>
+<style>
+  :root{
+    --bg:#faf9f7;--card-bg:#fff;--text:#2d2d2d;--text-light:#5a5a5a;--accent-p:#b22234;--accent-e:#1a5f8a;--accent-r:#2d7d46;
+    --gold:#b7933a;--border:#e8e4df;--tag-bg:#f0ede8;--shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+    --shadow-lg:0 12px 40px rgba(0,0,0,.12);--radius:10px;--sidebar-w:200px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:Georgia,'Times New Roman',serif;background:var(--bg);color:var(--text);line-height:1.8;min-height:100vh;padding-left:var(--sidebar-w)}
+  #sidebar{
+    position:fixed;left:0;top:0;width:var(--sidebar-w);height:100vh;background:#2c2c2c;color:#ccc;
+    overflow-y:auto;padding:20px 0;z-index:100;font-family:-apple-system,sans-serif;font-size:.82rem;
+    transition:transform .25s ease
+  }
+  #sidebar h3{color:#fff;font-size:.85rem;padding:8px 16px;border-bottom:1px solid #444;margin-bottom:8px;text-align:center}
+  #sidebar .date-link{display:block;padding:6px 16px;color:#aaa;text-decoration:none;transition:all .15s;border-left:3px solid transparent}
+  #sidebar .date-link:hover{color:#fff;background:#3a3a3a;border-left-color:var(--gold)}
+  #sidebar .date-link.active{color:#fff;background:#3a3a3a;border-left-color:var(--gold);font-weight:600}
+  #sidebar .no-archive{padding:16px;color:#666;font-size:.78rem;text-align:center}
+  #main{margin:0 auto;max-width:780px;padding:32px 28px 60px}
+  header{text-align:center;padding:36px 0 28px;border-bottom:2px solid var(--border);margin-bottom:32px}
+  header h1{font-size:1.75rem;font-weight:700;color:#1a1a1a}
+  header .date{font-size:.9rem;color:var(--text-light)}
+  .meta-bar{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-top:14px;font-size:.82rem;color:var(--text-light)}
+  .meta-bar span{background:var(--tag-bg);padding:4px 14px;border-radius:20px}
+  .section{margin-bottom:40px}
+  .section-title{font-size:1.25rem;font-weight:700;margin-bottom:16px;padding-bottom:6px;border-bottom:3px solid;display:flex;align-items:center;gap:8px}
+  .section-title.politics{color:var(--accent-p);border-color:var(--accent-p)}
+  .section-title.economy{color:var(--accent-e);border-color:var(--accent-e)}
+  .section-title.research{color:var(--accent-r);border-color:var(--accent-r)}
+  .news-card{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:22px 26px;margin-bottom:16px;box-shadow:var(--shadow);transition:box-shadow .3s,border-color .3s}
+  .news-card:hover{box-shadow:0 3px 12px rgba(0,0,0,.08);border-color:#d8d2c8}
+  .news-card h3{font-size:1.08rem;font-weight:700;margin-bottom:10px;line-height:1.45}
+  .news-card p{font-size:.95rem;color:var(--text-light);margin-bottom:12px;text-align:justify}
+  .news-card .source{font-size:.78rem;color:#999;font-style:italic}
+  .news-card .wim{color:#8a6d20;font-size:.88rem;padding:6px 0 0}
+  .trans-toggle{margin:8px 0 12px;border:1px solid #e0d8c0;border-radius:8px;overflow:hidden}
+  .trans-toggle summary{padding:8px 14px;background:#faf6ec;cursor:pointer;font-size:.85rem;color:#8a6d20;font-weight:600;user-select:none}
+  .trans-toggle .trans-content{padding:12px 16px;background:#fffbee;color:#5a4a2a;font-size:.88rem;line-height:1.8}
+  .trans-toggle .trans-content p{color:#5a4a2a!important;margin-bottom:8px!important}
+  .cloud-badge{display:inline-block;background:#e8f5e9;color:#2d7d46;font-size:.7rem;padding:2px 10px;border-radius:10px;margin-left:8px;vertical-align:middle}
+  .tips{background:#f4f9ff;border-radius:var(--radius);padding:16px 22px;margin-bottom:32px;font-size:.88rem;color:#3a5a7c;line-height:1.7;display:flex;align-items:flex-start;gap:12px}
+  .tips .icon{font-size:1.4rem;flex-shrink:0}
+  .lookup-word{cursor:pointer;border-bottom:1.5px dotted transparent;transition:border-color .2s,background .2s;border-radius:2px;padding:0 1px}
+  .lookup-word:hover{border-bottom-color:var(--gold);background:rgba(183,147,58,.08)}
+  .lookup-word.active{background:rgba(183,147,58,.18);border-bottom-color:var(--gold)}
+  #word-popover{position:fixed;z-index:9999;background:#fffef9;border:1px solid #d8d0b8;border-radius:12px;box-shadow:var(--shadow-lg);padding:18px 22px;min-width:200px;max-width:320px;opacity:0;transform:translateY(8px) scale(.96);transition:opacity .2s cubic-bezier(.16,1,.3,1),transform .25s cubic-bezier(.16,1,.3,1);pointer-events:none;font-family:-apple-system,sans-serif;word-break:break-word}
+  #word-popover.visible{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+  #word-popover .pop-word{font-size:1.25rem;font-weight:700;color:#1a1a1a;margin-bottom:4px;font-family:Georgia,serif}
+  #word-popover .pop-pos{font-size:.75rem;color:#999;text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px}
+  #word-popover .pop-meaning{font-size:.92rem;color:#444;line-height:1.5;padding:8px 12px;background:#faf6ec;border-radius:6px;border-left:3px solid var(--gold)}
+  #word-popover .pop-meaning .zh{color:#6b4c1e;font-weight:600}
+  #word-popover .pop-close{position:absolute;top:8px;right:10px;width:24px;height:24px;border:none;background:none;cursor:pointer;font-size:1rem;color:#bbb;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:color .2s,background .2s}
+  #word-popover .pop-close:hover{color:#666;background:#f0ede8}
+  #sel-toolbar{position:fixed;z-index:9998;background:#2d2d2d;color:#fff;border-radius:8px;padding:6px 14px;font-size:.82rem;font-family:-apple-system,sans-serif;cursor:pointer;opacity:0;transform:translateY(6px);transition:opacity .18s,transform .2s;pointer-events:none;box-shadow:0 6px 20px rgba(0,0,0,.25);white-space:nowrap}
+  #sel-toolbar.visible{opacity:1;transform:translateY(0);pointer-events:auto}
+  #sel-toolbar:hover{background:#3d3d3d}
+  #history-panel{position:fixed;right:24px;bottom:80px;z-index:9990;display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+  #history-toggle{width:44px;height:44px;border-radius:50%;background:#fff;border:1px solid var(--border);box-shadow:0 2px 12px rgba(0,0,0,.08);cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;transition:all .2s;position:relative}
+  #history-toggle:hover{border-color:var(--gold);box-shadow:0 4px 16px rgba(0,0,0,.12)}
+  #history-badge{position:absolute;top:-4px;right:-4px;background:var(--gold);color:#fff;font-size:.65rem;font-family:-apple-system,sans-serif;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:0 4px;opacity:0;transform:scale(0);transition:all .3s cubic-bezier(.16,1,.3,1)}
+  #history-badge.show{opacity:1;transform:scale(1)}
+  #history-list{background:#fffef9;border:1px solid #d8d0b8;border-radius:12px;box-shadow:var(--shadow-lg);padding:14px 16px;max-height:300px;overflow-y:auto;width:240px;font-family:-apple-system,sans-serif;font-size:.82rem;display:none;flex-direction:column;gap:8px}
+  #history-list.open{display:flex}
+  #history-list .h-item{display:flex;justify-content:space-between;align-items:center;padding:6px 8px;border-radius:6px;cursor:pointer;transition:background .15s;gap:8px}
+  #history-list .h-item:hover{background:#faf6ec}
+  #history-list .h-word{font-weight:600;color:#1a1a1a}
+  #history-list .h-zh{color:#888;font-size:.78rem}
+  #history-clear{text-align:center;font-size:.72rem;color:#bbb;cursor:pointer;padding:4px;border-radius:4px;transition:color .2s}
+  #history-clear:hover{color:#c0392b}
+  footer{text-align:center;padding:24px 0 0;border-top:1px solid var(--border);font-size:.78rem;color:#aaa;margin-top:8px}
+  .news-card p,.news-card h3{-webkit-tap-highlight-color:transparent}
+  #sidebar-toggle{display:none}
+  #sidebar-backdrop{display:none}
+  @media(max-width:760px){
+    body{padding-left:0}
+    #main{margin:0 auto;padding:20px 14px 40px}
+    .news-card{padding:16px 18px}
+    #history-panel{right:12px;bottom:60px}
+    #word-popover{max-width:260px}
+    #sidebar{
+      display:block;position:fixed;left:0;top:0;width:260px;height:100vh;height:100dvh;
+      z-index:300;transform:translateX(-100%);transition:transform .3s cubic-bezier(.4,0,.2,1);
+      box-shadow:4px 0 24px rgba(0,0,0,.3);overflow-y:auto;-webkit-overflow-scrolling:touch
+    }
+    #sidebar.open{transform:translateX(0)}
+    #sidebar-backdrop{
+      display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:299;
+      opacity:0;transition:opacity .3s ease
+    }
+    #sidebar-backdrop.visible{display:block;opacity:1}
+    #sidebar-toggle{
+      display:flex;position:fixed;top:12px;left:12px;z-index:298;
+      width:40px;height:40px;border-radius:50%;background:#2c2c2c;color:#fff;
+      border:none;font-size:1.3rem;cursor:pointer;align-items:center;justify-content:center;
+      box-shadow:0 2px 8px rgba(0,0,0,.25);transition:background .2s;-webkit-tap-highlight-color:transparent;
+      -webkit-user-select:none;user-select:none
+    }
+    #sidebar-toggle:hover{background:#3a3a3a}
+    #sidebar-toggle:active{background:#4a4a4a}
+  }
+  @media(pointer:coarse){.news-card p,.news-card h3{cursor:default}}
+</style>
+</head>
+<body>
+<button id="sidebar-toggle" aria-label="Toggle date archive">&#9776;</button>
+<div id="sidebar-backdrop"></div>
+<div id="sidebar">
+  <h3>&#128197; Past Editions</h3>
+  <div id="sidebar-dates" class="no-archive">Loading...</div>
+</div>
+<div id="main">
+<header>
+  <h1>Today's US News Brief <span class="cloud-badge">&#9729; CLOUD</span></h1>
+  <div class="date">Thursday, July 30, 2026</div>
+  <div class="meta-bar">
+    <span>&#128214; ~30 min read</span><span>&#128272; TOEIC 600+</span><span>&#128451; Politics &middot; Economy &middot; Research</span>
+  </div>
+</header>
+<div class="tips">
+  <span class="icon">&#128161;</span>
+  <div>
+    <strong>Click any word</strong> to look up its Chinese meaning.
+    <strong>Click &ldquo;Chinese Translation&rdquo;</strong> under each article for full Chinese text.
+    Use the <strong>left sidebar</strong> to browse past editions.
+  </div>
+</div>
+<div class="section"><div class="section-title politics">&#127987; POLITICS</div>
+<div class="news-card">
+    <h3>1. NATO Calls Urgent Meeting as String of Incidents Escalates Russia Tensions</h3>
+    <p>NATO held an emergency meeting on Monday after Russian missiles landed on Polish territory, marking a serious escalation in tensions between the alliance and Moscow. Germany's foreign minister said the situation was dangerous, noting that Europe is not at war but is certainly no longer at peace. The incidents have raised fears that a small mistake could lead to a much larger conflict.</p>
+<p>The meeting brought together senior diplomats from member countries to discuss a joint response and to strengthen air defenses along the eastern border. Poland asked for additional support, and several allies promised to send more troops and equipment. Russia denied targeting NATO territory and blamed Ukraine for the strikes, but Western officials rejected that explanation.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>北约因一系列事件加剧俄罗斯紧张局势召开紧急会议</p>
+<p>周一，俄罗斯导弹落入波兰领土后，北约召开紧急会议，这标志着北约与莫斯科之间的紧张局势严重升级。德国外长表示局势危险，指出欧洲虽未处于战争状态，但肯定也不再处于和平状态。这些事件引发了人们的担忧：一个小错误可能导致更大规模的冲突。</p>
+<p>会议汇集了成员国的资深外交官，讨论联合应对措施并加强东部边境的防空力量。波兰请求更多支持，多个盟国承诺增派部队和装备。俄罗斯否认以北约领土为目标，并将袭击归咎于乌克兰，但西方官员拒绝了这一解释。</p>
+</div>
+</details>
+    <p class="source">Source: The Washington Post — 2026-11-23</p>
+  </div>
+<div class="news-card">
+    <h3>2. Zelenskyy Hails Ukraine's Attack on a Russian Warship Docked at a Naval Base in Libya</h3>
+    <p>President Volodymyr Zelenskyy confirmed that Ukrainian sea drones (small unmanned boats) attacked and sank a Russian warship moored at a port in Libya. He called the operation a surprise assault that showed Ukraine's ability to strike Russian forces far from its own borders. The attack is one of the most distant operations Ukraine has carried out during the war.</p>
+<p>The Russian navy has not confirmed the loss of the vessel, and officials in Libya have not commented publicly on the incident. Military experts said the strike could signal a new phase in the conflict, in which Ukraine targets Russian ships in foreign ports. NATO countries are watching closely to see whether Russia will respond with more attacks on Ukrainian cities.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>泽连斯基称赞乌克兰袭击停靠在利比亚海军基地的俄罗斯军舰</p>
+<p>总统弗拉基米尔·泽连斯基证实，乌克兰海上无人机（小型无人船）袭击并击沉了一艘停靠在利比亚港口的俄罗斯军舰。他称这次行动是一次突袭，表明乌克兰有能力在本国边境之外打击俄罗斯军队。这是战争期间乌克兰实施的距本土最远的行动之一。</p>
+<p>俄罗斯海军尚未证实该舰损失，利比亚官员也未公开评论此事。军事专家表示，这次袭击可能标志着冲突进入新阶段，即乌克兰在外国港口打击俄罗斯船只。北约国家正密切关注俄罗斯是否会以更多针对乌克兰城市的袭击作为回应。</p>
+</div>
+</details>
+    <p class="source">Source: NPR — 2026-11-23</p>
+  </div>
+<div class="section-title economy">&#128176; ECONOMY</div>
+<div class="news-card">
+    <h3>3. Wall Street Roars Back as Huang's Shock Return Propels US Stocks</h3>
+    <p>US stocks rallied on Monday, recovering from last week's sharp technology-led selloff, after Nvidia's board reinstated Jensen Huang as CEO. The surprise move pushed Wall Street toward its best trading day since April 2025, with chipmakers and AI-related companies leading the gains. Investors welcomed the decision, saying Huang's leadership is closely tied to Nvidia's success in artificial intelligence.</p>
+<p>The board said the decision was made with input from senior levels of the US government, and President Trump publicly supported it. However, governance experts warned that the rapid reappointment could expose the company to legal and political risks. The House Foreign Affairs Committee still expects Huang to testify on December 1 about the company's business practices.</p>
+<p class="wim">&#128161; <strong>What this means for you:</strong> Nvidia is the world's most valuable chip company, so its leadership changes affect the entire stock market. The board's decision to bring back Huang quickly calmed investors but raised questions about how much influence the US government has over private companies.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>黄仁勋意外回归推动美股，华尔街强劲反弹</p>
+<p>周一，在英伟达董事会恢复黄仁勋首席执行官职务后，美国股市上涨，从上周科技股领跌的猛烈抛售中反弹。这一意外举动推动华尔街迎来自2025年4月以来最佳交易日，芯片制造商和人工智能相关公司领涨。投资者对此决定表示欢迎，称黄仁勋的领导力与英伟达在人工智能领域的成功密切相关。</p>
+<p>董事会表示，该决定是在美国联邦政府高层提供意见的情况下做出的，特朗普总统公开表示支持。然而，治理专家警告称，迅速重新任命可能使公司面临法律和政治风险。众议院外交事务委员会仍期待黄仁勋于12月1日就公司商业行为作证。</p>
+<p class="trans-wim">&#128161; <strong>这意味着：</strong>英伟达是全球市值最高的芯片公司，因此其领导层变动会影响整个股市。董事会迅速让黄仁勋回归的决定安抚了投资者，但也引发了关于美国政府对私营企业影响力有多大的质疑。</p>
+</div>
+</details>
+    <p class="source">Source: Bloomberg — 2026-11-23</p>
+  </div>
+<div class="news-card">
+    <h3>4. States Sue Musk Companies Over Flood of Sexualized Images Made with AI Chatbot Grok</h3>
+    <p>Two Democratic attorneys general from Virginia and Oregon are suing several of Elon Musk's companies over the AI chatbot Grok's ability to create sexualized images. The lawsuits, filed on Monday, argue that Musk's companies ignored safety measures and allowed the tool to generate harmful content. The states are seeking penalties and changes to how the chatbot operates.</p>
+<p>The case adds to growing legal pressure on AI companies to control what their tools can produce. Musk has previously said that Grok is designed to be less restricted than other chatbots, which he presents as a feature. Legal experts say the lawsuits could set an important example for how states regulate AI-generated content.</p>
+<p class="wim">&#128161; <strong>What this means for you:</strong> This case tests whether tech companies can be held responsible for harmful content created by their AI tools. If the states win, other AI companies may need to add stronger filters, which could slow down product development but improve safety.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>多州起诉马斯克旗下公司，指控AI聊天机器人Grok生成大量性化图像</p>
+<p>弗吉尼亚州和俄勒冈州的两名民主党总检察长正在起诉埃隆·马斯克旗下的多家公司，指控其AI聊天机器人Grok能够生成性化图像。周一提起的诉讼称，马斯克的公司无视安全措施，允许该工具生成有害内容。两州正在寻求罚款并改变该聊天机器人的运作方式。</p>
+<p>此案加剧了AI公司面临的法律压力，要求它们控制其工具可以生成的内容。马斯克此前曾表示，Grok的设计限制比其他聊天机器人更少，并将其视为一项特色。法律专家表示，这些诉讼可能为各州如何监管AI生成内容树立重要先例。</p>
+<p class="trans-wim">&#128161; <strong>这意味着：</strong>此案检验科技公司是否要为其AI工具生成的有害内容负责。如果各州胜诉，其他AI公司可能需要增加更强的过滤措施，这可能会减慢产品开发速度，但能提高安全性。</p>
+</div>
+</details>
+    <p class="source">Source: AP News — 2026-11-23</p>
+  </div>
+<div class="section-title research">&#128300; RESEARCH</div>
+<div class="news-card">
+    <h3>5. Hidden for 100 Million Years: X-rays Reveal an Ancient Flower from the Age of Dinosaurs</h3>
+    <p>Scientists from the US and UK have revealed an incredible fossil flower from the mid-Cretaceous period, about 100 million years ago, using advanced X-ray imaging. The flower was preserved in amber (hardened tree resin) and is so small that it was hidden inside a rock-like lump for millions of years. The study, published in the American Journal of Botany, opens a new window into the early evolution of modern plants.</p>
+<p>The X-ray technique allowed researchers to see the flower's internal structure without breaking the fragile specimen. It showed details such as petals, pollen and tiny reproductive parts that are rarely preserved in fossils. The team says the find helps explain how flowering plants spread and diversified while dinosaurs still walked the Earth.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>隐藏一亿年：X射线揭示恐龙时代的远古花朵</p>
+<p>来自美国和英国的科学家利用先进的X射线成像技术，揭示了一朵来自约一亿年前白垩纪中期的惊人化石花朵。这朵花保存在琥珀（硬化的树脂）中，体积非常小，在岩石般的块状物中隐藏了数百万年。这项发表在《美国植物学杂志》上的研究为现代植物的早期演化打开了一扇新窗口。</p>
+<p>X射线技术使研究人员能够在不破坏脆弱标本的情况下看到花朵的内部结构。它显示了花瓣、花粉和微小的生殖器官等化石中很少保存的细节。研究团队表示，这一发现有助于解释开花植物如何在恐龙仍在地球上行走时扩散和多样化。</p>
+</div>
+</details>
+    <p class="source">Source: Phys.org — 2026-11-23</p>
+  </div>
+<div class="news-card">
+    <h3>6. JWST Finds a Possible Black Hole That Grew Faster Than Its Host Galaxy in the Early Universe</h3>
+    <p>Astronomers using the James Webb Space Telescope (JWST) have found a possible black hole in the early universe that grew faster than its host galaxy. The object, seen as it was within the first billion years after the Big Bang, appears to have a mass of about a billion suns. How such massive black holes formed so quickly remains one of astronomy's biggest open questions.</p>
+<p>The team suggests that the black hole may have started from a massive seed and then fed on gas at an extremely high rate. This would allow it to grow much faster than the surrounding galaxy, which is unusual because black holes and galaxies usually grow together. Future observations will test whether this object is truly a black hole or a different kind of bright galaxy.</p>
+    <details class="trans-toggle">
+    <summary>&#127760; Chinese Translation (点击展开)</summary>
+    <div class="trans-content"><p class="trans-title">&#128204; <strong>标题：</strong>韦伯望远镜发现早期宇宙中可能比宿主星系增长更快的黑洞</p>
+<p>使用詹姆斯·韦伯太空望远镜（JWST）的天文学家在早期宇宙中发现了一个可能比其宿主星系增长更快的黑洞。该天体处于大爆炸后第一个十亿年内，其质量似乎约为十亿个太阳。如此巨大的黑洞如何如此迅速地形成，仍是天文学最大的未解问题之一。</p>
+<p>研究团队提出，该黑洞可能始于一个巨大的种子，然后以极高的速度吞噬气体。这将使其增长速度远超周围星系，这很不寻常，因为黑洞和星系通常共同增长。未来的观测将检验该天体是否真的是黑洞，还是另一种明亮的星系。</p>
+</div>
+</details>
+    <p class="source">Source: Phys.org — 2026-11-22</p>
+  </div>
+</div>
+<footer>
+  <p>&#128218; Auto-generated via NewsAPI + DeepSeek | Cloud pipeline &mdash; GitHub Actions | Thursday, July 30, 2026</p>
+</footer>
+</div>
+
+<div id="word-popover">
+  <button class="pop-close" id="pop-close-btn">&times;</button>
+  <div class="pop-word" id="pop-word"></div><div class="pop-pos" id="pop-pos"></div><div class="pop-meaning" id="pop-meaning"></div>
+</div>
+<div id="sel-toolbar">&#128269; Look up "<span id="sel-word"></span>"</div>
+<div id="history-panel">
+  <div id="history-list"><div id="history-clear">Clear all</div></div>
+  <button id="history-toggle" title="Lookup History">&#128214;<span id="history-badge">0</span></button>
+</div>
+
+<script>
+var DICT = {    "ability":"n. 能力",
+    "additional":"adj. 额外的",
+    "adds":"v. 增加（第三人称单数）",
+    "advanced":"adj. 先进的",
+    "affairs":"n. 事务",
+    "age":"n. 年龄；时代",
+    "ago":"adv. 以前",
+    "ai-generated":"adj. AI生成的",
+    "ai-related":"adj. 与AI相关的",
+    "air":"n. 空气",
+    "alliance":"n. 联盟",
+    "allies":"n. 盟友",
+    "allow":"v. 允许",
+    "allowed":"v. 允许（过去式/过去分词）",
+    "amber":"n./adj. 琥珀；琥珀色",
+    "american":"adj. 美国的；n. 美国人",
+    "ancient":"adj. 古代的",
+    "appears":"v. 似乎；出现（第三人称单数）",
+    "april":"n. 四月",
+    "argue":"v. 争论；主张",
+    "artificial":"adj. 人工的",
+    "asked":"v. 询问（过去式/过去分词）",
+    "assault":"n./v. 袭击",
+    "astronomers":"n. 天文学家",
+    "astronomy":"n. 天文学",
+    "attack":"n./v. 攻击",
+    "attacked":"v. 攻击（过去式/过去分词）",
+    "attacks":"n./v. 攻击（复数/第三人称单数）",
+    "attorneys":"n. 律师",
+    "back":"adv. 向后；n. 背部",
+    "bang":"n. 巨响；v. 猛击",
+    "base":"n. 基地；v. 以…为基础",
+    "best":"adj. 最好的",
+    "big":"adj. 大的",
+    "biggest":"adj. 最大的",
+    "billion":"n. 十亿",
+    "black":"adj. 黑色的",
+    "blamed":"v. 指责（过去式/过去分词）",
+    "board":"n. 董事会；委员会",
+    "boats":"n. 船只",
+    "border":"n. 边界",
+    "borders":"n. 边界（复数）",
+    "botany":"n. 植物学",
+    "breaking":"adj. 突发的；v. 打破（现在分词）",
+    "bright":"adj. 明亮的",
+    "brought":"v. 带来（过去式/过去分词）",
+    "business":"n. 商业；企业",
+    "called":"v. 称为（过去式/过去分词）",
+    "calls":"n./v. 电话；呼叫（复数/第三人称单数）",
+    "carried":"v. 携带（过去式/过去分词）",
+    "case":"n. 案件；情况",
+    "ceo":"n. 首席执行官",
+    "certainly":"adv. 当然",
+    "changes":"n./v. 变化（复数/第三人称单数）",
+    "chatbot":"n. 聊天机器人",
+    "chatbots":"n. 聊天机器人（复数）",
+    "chipmakers":"n. 芯片制造商",
+    "cities":"n. 城市（复数）",
+    "closely":"adv. 密切地",
+    "commented":"v. 评论（过去式/过去分词）",
+    "committee":"n. 委员会",
+    "companies":"n. 公司（复数）",
+    "company":"n. 公司",
+    "confirmed":"v. 确认（过去式/过去分词）",
+    "conflict":"n. 冲突",
+    "content":"n. 内容",
+    "control":"n./v. 控制",
+    "countries":"n. 国家（复数）",
+    "create":"v. 创造",
+    "dangerous":"adj. 危险的",
+    "day":"n. 天；日子",
+    "december":"n. 十二月",
+    "decision":"n. 决定",
+    "defenses":"n. 防御（复数）",
+    "democratic":"adj. 民主的",
+    "denied":"v. 否认（过去式/过去分词）",
+    "designed":"v. 设计（过去式/过去分词）",
+    "details":"n. 细节",
+    "different":"adj. 不同的",
+    "dinosaurs":"n. 恐龙",
+    "diplomats":"n. 外交官",
+    "discuss":"v. 讨论",
+    "distant":"adj. 遥远的",
+    "diversified":"v. 多元化（过去式/过去分词）",
+    "docked":"v. 停靠（过去式/过去分词）",
+    "drones":"n. 无人机",
+    "early":"adj./adv. 早的；早期",
+    "earth":"n. 地球",
+    "eastern":"adj. 东部的",
+    "elon":"n. 埃隆（人名）",
+    "emergency":"n. 紧急情况",
+    "equipment":"n. 设备",
+    "escalates":"v. 升级（第三人称单数）",
+    "escalation":"n. 升级",
+    "europe":"n. 欧洲",
+    "evolution":"n. 进化；演变",
+    "example":"n. 例子",
+    "expects":"v. 预期（第三人称单数）",
+    "experts":"n. 专家",
+    "explain":"v. 解释",
+    "explanation":"n. 解释",
+    "expose":"v. 揭露",
+    "extremely":"adv. 极其",
+    "far":"adv. 远",
+    "faster":"adj./adv. 更快的",
+    "fears":"n./v. 恐惧（复数/第三人称单数）",
+    "feature":"n. 特征；v. 以…为特色",
+    "fed":"n. 美联储；v. 喂养（过去式/过去分词）",
+    "filed":"v. 提交（过去式/过去分词）",
+    "find":"v. 发现",
+    "finds":"v. 发现（第三人称单数）",
+    "first":"adj./adv. 第一；首先",
+    "flood":"n. 洪水",
+    "flower":"n. 花",
+    "flowering":"adj. 开花的",
+    "forces":"n. 力量；部队",
+    "foreign":"adj. 外国的",
+    "formed":"v. 形成（过去式/过去分词）",
+    "fossil":"n. 化石",
+    "fossils":"n. 化石（复数）",
+    "found":"v. 发现（过去式/过去分词）",
+    "fragile":"adj. 脆弱的",
+    "future":"n. 未来",
+    "gains":"n. 收益（复数）",
+    "galaxies":"n. 星系（复数）",
+    "galaxy":"n. 星系",
+    "gas":"n. 气体；天然气",
+    "general":"adj. 普遍的；n. 将军",
+    "generate":"v. 产生",
+    "germany":"n. 德国",
+    "governance":"n. 治理",
+    "government":"n. 政府",
+    "grew":"v. 增长（过去式）",
+    "grok":"n. Grok（AI模型名）",
+    "grow":"v. 增长",
+    "growing":"adj. 增长的",
+    "hails":"v. 赞扬；来自（第三人称单数）",
+    "hardened":"adj. 强化的；v. 使坚硬（过去式/过去分词）",
+    "harmful":"adj. 有害的",
+    "held":"v. 举行（过去式/过去分词）",
+    "helps":"v. 帮助（第三人称单数）",
+    "hidden":"adj. 隐藏的",
+    "high":"adj. 高的",
+    "hole":"n. 洞",
+    "holes":"n. 洞（复数）",
+    "host":"n./v. 主办；主持人",
+    "house":"n. 房屋；议院",
+    "however":"adv. 然而",
+    "huang":"n. 黄（人名）",
+    "ignored":"v. 忽视（过去式/过去分词）",
+    "images":"n. 图像（复数）",
+    "imaging":"n. 成像",
+    "important":"adj. 重要的",
+    "incident":"n. 事件",
+    "incidents":"n. 事件（复数）",
+    "incredible":"adj. 难以置信的",
+    "input":"n. 输入",
+    "inside":"prep./adv. 在内部",
+    "intelligence":"n. 智能；情报",
+    "internal":"adj. 内部的",
+    "investors":"n. 投资者",
+    "james":"n. 詹姆斯（人名）",
+    "jensen":"n. 黄仁勋（人名）",
+    "joint":"adj. 联合的",
+    "journal":"n. 期刊",
+    "jwst":"n. 詹姆斯·韦伯太空望远镜",
+    "kind":"n. 种类",
+    "landed":"v. 着陆（过去式/过去分词）",
+    "larger":"adj. 更大的",
+    "last":"adj. 最后的；v. 持续",
+    "lawsuits":"n. 诉讼（复数）",
+    "lead":"v. 领导；n. 领先",
+    "leadership":"n. 领导力",
+    "leading":"adj. 领先的",
+    "legal":"adj. 法律的",
+    "less":"adj./adv. 较少的",
+    "levels":"n. 水平（复数）",
+    "libya":"n. 利比亚",
+    "longer":"adj./adv. 更长的",
+    "loss":"n. 损失",
+    "lump":"n. 块",
+    "made":"v. 制造（过去式/过去分词）",
+    "marking":"v. 标志着（现在分词）",
+    "mass":"n. 质量；大量",
+    "massive":"adj. 巨大的",
+    "measures":"n. 措施（复数）",
+    "meeting":"n. 会议",
+    "member":"n. 成员",
+    "mid-cretaceous":"adj. 白垩纪中期的",
+    "military":"adj. 军事的；n. 军队",
+    "million":"n. 百万",
+    "millions":"n. 数百万",
+    "minister":"n. 部长",
+    "missiles":"n. 导弹（复数）",
+    "mistake":"n. 错误",
+    "modern":"adj. 现代的",
+    "monday":"n. 星期一",
+    "moored":"v. 停泊（过去式/过去分词）",
+    "moscow":"n. 莫斯科",
+    "move":"v. 移动；行动",
+    "musk":"n. 麝香",
+    "nato":"n. 北约（北大西洋公约组织）",
+    "naval":"adj. 海军的",
+    "navy":"n. 海军",
+    "new":"adj. 新的",
+    "noting":"v. 注意到，指出（note的现在分词）",
+    "nvidia":"n. 英伟达（公司名）",
+    "object":"n. 物体；目标；v. 反对",
+    "observations":"n. 观察，观测（observation的复数）",
+    "officials":"n. 官员（official的复数）",
+    "one":"num. 一；pron. 一个",
+    "open":"v. 打开；adj. 开放的",
+    "opens":"v. 打开（open的第三人称单数）",
+    "operates":"v. 运营，运作（operate的第三人称单数）",
+    "operation":"n. 运营，操作；手术",
+    "operations":"n. 运营，业务（operation的复数）",
+    "oregon":"n. 俄勒冈（美国州名）",
+    "own":"adj. 自己的；v. 拥有",
+    "parts":"n. 零件，部分（part的复数）",
+    "peace":"n. 和平",
+    "penalties":"n. 罚款，处罚（penalty的复数）",
+    "period":"n. 时期，阶段",
+    "petals":"n. 花瓣（petal的复数）",
+    "phase":"n. 阶段，时期",
+    "plants":"n. 植物；工厂（plant的复数）",
+    "poland":"n. 波兰",
+    "polish":"adj. 波兰的；v. 抛光",
+    "political":"adj. 政治的",
+    "pollen":"n. 花粉",
+    "port":"n. 港口",
+    "ports":"n. 港口（port的复数）",
+    "possible":"adj. 可能的",
+    "practices":"n. 做法，惯例（practice的复数）",
+    "presents":"v. 呈现，展示（present的第三人称单数）",
+    "preserved":"v. 保存，保留（preserve的过去式）",
+    "president":"n. 总统；总裁",
+    "pressure":"n. 压力",
+    "previously":"adv. 先前，之前",
+    "produce":"v. 生产，制造",
+    "promised":"v. 承诺（promise的过去式）",
+    "propels":"v. 推进，驱动（propel的第三人称单数）",
+    "publicly":"adv. 公开地",
+    "published":"v. 发表，出版（publish的过去式）",
+    "pushed":"v. 推动（push的过去式）",
+    "questions":"n. 问题（question的复数）",
+    "quickly":"adv. 迅速地",
+    "raised":"v. 提高，筹集（raise的过去式）",
+    "rallied":"v. 反弹，集结（rally的过去式）",
+    "rapid":"adj. 快速的",
+    "rarely":"adv. 很少，罕见地",
+    "rate":"n. 比率，速率",
+    "reappointment":"n. 重新任命，连任",
+    "recovering":"v. 恢复（recover的现在分词）",
+    "regulate":"v. 监管，管制",
+    "reinstated":"v. 恢复，复职（reinstate的过去式）",
+    "rejected":"v. 拒绝（reject的过去式）",
+    "remains":"v. 仍然是；n. 遗迹（remain的第三人称单数）",
+    "reproductive":"adj. 生殖的，繁殖的",
+    "researchers":"n. 研究人员（researcher的复数）",
+    "resin":"n. 树脂",
+    "respond":"v. 回应，答复",
+    "response":"n. 回应，反应",
+    "restricted":"adj. 受限的；v. 限制（restrict的过去式）",
+    "return":"v. 返回；n. 回报",
+    "reveal":"v. 揭示，透露",
+    "revealed":"v. 揭示，透露（reveal的过去式）",
+    "risks":"n. 风险（risk的复数）",
+    "roars":"v. 咆哮，轰鸣（roar的第三人称单数）",
+    "rock-like":"adj. 岩石般的",
+    "russia":"n. 俄罗斯",
+    "russian":"adj. 俄罗斯的；n. 俄罗斯人",
+    "safety":"n. 安全",
+    "said":"v. 说（say的过去式）",
+    "sank":"v. 下沉（sink的过去式）",
+    "say":"v. 说",
+    "saying":"v. 说（say的现在分词）；n. 谚语",
+    "says":"v. 说（say的第三人称单数）",
+    "scientists":"n. 科学家（scientist的复数）",
+    "sea":"n. 海，海洋",
+    "see":"v. 看见，明白",
+    "seed":"n. 种子",
+    "seeking":"v. 寻求（seek的现在分词）",
+    "seen":"v. 看见（see的过去分词）",
+    "selloff":"n. 抛售",
+    "send":"v. 发送，派遣",
+    "senior":"adj. 高级的，资深的",
+    "serious":"adj. 严重的，严肃的",
+    "set":"v. 设置，设定；n. 一套",
+    "sexualized":"adj. 性化的",
+    "sharp":"adj. 急剧的，锋利的",
+    "ships":"n. 船只（ship的复数）",
+    "shock":"n. 冲击，震惊",
+    "showed":"v. 显示（show的过去式）",
+    "signal":"n. 信号",
+    "since":"prep./conj. 自从；因为",
+    "situation":"n. 情况，形势",
+    "small":"adj. 小的",
+    "space":"n. 太空；空间",
+    "specimen":"n. 标本，样本",
+    "spread":"v. 传播，蔓延",
+    "started":"v. 开始（start的过去式）",
+    "states":"n. 州；国家（state的复数）",
+    "still":"adv. 仍然；adj. 静止的",
+    "stocks":"n. 股票（stock的复数）",
+    "street":"n. 街道",
+    "strengthen":"v. 加强，增强",
+    "strike":"v./n. 罢工；打击",
+    "strikes":"n. 罢工；打击（strike的复数）",
+    "string":"n. 一串，细绳",
+    "structure":"n. 结构",
+    "study":"n./v. 研究，学习",
+    "success":"n. 成功",
+    "sue":"v. 起诉，控告",
+    "suggests":"v. 表明，建议（suggest的第三人称单数）",
+    "suing":"v. 起诉（sue的现在分词）",
+    "suns":"n. 太阳（sun的复数）",
+    "support":"n./v. 支持",
+    "supported":"v. 支持（support的过去式）",
+    "surprise":"n. 意外，惊喜",
+    "surrounding":"adj. 周围的",
+    "targeting":"v. 瞄准，针对（target的现在分词）",
+    "targets":"n. 目标（target的复数）",
+    "team":"n. 团队",
+    "technique":"n. 技术，技巧",
+    "technology-led":"adj. 以技术为主导的",
+    "telescope":"n. 望远镜",
+    "tensions":"n. 紧张局势（tension的复数）",
+    "territory":"n. 领土，区域",
+    "test":"n./v. 测试，试验",
+    "testify":"v. 作证，证明",
+    "than":"conj. 比",
+    "then":"adv. 然后，当时",
+    "tied":"v. 系，绑（tie的过去式）；adj. 相关的",
+    "tiny":"adj. 微小的",
+    "together":"adv. 一起",
+    "tool":"n. 工具",
+    "tools":"n. 工具（tool的复数）",
+    "toward":"prep. 朝向，对于",
+    "trading":"n. 交易，贸易",
+    "tree":"n. 树",
+    "troops":"n. 军队，部队（troop的复数）",
+    "truly":"adv. 真正地",
+    "trump":"n. 特朗普（人名）",
+    "two":"num. 二",
+    "ukraine":"n. 乌克兰",
+    "ukrainian":"adj. 乌克兰的；n. 乌克兰人",
+    "universe":"n. 宇宙",
+    "unmanned":"adj. 无人的",
+    "unusual":"adj. 不寻常的",
+    "urgent":"adj. 紧急的",
+    "using":"v. 使用（use的现在分词）",
+    "usually":"adv. 通常",
+    "vessel":"n. 船只；容器",
+    "virginia":"n. 弗吉尼亚（美国州名）",
+    "volodymyr":"n. 弗拉基米尔（人名）",
+    "walked":"v. 走（walk的过去式）",
+    "wall":"n. 墙",
+    "war":"n. 战争",
+    "warned":"v. 警告（warn的过去式）",
+    "warship":"n. 军舰",
+    "watching":"v. 观看（watch的现在分词）",
+    "webb":"n. 韦布（人名，如詹姆斯·韦布望远镜）",
+    "week":"n. 周，星期",
+    "welcomed":"v. 欢迎（welcome的过去式）",
+    "western":"adj. 西方的",
+    "whether":"conj. 是否",
+    "window":"n. 窗户",
+    "x-ray":"n. X射线",
+    "x-rays":"n. X射线（x-ray的复数）",
+    "years":"n. 年（year的复数）",
+    "zelenskyy":"n. 泽连斯基（人名）"
+};
+var popover=document.getElementById('word-popover'),popWord=document.getElementById('pop-word'),popPos=document.getElementById('pop-pos'),popMeaning=document.getElementById('pop-meaning'),popClose=document.getElementById('pop-close-btn'),selToolbar=document.getElementById('sel-toolbar'),selWordSpan=document.getElementById('sel-word'),historyList=document.getElementById('history-list'),historyToggle=document.getElementById('history-toggle'),historyBadge=document.getElementById('history-badge'),popoverTimer=null,activeWordEl=null,lookupHistory=[];
+try{var saved=localStorage.getItem('wb_cloud_v2_history');if(saved)lookupHistory=JSON.parse(saved);updateBadge()}catch(e){}
+function norm(w){
+  w=w.trim().toLowerCase().replace(/[.,;:!?()"']+$/g,'').replace(/^[.,;:!?()"']+/g,'').replace(/'s$/g,'');
+  if(!w||w.length<3)return w;
+  var candidates=[w];
+  // try word-form reduction when exact form not in dict (checked by lookup)
+  if(w.length>4&&w.endsWith('ing'))candidates.push(w.slice(0,-3),w.slice(0,-3)+'e');
+  if(w.endsWith('ied'))candidates.push(w.slice(0,-3)+'y');
+  if(w.endsWith('ed'))candidates.push(w.slice(0,-2),w.slice(0,-1));
+  if(w.endsWith('es')&&!w.endsWith('ses'))candidates.push(w.slice(0,-2));
+  if(w.endsWith('s')&&!w.endsWith('ss'))candidates.push(w.slice(0,-1));
+  for(var i=0;i<candidates.length;i++){
+    if(DICT[candidates[i]])return candidates[i];
+  }
+  return w;
+}
+function lookup(raw){var w=norm(raw);if(!w||w.length<2)return null;if(DICT[w])return{word:raw.trim(),meaning:DICT[w]};var o=raw.trim().toLowerCase().replace(/[^\w\s-]/g,'');if(DICT[o])return{word:raw.trim(),meaning:DICT[o]};return null}
+function showPopover(x,y,word,meaning){if(popoverTimer){clearTimeout(popoverTimer);popoverTimer=null}var m=meaning.match(/^(\w+\.?)\s*(.*)/);popWord.textContent=word;popPos.textContent=m?m[1]:'';popMeaning.innerHTML='<span class="zh">'+(m?m[2]:meaning)+'</span>';var pw=popover.offsetWidth,ph=popover.offsetHeight,l=x+12,t=y-ph-8;if(t<10)t=y+20;if(l+pw>window.innerWidth-10)l=x-pw-12;if(l<10)l=10;popover.style.left=l+'px';popover.style.top=t+'px';popover.classList.add('visible')}
+function hidePopover(){popover.classList.remove('visible')}
+function addHistory(word,meaning){lookupHistory=lookupHistory.filter(function(h){return h.word!==word});lookupHistory.unshift({word:word,meaning:meaning});if(lookupHistory.length>30)lookupHistory.pop();try{localStorage.setItem('wb_cloud_v2_history',JSON.stringify(lookupHistory))}catch(e){};updateBadge();renderHistory()}
+function updateBadge(){var c=lookupHistory.length;historyBadge.textContent=c;if(c>0)historyBadge.classList.add('show');else historyBadge.classList.remove('show')}
+function renderHistory(){historyList.innerHTML='';var cd=document.createElement('div');cd.id='history-clear';cd.textContent='Clear all';cd.onclick=function(){lookupHistory=[];localStorage.removeItem('wb_cloud_v2_history');updateBadge();renderHistory()};historyList.appendChild(cd);lookupHistory.forEach(function(h){var d=document.createElement('div');d.className='h-item';var m=h.meaning.match(/^(\w+\.?)\s*(.*)/);d.innerHTML='<span class="h-word">'+h.word+'</span><span class="h-zh">'+(m?m[2]:h.meaning)+'</span>';historyList.appendChild(d)})}
+document.querySelectorAll('.news-card p:not(.wim):not(.source), .news-card h3').forEach(function(el){el.addEventListener('click',function(e){var sel=window.getSelection();if(sel.toString().trim())return;var range=document.caretRangeFromPoint(e.clientX,e.clientY);if(!range)return;var tn=range.startContainer;if(tn.nodeType!==Node.TEXT_NODE)return;var text=tn.textContent,off=range.startOffset,start=off;while(start>0&&/[\w'-]/.test(text[start-1]))start--;var end=off;while(end<text.length&&/[\w'-]/.test(text[end]))end++;var w=text.slice(start,end).trim();if(!w||w.length<2)return;var r=lookup(w);if(!r){hidePopover();return}if(activeWordEl)activeWordEl.classList.remove('active');var span=document.createElement('span');span.className='lookup-word active';span.textContent=w;var before=text.slice(0,start),after=text.slice(end);var p=tn.parentNode;p.insertBefore(document.createTextNode(before),tn);p.insertBefore(span,tn);p.insertBefore(document.createTextNode(after),tn);p.removeChild(tn);activeWordEl=span;setTimeout(function(){if(activeWordEl===span)span.classList.remove('active')},3000);var rect=span.getBoundingClientRect();showPopover(rect.left+rect.width/2,rect.top,r.word,r.meaning);addHistory(r.word,r.meaning)})});
+document.addEventListener('mouseup',function(e){setTimeout(function(){var sel=window.getSelection();var text=sel.toString().trim();if(!text||text.length<2||text.length>40){selToolbar.classList.remove('visible');return}var n=sel.anchorNode,ok=false;while(n){if(n.classList&&n.classList.contains('news-card')){ok=true;break}n=n.parentNode}if(!ok){selToolbar.classList.remove('visible');return}var rect=sel.getRangeAt(0).getBoundingClientRect();selWordSpan.textContent=text;var l=rect.left+rect.width/2-selToolbar.offsetWidth/2,t=rect.bottom+8;if(l<10)l=10;if(l+selToolbar.offsetWidth>window.innerWidth-10)l=window.innerWidth-selToolbar.offsetWidth-10;selToolbar.style.left=l+'px';selToolbar.style.top=t+'px';selToolbar.classList.add('visible');selToolbar._st=text},10)});
+selToolbar.addEventListener('click',function(){var text=selToolbar._st;if(!text)return;var pk=text.toLowerCase(),r=null;if(DICT[pk])r={word:text,meaning:DICT[pk]};else{var ws=text.split(/\s+/);for(var i=0;i<ws.length;i++){r=lookup(ws[i]);if(r)break}}if(r){var rect=selToolbar.getBoundingClientRect();showPopover(rect.left+rect.width/2,rect.top,r.word,r.meaning);addHistory(r.word,r.meaning)}selToolbar.classList.remove('visible');window.getSelection().removeAllRanges()});
+document.addEventListener('click',function(e){if(e.target.closest('.news-card'))return;if(popover.contains(e.target))return;if(e.target===selToolbar||selToolbar.contains(e.target))return;if(e.target.closest('#history-panel')||e.target.closest('#sidebar'))return;popoverTimer=setTimeout(hidePopover,200)});
+popover.addEventListener('mouseenter',function(){if(popoverTimer){clearTimeout(popoverTimer);popoverTimer=null}});
+popover.addEventListener('mouseleave',function(){popoverTimer=setTimeout(hidePopover,300)});
+popClose.addEventListener('click',function(e){e.stopPropagation();hidePopover()});
+window.addEventListener('scroll',function(){hidePopover();selToolbar.classList.remove('visible')},{passive:true});
+historyToggle.addEventListener('click',function(e){e.stopPropagation();renderHistory();historyList.classList.toggle('open')});
+document.addEventListener('click',function(e){if(!historyList.contains(e.target)&&e.target!==historyToggle&&!historyToggle.contains(e.target))historyList.classList.remove('open')});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){hidePopover();selToolbar.classList.remove('visible');historyList.classList.remove('open')}});
+// Sidebar toggle (mobile overlay)
+(function(){
+  var sb=document.getElementById('sidebar'),st=document.getElementById('sidebar-toggle'),bd=document.getElementById('sidebar-backdrop');
+  function openSb(){sb.classList.add('open');bd.classList.add('visible');document.body.style.overflow='hidden'}
+  function closeSb(){sb.classList.remove('open');bd.classList.remove('visible');document.body.style.overflow=''}
+  st.addEventListener('click',function(e){e.stopPropagation();sb.classList.contains('open')?closeSb():openSb()});
+  bd.addEventListener('click',closeSb);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&sb.classList.contains('open'))closeSb()});
+  // Close sidebar when a date link is clicked on mobile
+  sb.addEventListener('click',function(e){if(window.innerWidth<=760&&e.target.classList.contains('date-link'))closeSb()});
+  window.addEventListener('resize',function(){if(window.innerWidth>760)closeSb()});
+})();
+// Sidebar archive loader
+(function(){
+  var sd=document.getElementById('sidebar-dates');
+  fetch('/daily-en-news-cloud/archive/index.json',{cache:'no-cache'}).then(function(r){return r.json()}).then(function(dates){
+    if(!dates.length){sd.innerHTML='<p>No archived editions yet.</p>';return}
+    var today='2026-11-25';sd.innerHTML='';
+    dates.forEach(function(d){var a=document.createElement('a');a.className='date-link';a.href='/daily-en-news-cloud/archive/'+d+'.html';a.textContent=d;if(d===today)a.classList.add('active');sd.appendChild(a)})
+  }).catch(function(){sd.innerHTML='<p>Archive index loading...</p>'})
+})();
+updateBadge();
+</script>
+</body>
+</html>
